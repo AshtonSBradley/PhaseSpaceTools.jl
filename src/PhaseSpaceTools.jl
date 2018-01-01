@@ -14,4 +14,4 @@ include("crescent.jl")
 
 export coherent, thermal, squeezed, fock, crescent
 
-end #end of module
+end #end of module test
