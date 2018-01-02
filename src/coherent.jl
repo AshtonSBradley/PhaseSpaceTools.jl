@@ -10,10 +10,9 @@ samples phase space distribution for coherent state
 
 `dist` is distrubtion. Can be either `+P` or `W`
 
-This is a simple function to establish format.
 For a coherent state in +P the distribution is just a point on the complex plane
 at the position of the coherent amplitude.
-Default (no keywords) will give +P
+Default (no value for dist) will give +P
 """
 function coherent(β,N;dist="+P")
 if dist=="+P"
