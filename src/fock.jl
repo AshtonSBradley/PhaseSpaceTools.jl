@@ -24,6 +24,15 @@ elseif dist=="W"
     α = (p + q*randn(N)).*exp.(2π*im*rand(N))
     ᾱ = conj(α)
     return α,ᾱ
+elseif dist=="+W"
+    γ = (randn(N)+im*randn(N))/sqrt(2)
+    x1= max(0,sqrt(n)-5); x2 = sqrt(n)+5
+    (n==0||n==1)?Pmax=0.71:Pmax=0.6
+    z = reject(x->PlaguerreN.(x,n),[x1,x2],N,Pmax)
+    μ = z.*exp.(2π*im*rand(N))
+    α = μ + γ
+    ᾱ = conj(μ - γ)
+return α, ᾱ
 else error("distribution not implemented")
 end
 end
