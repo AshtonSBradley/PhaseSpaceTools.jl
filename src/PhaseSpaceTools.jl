@@ -2,9 +2,9 @@ __precompile__()
 
 module PhaseSpaceTools
 
-using Reexport, PyCall, SymPy
+using Reexport
 
-@reexport using Distributions
+@reexport using Distributions, PyCall, SymPy
 
 include("reject.jl")
 include("laguerre.jl")
