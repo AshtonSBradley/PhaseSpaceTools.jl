@@ -7,7 +7,7 @@ samples phase space distribution for a Fock state
 
 `N` is number of samples
 
-`dist` is distribution. Can be either `W` or `+P`(default)
+`dist` is distribution. Can be either `W`, `+W`, or `+P`(default)
 """
 function fock(n,N;dist="+P")
 if dist=="+P"
