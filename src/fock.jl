@@ -25,6 +25,7 @@ elseif dist=="W"
     ᾱ = conj(α)
     return α,ᾱ
 elseif dist=="+W"
+    n>300 ? error("require n<=300"): nothing
     γ = (randn(N)+im*randn(N))/sqrt(2)
     x1= max(0,sqrt(n)-5); x2 = sqrt(n)+5
     (n==0||n==1)?Pmax=0.71:Pmax=0.6
