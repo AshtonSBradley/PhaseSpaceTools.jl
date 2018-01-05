@@ -17,6 +17,7 @@ end
 include("reject.jl")
 include("laguerre.jl")
 include("plaguerre.jl")
+include("plaguerre_asymptotic.jl")
 include("coherent.jl")
 include("thermal.jl")
 include("squeezed.jl")

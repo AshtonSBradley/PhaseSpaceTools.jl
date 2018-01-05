@@ -25,7 +25,7 @@ elseif dist=="W"
     ᾱ = conj(α)
     return α,ᾱ
 elseif dist=="+W"
-    n>300 ? error("require n<=300"): nothing
+    if n<=320
     γ = (randn(N)+im*randn(N))/sqrt(2)
     x1= max(0,sqrt(n)-5); x2 = sqrt(n)+5
     (n==0||n==1) ? Pmax=0.71 : Pmax=0.6
@@ -33,7 +33,16 @@ elseif dist=="+W"
     μ = z.*exp.(2π*im*rand(N))
     α = μ + γ
     ᾱ = conj(μ - γ)
-return α, ᾱ
+    return α, ᾱ
+    else
+    γ = (randn(N)+im*randn(N))/sqrt(2)
+    x1= max(0,sqrt(n)-5); x2 = sqrt(n)+5
+    z = reject(x->plaguerre_asymptotic.(x,n),[x1,x2],N,0.6)
+    μ = z.*exp.(2π*im*rand(N))
+    α = μ + γ
+    ᾱ = conj(μ - γ)
+    return α, ᾱ
+    end
 else error("distribution not implemented")
 end
 end
