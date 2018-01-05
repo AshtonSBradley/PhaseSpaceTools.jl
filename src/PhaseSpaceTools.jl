@@ -22,6 +22,6 @@ include("squeezed.jl")
 include("fock.jl")
 include("crescent.jl")
 
-export coherent, thermal, squeezed, fock, crescent
+export coherent, thermal, squeezed, fock, crescent, reject, laguerre, PlaguerreN
 
-end #end of module test
+end #end of module
