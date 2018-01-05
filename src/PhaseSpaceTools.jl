@@ -2,20 +2,12 @@ __precompile__()
 
 module PhaseSpaceTools
 
-using PyCall, SymPy, Distributions
 
-#import laguerre from scipy.special
-const scipy_spec = PyNULL()
+using Distributions, GSL
 
-function __init__()
-    copy!(scipy_spec, pyimport_conda("scipy.special", "scipy"))
-end
-
-#using Reexport
-#@reexport using Distributions
 
 include("reject.jl")
-include("laguerre.jl")
+include("laguerren.jl")
 include("plaguerre.jl")
 include("plaguerre_asymptotic.jl")
 include("coherent.jl")
