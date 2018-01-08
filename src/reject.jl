@@ -1,7 +1,18 @@
+"""
+```julia
+samples = reject(P,w,N,Pmax)
+```
+Samples the distribution `P` over the window
+
+`w=[w1,w2]`, where `P` is a function with `max(P)<=Pmax`.
+
+`N` is number of samples
+
+"""
 function reject(P,w,N,Pmax)
-    #rejection sampling the probability distribution P over the window w=[w1,w2]
+    #Rejection sampling the probability distribution P over the window w=[w1,w2]
     #Pmax must be numerical with value max(P) <= Pmax
-    #initialize sample vector
+
     samples = Array{Float64}(1)
     while length(samples) < N + 1
         y = w[1] + rand()*(w[2]-w[1])
