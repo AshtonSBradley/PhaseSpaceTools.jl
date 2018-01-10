@@ -11,6 +11,12 @@ Sample the phase-space distribution for a Fock state.
 
 For standard `P,Q,W` distributions, `a` and `ā` are complex conjugate, while for `+P` etc,
 `a` and `ā` are independent variables.
+
+## Wigner representation
+The standard `W` is sampled using an approximation that reproduces operator averages accuratley for large `n`, but neglects some quantum correlations.
+
+The `+W` sampling is carried out in a doubled phase space, where the distribution is positive semi-definite, and hence may be sampled exactly for any `n`.
+To acheive fast evaluation, an accurate asymptotic expansion is used for large `n` (n>320).
 """
 function fock(n,N;dist="+P")
 if dist=="+P"
