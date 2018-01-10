@@ -2,8 +2,8 @@
 ```julia
 P(x,n) = plaguerre(x,n)
 ```
-Radial phase space probability distribution for fock state sampling in
-+P representation.
+Define the radial phase-space probability distribution for sampling a fock state in the
++P representation. 
 
 `x ` is location to evaluate probability.
 

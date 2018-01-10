@@ -2,11 +2,17 @@
 ```julia
 samples = reject(P,w,N,Pmax)
 ```
-Samples the distribution `P` over the window
+Sample a probability distribution by rejection sampling over a finite window.
 
-`w=[w1,w2]`, where `P` is a function with `max(P)<=Pmax`.
+`P` is the probability distribution, normalized to 1.
 
-`N` is number of samples
+`w=[w1,w2]` is the window for sampling.
+
+`N` is number of samples.
+
+`Pmax` is a numerical upper bound for `P`: `max(P) ≦ Pmax`.
+
+
 
 """
 function reject(P,w,N,Pmax)

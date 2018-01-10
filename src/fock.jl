@@ -2,12 +2,13 @@
 ```julia
 a,ā = fock(n,N;dist)
 ```
-samples phase space distribution for a Fock state
-`n` is number of fock state
+Sample the phase-space distribution for a Fock state
 
-`N` is number of samples
+`n` is number of fock state.
 
-`dist` is distribution. Can be either `W`, `+W`, or `+P`(default)
+`N` is number of samples.
+
+Distribution `dist` can be either `W`, `+W`, or `+P`(default).
 """
 function fock(n,N;dist="+P")
 if dist=="+P"

@@ -2,17 +2,16 @@
 ```julia
 a,ā = coherent(β,N;dist)
 ```
-samples phase space distribution for coherent state
+Sample the phase-space distribution for a coherent state.
 
-`β` is coherent amplitude (complex)
+`β` is coherent (complex) amplitude.
 
-`N` is number of samples
+`N` is number of samples.
 
-`dist` is distrubtion. Can be either `+P` or `W`
+`dist` is distrubtion. Can be either `W` or `+P` (default).
 
-For a coherent state in +P the distribution is just a point on the complex plane
+For a coherent state in +P, the distribution is just a point on the complex plane
 at the position of the coherent amplitude.
-Default (no value for dist) will give +P
 """
 function coherent(β,N;dist="+P")
 if dist=="+P"

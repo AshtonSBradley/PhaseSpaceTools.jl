@@ -2,17 +2,19 @@
 ```julia
 a,ā = crescent(β,ϵ,q,N;dist)
 ```
-Sample phase space distribution for a crescent state
+Sample the phase-space distribution for a crescent state.
+First samples a squeezed state, then introduces a searing factor
+in phase-space in the form of a gaussian distributed random phase.
 
-`β` is coherent amplitude
+`β` is coherent (complex) amplitude.
 
-`ϵ` is squeeze paramter
+`ϵ` is squeezing paramter.
 
-`q` is shearing parameter
+`q` is shearing parameter.
 
-`N` is number of samples
+`N` is number of samples.
 
-`dist` is distribution. Can be either `Q` or `+P`
+`dist` is distribution. Can be either `Q` or `+P` (default)
 """
 function crescent(β,ϵ,q,N;dist="+P")
 if dist=="+P"

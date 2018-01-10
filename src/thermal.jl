@@ -2,15 +2,15 @@
 ```julia
 a,ā = thermal(β,n̄,N;dist)
 ```
-samples phase space distribution for a thermal state:
+Sample the phase-space distribution for a thermal state.
 
-`β` is complex displacement
+`β` is the coherent (complex) displacement.
 
-`n̄` is thermal average population
+`n̄` is the thermal average population.
 
-`N` is number of samples
+`N` is the number of samples.
 
-`dist` is the distribution. Can be `P`, `Q` or `W`
+`dist` is the distribution. Can be `P` (default), `Q` or `W`
 """
 function thermal(β,n̄,N;dist="P")
 if dist=="P"
