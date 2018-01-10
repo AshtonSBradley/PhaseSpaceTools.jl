@@ -13,10 +13,9 @@ For standard `P,Q,W` distributions, `a` and `ā` are complex conjugate, while f
 `a` and `ā` are independent variables.
 
 ## Wigner representation
-The standard `W` is sampled using an approximation that reproduces operator averages accuratley for large `n`, but neglects some quantum correlations.
+* The standard `W` is sampled using an approximation that reproduces operator averages accuratley for large `n`, but neglects some quantum correlations.
 
-The `+W` sampling is carried out in a doubled phase space, where the distribution is positive semi-definite, and hence may be sampled exactly for any `n`.
-To acheive fast evaluation, an accurate asymptotic expansion is used for large `n` (n>320).
+* The `+W` sampling is carried out in a doubled phase space, where the distribution is positive semi-definite, and hence may be sampled exactly for any `n`. Fast evaluation is achieved for large `n` using an accurate asymptotic expansion `(n>320)`.
 """
 function fock(n,N;dist="+P")
 if dist=="+P"
