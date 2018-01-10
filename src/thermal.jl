@@ -1,16 +1,18 @@
 """
-```julia
-a,ā = thermal(β,n̄,N;dist)
-```
+    a,ā = thermal(β,n̄,N;dist="P")
+
 Sample the phase-space distribution for a thermal state.
 
-`β` is the coherent (complex) displacement.
+`β`: coherent (complex) displacement.
 
-`n̄` is the thermal average population.
+`n̄`: thermal average population.
 
-`N` is the number of samples.
+`N`: number of samples.
 
-`dist` is the distribution. Can be `P` (default), `Q` or `W`
+`dist`: phase-space distribution. Can be `P`, `Q` or `W`.
+
+For standard `P,Q,W` distributions, `a` and `ā` are complex conjugate, while for `+P` etc,
+`a` and `ā` are independent variables.
 """
 function thermal(β,n̄,N;dist="P")
 if dist=="P"

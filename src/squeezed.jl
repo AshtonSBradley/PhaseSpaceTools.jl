@@ -1,16 +1,18 @@
 """
-```julia
-a,ā = squeezed(β,ϵ,N;dist)
-```
+    a,ā = squeezed(β,ϵ,N;dist="+P")
+
 Sample the phase-space distribution for a squeezed state.
 
-`β` is the coherent (complex) amplitude.
+`β`: coherent (complex) amplitude.
 
-`ϵ` is (complex) squeezing parameter.
+`ϵ`: complex valued squeezing parameter.
 
-`N` is the number of samples.
+`N`: number of samples.
 
-`dist` is the distribution; can be `W` or `+P` (default).
+`dist`: phase-space distribution; can be `W` or `+P`.
+
+For standard `P,Q,W` distributions, `a` and `ā` are complex conjugate, while for `+P` etc,
+`a` and `ā` are independent variables.
 """
 function squeezed(β,ϵ,N;dist="+P")
 if dist=="+P"

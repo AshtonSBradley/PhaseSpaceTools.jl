@@ -1,18 +1,15 @@
 """
-```julia
-samples = reject(P,w,N,Pmax)
-```
-Sample a probability distribution by rejection sampling over a finite window.
+    x = reject(P,w,N,Pmax)
 
-`P` is the probability distribution, normalized to 1.
+Generate `x` distributed according to a probability distribution by rejection sampling over a finite window.
 
-`w=[w1,w2]` is the window for sampling.
+`P`: probability distribution, normalized to 1.
 
-`N` is number of samples.
+`w=[w1,w2]`: window for sampling `x`.
 
-`Pmax` is a numerical upper bound for `P`: `max(P) ≦ Pmax`.
+`N`: number of samples.
 
-
+`Pmax`: numerical upper bound for `P`: `max(P) ≦ Pmax`.
 
 """
 function reject(P,w,N,Pmax)

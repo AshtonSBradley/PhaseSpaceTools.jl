@@ -1,13 +1,12 @@
 """
-```julia
-P(x,n) = plaguerre(x,n)
-```
+    P(x,n) = plaguerre(x,n)
+
 Define the radial phase-space probability distribution for sampling a fock state in the
-+P representation. 
+`+P` representation.
 
-`x ` is location to evaluate probability.
+`x`: location to evaluate probability.
 
-`n` is the number of the fock state.
+`n`: the number of the fock state.
 
 """
 function plaguerre(x,n)

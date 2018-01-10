@@ -1,14 +1,16 @@
 """
-```julia
-a,ā = fock(n,N;dist)
-```
-Sample the phase-space distribution for a Fock state
+    a,ā = fock(n,N;dist="+P")
 
-`n` is number of fock state.
+Sample the phase-space distribution for a Fock state.
 
-`N` is number of samples.
+`n`: number of the fock state |n⟩.
 
-Distribution `dist` can be either `W`, `+W`, or `+P`(default).
+`N`: number of samples.
+
+`dist`: phase-space distribution can be either `W`, `+W`, or `+P`.
+
+For standard `P,Q,W` distributions, `a` and `ā` are complex conjugate, while for `+P` etc,
+`a` and `ā` are independent variables.
 """
 function fock(n,N;dist="+P")
 if dist=="+P"
