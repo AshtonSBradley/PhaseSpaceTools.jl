@@ -14,7 +14,7 @@ in phase-space in the form of a gaussian distributed random phase.
 
 `N` is number of samples.
 
-`dist` is distribution. Can be either `Q` or `+P` (default)
+`dist` is distribution. Can be either `Q` or `+P` (default).
 """
 function crescent(β,ϵ,q,N;dist="+P")
 if dist=="+P"
