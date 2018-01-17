@@ -31,7 +31,7 @@ elseif dist=="W"
     q = 1/(4*p)
     α = (p + q*randn(N)).*exp.(2π*im*rand(N))
     ᾱ = conj(α)
-    return α,ᾱ
+    return α, ᾱ
 elseif dist=="+W"
     if n<=320
     γ = (randn(N)+im*randn(N))/sqrt(2)
