@@ -16,6 +16,11 @@ For standard `P,Q,W` distributions, `a` and `ā` are complex conjugate, while f
 * The standard `W` is sampled using an approximation that reproduces operator averages accuratley for large `n`, but neglects some quantum correlations.
 
 * The `+W` sampling is carried out in a doubled phase space, where the distribution is positive semi-definite, and hence may be sampled exactly for any `n`. Fast evaluation is achieved for large `n` using an accurate asymptotic expansion `(n>320)`.
+
+External links
+
+[Numerical representation of quantum states in the positive-P and Wigner representations, Olsen, Bradley, Optics Communications 282, 3924 (2009)](http://dx.doi.org/10.1016/j.optcom.2009.06.033)
+
 """
 function fock(n,N;dist="+P")
 if dist=="+P"
