@@ -9,12 +9,10 @@ Generate `x` distributed according to a probability distribution by rejection sa
 
 `N`: number of samples.
 
-`Pmax`: numerical upper bound for `P`: `max(P) ≦ Pmax`.
+`Pmax`: numerical upper bound for `P`: `Pmax ≧ max(P(w))`.
 
 """
 function reject(P,w,N,Pmax)
-    #Rejection sampling the probability distribution P over the window w=[w1,w2]
-    #Pmax must be numerical with value max(P) <= Pmax
 
     samples = Array{Float64}(1)
     while length(samples) < N + 1
