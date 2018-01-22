@@ -32,6 +32,7 @@ if dist=="+P"
     ᾱ = conj(μ - γ)
     return α, ᾱ
 elseif dist=="W"
+    n<10 && warn("Fock state sampling for W is only valid for n ≫ 1.")
     p = 0.5*sqrt(2*n+1+2*sqrt(n^2+n))
     q = 1/(4*p)
     α = (p + q*randn(N)).*exp.(2π*im*rand(N))
