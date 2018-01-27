@@ -1,4 +1,4 @@
-#test W
+#test +W for large n
 
 n = 101
 N = 100000
