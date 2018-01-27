@@ -15,24 +15,27 @@ Pkg.test("PhaseSpaceTools")
 using PhaseSpaceTools
 ```
 #### Coherent state
+A coherent state |α⟩ is "sampled" as
 ```julia
-julia>
 α = 1.0+im*2.0 #coherent state |α⟩
 N = 1000 #number of samples
 a,ā = coherent(α,N,dist="+P")
 ```
-a special (trivial) case where the two phase space variables a and ā are complex conjugate in the +P representation.
+This is a special (trivial) case where the two phase space variables a and ā are complex conjugate, and non-stochastic in the +P representation.
 
 #### Fock state
-An approximate fock state sampler for W:
+An approximate fock state sampler in the Wigner representation:
 ```julia
-julia>
 n = 100 #fock state |n⟩
 N = 1000 #number of samples
 a,ā = fock(n,N,dist="W")
 ```
-provides a positive W approximation for large `n`.
+Provides a positive W approximation that reproduces moments for large `n`.
 
-See  `/examples/PhaseSpaceTools.ipynb` for more usage.
+#### States
+`coherent`, `squeezed`, `fock`, `thermal`, `crescent`.
+
+See  `/examples/PhaseSpaceTools.ipynb` for more usage examples.
+
 #### External links
 [Numerical representation of quantum states in the positive-P and Wigner representations, Olsen, Bradley, Optics Communications 282, 3924 (2009)](http://dx.doi.org/10.1016/j.optcom.2009.06.033)
