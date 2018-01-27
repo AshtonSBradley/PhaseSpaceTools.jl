@@ -1,3 +1,5 @@
+#!/usr/bin/env julia
+
 using PhaseSpaceTools
 using Base.Test
 
