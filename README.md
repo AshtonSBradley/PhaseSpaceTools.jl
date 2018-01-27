@@ -17,7 +17,7 @@ using PhaseSpaceTools
 #### Coherent state
 ```julia
 julia>
-α = 1.0+im*2.0 #coherent amplitude
+α = 1.0+im*2.0 #coherent state |α⟩
 N = 1000 #number of samples
 a,ā = coherent(α,N,dist="+P")
 ```
