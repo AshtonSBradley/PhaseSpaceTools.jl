@@ -5,7 +5,7 @@
 [![Coverage Status](https://coveralls.io/repos/AshtonSBradley/PhaseSpaceTools.jl/badge.svg?branch=master&service=github)](https://coveralls.io/github/AshtonSBradley/PhaseSpaceTools.jl?branch=master)
 [![codecov.io](http://codecov.io/github/AshtonSBradley/PhaseSpaceTools.jl/coverage.svg?branch=master)](http://codecov.io/github/AshtonSBradley/PhaseSpaceTools.jl?branch=master)
 
-Package for sampling some of the quantum initial states commonly encountered in quantum-optical and matter-wave bosonic systems. W and +P representations are implemented, being the most useful for dynamical simulations. Currently supports only single mode sampling.
+Small package for sampling some of the quantum initial states commonly encountered in quantum-optical and matter-wave bosonic systems. Wigner (`W`) and positive-P (`+P`) representations are implemented, being the most useful for dynamical simulations. Currently supports only single mode sampling.
 
 ## Install
 
@@ -14,6 +14,10 @@ Pkg.clone("https://github.com/AshtonSBradley/PhaseSpaceTools.jl.git")
 Pkg.test("PhaseSpaceTools")
 using PhaseSpaceTools
 ```
+
+## States
+`coherent`, `thermal`, `squeezed`, `fock`, `crescent`.
+
 #### Coherent state
 A coherent state |α⟩ is "sampled" as
 ```julia
@@ -32,10 +36,9 @@ a,ā = fock(n,N,dist="W")
 ```
 Provides a positive W approximation that reproduces moments for large `n`.
 
-#### States
-`coherent`, `squeezed`, `fock`, `thermal`, `crescent`.
+### Examples
 
-See  `/examples/PhaseSpaceTools.ipynb` for more usage examples.
+See  `/examples/PhaseSpaceTools.ipynb` for more usage.
 
-#### External links
+### External links
 [Numerical representation of quantum states in the positive-P and Wigner representations, Olsen, Bradley, Optics Communications 282, 3924 (2009)](http://dx.doi.org/10.1016/j.optcom.2009.06.033)
