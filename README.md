@@ -15,7 +15,9 @@ Pkg.test("PhaseSpaceTools")
 using PhaseSpaceTools
 ```
 
-## States
+## Usage
+
+### States
 `coherent`, `thermal`, `squeezed`, `fock`, `crescent`
 
 #### Coherent state
@@ -36,9 +38,9 @@ a,ā = fock(n,N,dist="W")
 ```
 Provides a positive W approximation that reproduces moments for large `n`.
 
-### Examples
+## Examples
 
 See  `/examples/PhaseSpaceTools.ipynb` for more usage.
 
-### External links
+## External links
 [Numerical representation of quantum states in the positive-P and Wigner representations, Olsen, Bradley, Optics Communications 282, 3924 (2009)](http://dx.doi.org/10.1016/j.optcom.2009.06.033)
