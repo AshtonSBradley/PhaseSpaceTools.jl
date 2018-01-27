@@ -16,7 +16,7 @@ using PhaseSpaceTools
 ```
 
 ## States
-`coherent`, `thermal`, `squeezed`, `fock`, `crescent`.
+`coherent`, `thermal`, `squeezed`, `fock`, `crescent`
 
 #### Coherent state
 A coherent state |α⟩ is "sampled" as
