@@ -27,7 +27,7 @@ A coherent state |α⟩ is "sampled" as
 N = 1000 #number of samples
 a,ā = coherent(α,N,dist="+P")
 ```
-This is a special (trivial) case where the two phase space variables a and ā are complex conjugate, and non-stochastic in the +P representation.
+This is a special (trivial) case where the two phase space variables `a` and `ā` are complex conjugate, and non-stochastic in the `+P` representation.
 
 #### Fock state
 An approximate fock state sampler in the Wigner representation:
@@ -36,7 +36,7 @@ n = 100 #fock state |n⟩
 N = 1000 #number of samples
 a,ā = fock(n,N,dist="W")
 ```
-Provides a positive W approximation that reproduces moments for large `n`.
+Provides a positive `W` approximation that reproduces moments for large `n`.
 
 ## Examples
 
