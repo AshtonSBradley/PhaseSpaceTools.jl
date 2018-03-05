@@ -43,4 +43,4 @@ Provides a positive `W` approximation that reproduces moments for large `n`.
 See  `/examples/PhaseSpaceTools.ipynb` for more usage.
 
 ## External links
-[Numerical representation of quantum states in the positive-P and Wigner representations, Olsen, Bradley, Optics Communications 282, 3924 (2009)](http://dx.doi.org/10.1016/j.optcom.2009.06.033)
+[Numerical representation of quantum states in the positive-P and Wigner representations, M K Olsen, A S Bradley, Optics Communications 282, 3924 (2009)](http://dx.doi.org/10.1016/j.optcom.2009.06.033)
