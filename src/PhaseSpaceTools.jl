@@ -6,7 +6,6 @@ using Reexport
 @reexport using Distributions
 @reexport using Statistics
 @reexport using LinearAlgebra
-#@reexport using GSL
 
 import GSL:sf_laguerre_n
 
