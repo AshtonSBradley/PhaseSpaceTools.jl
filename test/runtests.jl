@@ -1,7 +1,7 @@
 #!/usr/bin/env julia
 
 using PhaseSpaceTools
-using Base.Test
+using Test
 
 #test coherent
 include("samplecoherentW.jl")
