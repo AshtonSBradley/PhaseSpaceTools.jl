@@ -25,6 +25,5 @@ include("samplesqueezed+P.jl")
 include("samplesqueezedW.jl")
 @testset "squeezed state W tests " begin include("testsqueezed+P.jl") end
 
-
 #test thermal
 #include("samplethermalP.jl")

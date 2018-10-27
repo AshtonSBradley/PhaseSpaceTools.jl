@@ -13,13 +13,11 @@ Generate `x` distributed according to a probability distribution by rejection sa
 
 """
 function reject(P,w,N,Pmax)
-    samples = Array{Float64}(undef,N)
-    count = 1
-    while count < N+1
+    samples = Array{Float64}(undef,0)
+    while length(samples) < N
         y = w[1] + rand()*(w[2] - w[1])
         z = rand()*Pmax
-        (z < P(y)) && (samples[count] = y)
-        count += 1
+        z < P(y) && push!(samples,y)
     end
     return samples
 end
