@@ -24,7 +24,7 @@ External links
 """
 function fock(n,N;dist="+P")
 if dist=="+P"
-    γ = (randn(N) .+ im*randn(N))/sqrt(2)
+    γ = crandn(N)
     d = Gamma(n+1,1)
     z = rand(d,N)
     μ = sqrt.(z).*exp.(2π*im*rand(N))
@@ -40,7 +40,7 @@ elseif dist=="W"
     return α, ᾱ
 elseif dist=="+W"
     if n<=320
-    γ = (randn(N) .+ im*randn(N))/sqrt(2)
+    γ = crandn(N)
     x1 = max(0,sqrt(n)-5); x2 = sqrt(n)+5
     (n==0||n==1) ? Pmax=0.71 : Pmax=0.6
     z = reject(x->plaguerre.(x,n),[x1,x2],N,Pmax)
@@ -49,7 +49,7 @@ elseif dist=="+W"
     ᾱ = conj(μ .- γ)
     return α, ᾱ
     else
-    γ = (randn(N) .+ im*randn(N))/sqrt(2)
+    γ = crandn(N)
     x1= max(0,sqrt(n)-5); x2 = sqrt(n)+5
     z = reject(x->plaguerre_asymptotic.(x,n),[x1,x2],N,0.6)
     μ = z.*exp.(2π*im*rand(N))

@@ -7,7 +7,7 @@ Sample the phase-space distribution for a coherent state.
 
 `N`: number of samples.
 
-`dist`: phase-space distrubtion. Can be either `W` or `+P`.
+`dist`: phase-space distribution, either `W` or `+P`.
 
 For a coherent state in +P, the distribution is just a point on the complex plane
 at the position of the coherent amplitude.
@@ -21,11 +21,11 @@ if dist=="+P"
     ᾱ = conj(α)
     return α, ᾱ
 elseif dist=="W"
-    α = β .+ (randn(N)+im*randn(N))/2
+    α = β .+ crandn(N)/sqrt(2)
     ᾱ = conj(α)
     return α, ᾱ
 elseif dist=="+W"
-    α = β .+ (randn(N)+im*randn(N))/2
+    α = β .+ crandn(N)/sqrt(2)
     ᾱ = conj(α)
     return α, ᾱ
 else error("distribution not implemented")

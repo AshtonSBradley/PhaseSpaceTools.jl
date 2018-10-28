@@ -18,7 +18,7 @@ function squeezed(β,ϵ,N;dist="+P")
 if dist=="+P"
     r = abs(ϵ)
     ϕ = angle(ϵ)/2
-    γ = (randn(N) .+ im*randn(N))/sqrt(2)
+    γ = crandn(N)
     ν = sqrt(exp(-r)*cosh(r)/2)*randn(N) .+ im*sqrt(exp(r)*cosh(r)/2)*randn(N)
     α = β .+ exp(im*ϕ)*ν .+ γ
     ᾱ = conj(β) .+ exp(-im*ϕ)*conj(ν) .- conj(γ)
