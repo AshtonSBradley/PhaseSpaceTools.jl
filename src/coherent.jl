@@ -21,11 +21,11 @@ if dist=="+P"
     ᾱ = conj(α)
     return α, ᾱ
 elseif dist=="W"
-    α = β + (randn(N)+im*randn(N))/2
+    α = β .+ (randn(N)+im*randn(N))/2
     ᾱ = conj(α)
     return α, ᾱ
 elseif dist=="+W"
-    α = β + (randn(N)+im*randn(N))/2
+    α = β .+ (randn(N)+im*randn(N))/2
     ᾱ = conj(α)
     return α, ᾱ
 else error("distribution not implemented")

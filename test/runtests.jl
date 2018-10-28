@@ -1,7 +1,7 @@
 #!/usr/bin/env julia
 
 using PhaseSpaceTools
-using Base.Test
+using Test
 
 #test coherent
 include("samplecoherentW.jl")
@@ -24,7 +24,6 @@ include("samplesqueezed+P.jl")
 #test squeezed
 include("samplesqueezedW.jl")
 @testset "squeezed state W tests " begin include("testsqueezed+P.jl") end
-
 
 #test thermal
 #include("samplethermalP.jl")

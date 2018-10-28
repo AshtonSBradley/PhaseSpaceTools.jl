@@ -1,0 +1,11 @@
+name = "PhaseSpaceTools"
+uuid = "0e21426a-da0a-11e8-1f13-43a2532b2fa8"
+authors = ["Ashton Bradley <ashton.bradley@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
+GSL = "92c85e6c-cbff-5e0c-80f7-495c94daaecd"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+Reexport = "189a3867-3050-52da-a836-e630ba90ab69"
+Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"

@@ -1,9 +1,10 @@
-__precompile__()
-
 module PhaseSpaceTools
 
-#using Distributions, GSL
-using Distributions
+using Reexport
+@reexport using Distributions
+@reexport using Statistics
+@reexport using LinearAlgebra
+
 import GSL:sf_laguerre_n
 
 export coherent, thermal, squeezed, fock, crescent
