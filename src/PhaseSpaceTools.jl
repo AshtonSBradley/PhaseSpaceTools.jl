@@ -1,13 +1,15 @@
-__precompile__()
-
 module PhaseSpaceTools
 
-#using Distributions, GSL
-using Distributions
+using Reexport
+@reexport using Distributions
+@reexport using Statistics
+@reexport using LinearAlgebra
+
 import GSL:sf_laguerre_n
 
-export coherent, thermal, squeezed, fock, crescent
+export coherent, thermal, squeezed, fock, crescent, bogoliubov, crandn
 
+include("helpers.jl")
 include("reject.jl")
 include("laguerren.jl")
 include("plaguerre.jl")
@@ -17,5 +19,6 @@ include("thermal.jl")
 include("squeezed.jl")
 include("fock.jl")
 include("crescent.jl")
+include("bogoliubov.jl")
 
 end #end of module
