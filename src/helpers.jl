@@ -14,6 +14,6 @@ Usage:
 
 `a = crandn(50,100)` returns a `50x100-element Array{Complex{Float64},2}`.
 """
-function crandn(N...)
-    return (randn(N...) .+ im*randn(N...))/sqrt(2)
+function crandn(args...)
+    return randn(ComplexF64,args...)
 end
