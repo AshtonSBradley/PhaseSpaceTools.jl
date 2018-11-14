@@ -2,7 +2,7 @@
 
 α = 100*(randn()+im*randn())
 N = 100000
-a,ā = coherent(α,N;dist="W")
+a,ā = coherent(α,N;dist=:W)
 
 av_a = mean(a)
 n̄ = real(mean(a.*ā)-.5)

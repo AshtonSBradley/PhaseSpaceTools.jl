@@ -1,5 +1,5 @@
 """
-    a,ā = squeezed(β,ϵ,N;dist="+P")
+    a,ā = squeezed(β,ϵ,N;dist=:posP)
 
 Sample the phase-space distribution for a squeezed state.
 
@@ -9,13 +9,13 @@ Sample the phase-space distribution for a squeezed state.
 
 `N`: number of samples.
 
-`dist`: phase-space distribution; can be `W` or `+P`.
+`dist`: phase-space distribution; can be `:W` or `:posP`.
 
 For standard `P,Q,W` distributions, `a` and `ā` are complex conjugate, while for `+P` etc,
 `a` and `ā` are independent variables.
 """
-function squeezed(β,ϵ,N;dist="+P")
-if dist=="+P"
+function squeezed(β,ϵ,N;dist=:posP)
+if dist==:posP
     r = abs(ϵ)
     ϕ = angle(ϵ)/2
     γ = crandn(N)
@@ -23,7 +23,7 @@ if dist=="+P"
     α = β .+ exp(im*ϕ)*ν .+ γ
     ᾱ = conj(β) .+ exp(-im*ϕ)*conj(ν) .- conj(γ)
     return α, ᾱ
-elseif dist=="W"
+elseif dist==:W
     r = abs(ϵ)
     ϕ = angle(ϵ)/2
     α = β .+ 0.5*(randn(N)*exp(-r) .+ im*randn(N)*exp(r))*exp(-im*ϕ)

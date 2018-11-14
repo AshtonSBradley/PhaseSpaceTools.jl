@@ -11,9 +11,6 @@ export coherent, thermal, squeezed, fock, crescent, bogoliubov, crandn
 
 include("helpers.jl")
 include("reject.jl")
-include("laguerren.jl")
-include("plaguerre.jl")
-include("plaguerre_asymptotic.jl")
 include("coherent.jl")
 include("thermal.jl")
 include("squeezed.jl")

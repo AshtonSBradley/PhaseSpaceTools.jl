@@ -2,7 +2,7 @@
 
 n = 99
 N = 100000
-a,ā = fock(n,N;dist="+W")
+a,ā = fock(n,N;dist=:posW)
 
 av_a = mean(a)
 absa = abs(av_a)

@@ -1,5 +1,5 @@
 """
-    a,ā = coherent(β,N;dist="+P")
+    a,ā = coherent(β,N;dist=:posP)
 
 Sample the phase-space distribution for a coherent state.
 
@@ -7,7 +7,7 @@ Sample the phase-space distribution for a coherent state.
 
 `N`: number of samples.
 
-`dist`: phase-space distribution, either `W` or `+P`.
+`dist`: phase-space distribution, either `:W` or `:posP`.
 
 For a coherent state in +P, the distribution is just a point on the complex plane
 at the position of the coherent amplitude.
@@ -15,16 +15,16 @@ at the position of the coherent amplitude.
 For standard `P,Q,W` distributions, `a` and `ā` are complex conjugate, while for `+P` etc,
 `a` and `ā` are independent variables.
 """
-function coherent(β,N;dist="+P")
-if dist=="+P"
+function coherent(β,N;dist=:posP)
+if dist==:posP
     α = β*ones(N)
     ᾱ = conj(α)
     return α, ᾱ
-elseif dist=="W"
+elseif dist==:W
     α = β .+ crandn(N)/sqrt(2)
     ᾱ = conj(α)
     return α, ᾱ
-elseif dist=="+W"
+elseif dist==:posW
     α = β .+ crandn(N)/sqrt(2)
     ᾱ = conj(α)
     return α, ᾱ

@@ -3,7 +3,7 @@
 r = 1.5
 ϵ = r*exp(2*im*ϕ)
 N = 10000
-a,ā = squeezed(β,ϵ,N,dist="W")
+a,ā = squeezed(β,ϵ,N,dist=:W)
 
 av_a = mean(a);absa = abs(av_a)
 n̄ = real(mean(a.*ā)-.5)
