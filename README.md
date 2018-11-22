@@ -11,31 +11,51 @@ Small package for sampling some of the quantum initial states commonly encounter
 
 ```julia
 ] add https://github.com/AshtonSBradley/PhaseSpaceTools.jl.git
-using PhaseSpaceTools
 ```
 
 ## Usage
+```julia
+julia>using PhaseSpaceTools
+help?> squeezed
+search: squeezed
+
+  a,ā = squeezed(β,ϵ,N;dist=:posP)
+
+  Sample the phase-space distribution for a squeezed state.
+
+  β: coherent (complex) amplitude.
+
+  ϵ: complex valued squeezing parameter.
+
+  N: number of samples.
+
+  dist: phase-space distribution; can be :W or :posP.
+
+  For standard P,Q,W distributions, a and ā are complex conjugate, while for +P etc, a and ā are independent
+  variables.
+```
+
 
 ### States
 `coherent`, `thermal`, `squeezed`, `fock`, `crescent`
 
 #### Coherent state
-A coherent state |α⟩ is sampled as
+A coherent state |α⟩ is "sampled" as
 ```julia
 α = 1.0+im*2.0 #coherent state |α⟩
 N = 1000 #number of samples
-a,ā = coherent(α,N,dist="+P")
+a,ā = coherent(α,N,dist=:posP)
 ```
-This is a special (trivial) case where the two phase space variables `a` and `ā` are complex conjugate, and non-stochastic in the `+P` representation.
+This is a special case where the two phase space variables `a` and `ā` are complex conjugate, and non-stochastic in the `+P` representation.
 
 #### Fock state
 An approximate fock state sampler in the Wigner representation:
 ```julia
 n = 100 #fock state |n⟩
 N = 1000 #number of samples
-a,ā = fock(n,N,dist="W")
+a,ā = fock(n,N,dist=:W)
 ```
-Provides a positive `W` approximation that reproduces moments for large `n`.
+Provides an approximate sampling of `W` that reproduces operator averages for large `n`.
 
 ## Examples
 
