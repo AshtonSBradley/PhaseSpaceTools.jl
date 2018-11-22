@@ -35,7 +35,7 @@ n = 100 #fock state |n⟩
 N = 1000 #number of samples
 a,ā = fock(n,N,dist=:W)
 ```
-Provides a positive `W` approximation that reproduces moments for large `n`.
+Provides an approximate sampling of `W` that reproduces moments for large `n`.
 
 ## Examples
 
