@@ -19,11 +19,17 @@ end
 
 struct Squeezed <: State
     β::Complex{Float64}
-    ϵ::Float64
+    ϵ::Complex{Float64}
 end
 
 struct Thermal <: State
     β::Complex{Float64}
+    n̄::Float64
+end
+
+struct Bogoliubov <: State
+    u::Complex{Float64}
+    v::Complex{Float64}
     n̄::Float64
 end
 
@@ -183,23 +189,135 @@ function positiveW(state::Fock,N)
 end
 end
 
-# tests
+function wigner(state::Bogoliubov,N)
+    b,b̄ = wigner(Thermal(0.0,n̄),N)
+    a = u*b + conj(v)*b̄
+    ā = conj.(a)
+    return a,ā
+end
 
-N = 1000000
-β = 100*randnc()
-state = Coherent(β)
+# test coherent
+using Test, LinearAlgebra
+
+# sample
+N = 100000
+α = 100*randnc()
+state = Coherent(α)
+
 a,ā = wigner(state,N)
-meanb = mean(a)
+meana = mean(a)
 n̄ = real(mean(@. ā*a)-.5)
-Vn = mean(@. ā^2*a^2)-mean(@. a*ā)-n̄^2 |> real
+Vn = mean(@. ā^2*a^2)-mean(@. a*ā)-n̄^2 |> abs
 
-state = Fock(15)
-α,ᾱ = positiveP(state,100)
-@time α,ᾱ = wigner(state,1000)
-@time α,ᾱ = positiveW(state,1000000)
+#test
+@test norm(meana - α)/abs(α) < 0.01
+@test abs(n̄ - abs(α).^2)/abs(α)^2 < 0.01
+@test abs(Vn - abs(α)^2)/abs(α)^2 < 0.05
 
-state = Squeezed(20. +im*1.9,2.0)
+#sample
+n = 100
+N = 100000
+state = Fock(n)
+a,ā = wigner(state,N)
 
+meana = mean(a)
+absa = abs(meana)
+n̄ = mean(abs2.(a))-.5
+Vn= abs(mean(abs2.(a).^2)-mean(abs2.(a))-n̄.^2)
+rel_num_var = sqrt(abs(Vn))/abs(n̄);
 
+#test
+@test absa < 0.1
+@test n̄ - n < 0.01
+@test Vn < 0.01
+@test rel_num_var < 0.001
 
-methods(positiveP)
+#sample
+n = 99
+N = 100000
+state = Fock(n)
+a,ā = positiveW(state,N)
+
+meana = mean(a)
+absa = abs(meana)
+n̄ = real(mean(a.*ā)-.5)
+Vn = abs(mean(a.*a.*ā.*ā)-abs(mean(a.*ā))-n̄.^2)
+rel_num_var = sqrt(abs(Vn))/abs(n̄);
+
+#test
+@test absa < 0.1
+@test n̄ - n < 1
+@test Vn < 50
+@test rel_num_var < 0.1
+
+#sample
+n = 101
+state = Fock(n)
+N = 100000
+
+a,ā = positiveW(state,N)
+
+av_a = mean(a)
+absa = abs(av_a)
+n̄ = real(mean(a.*ā)-.5)
+Vn= abs(mean(a.*a.*ā.*ā)-mean(a.*ā)-n̄.^2)
+rel_num_var = sqrt(abs(Vn))/abs(n̄);
+
+#test
+@test absa < 0.1
+@test n̄ - n < 0.1
+@test Vn < 30
+@test rel_num_var < 0.1
+
+#sample
+β = 10
+ϕ = π/16
+r = 2
+ϵ = r*exp(2*im*ϕ)
+state = Squeezed(β,ϵ)
+N = 10000
+
+a,ā = positiveP(state,N)
+
+av_a = mean(a);absa = abs(av_a)
+n̄ = real(mean(a.*ā))
+nbar = sinh(abs(ϵ)).^2+abs2(β)
+
+#test
+@test norm(av_a - β)/abs(β) < 0.01
+@test abs(n̄ - nbar)/abs(β)^2 < 0.01
+
+#sample
+β = 10
+ϕ = π/16
+r = 1.5
+ϵ = r*exp(2*im*ϕ)
+N = 10000
+a,ā = wigner(state,N)
+
+av_a = mean(a);absa = abs(av_a)
+n̄ = real(mean(a.*ā)-.5)
+nbar = sinh(abs(ϵ)).^2+abs2(β)
+
+#test
+@test norm(av_a - β)/abs(β) < 0.01
+@test abs(n̄ - nbar)/abs(β)^2 < 0.01
+
+#sample
+state = Bogoliubov(u,v,n̄)
+
+N = 100000
+u = randnc(1)[1]
+v = randnc(1)[1]
+n̄ = 307
+
+a,ā = wigner(state,N)
+
+# thermal mode population (zero coherent amplitude)
+N̄ = real(mean(a.*ā))
+
+# analytic form for Bogoliubov state:
+nbog = (abs2.(u) + abs2.(v))*(n̄+.5)
+
+#test
+@test isapprox(N̄,nbog,rtol=1e-2)
