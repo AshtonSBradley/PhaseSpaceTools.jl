@@ -33,9 +33,11 @@ function randnc(args...)
 end
 
 function reject(P,w,N,Pmax)
+    a,b = w
     samples = Array{Float64}(undef,0)
+    sizehint!(samples,N)
     while length(samples) < N
-        y = w[1] + rand()*(w[2] - w[1])
+        y = a + rand()*(b - a)
         z = rand()*Pmax
         z < P(y) && push!(samples,y)
     end
@@ -186,12 +188,13 @@ end
 state = Coherent(10.2+im)
 α,ᾱ = wigner(state,1000)
 
-state = Fock(12)
+state = Fock(15)
 α,ᾱ = positiveP(state,100)
-α,ᾱ = wigner(state,100)
+@time α,ᾱ = wigner(state,1000)
+@time α,ᾱ = positiveW(state,1000000)
 
 state = Squeezed(20. +im*1.9,2.0)
 
-α,ᾱ = positiveW(state,1000)
+
 
 methods(positiveP)
