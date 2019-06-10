@@ -185,8 +185,13 @@ end
 
 # tests
 
-state = Coherent(10.2+im)
-α,ᾱ = wigner(state,1000)
+N = 1000000
+β = 100*randnc()
+state = Coherent(β)
+a,ā = wigner(state,N)
+meanb = mean(a)
+n̄ = real(mean(@. ā*a)-.5)
+Vn = mean(@. ā^2*a^2)-mean(@. a*ā)-n̄^2 |> real
 
 state = Fock(15)
 α,ᾱ = positiveP(state,100)
