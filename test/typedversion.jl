@@ -1,5 +1,8 @@
-using Distributions, Statistics
+using Distributions, Statistics, Parameters
 import GSL:sf_laguerre_n
+
+# helpers
+randnc(args...) = randn(ComplexF64,args...)
 
 abstract type State end
 
@@ -8,7 +11,7 @@ struct Coherent <: State
 end
 
 struct Fock <: State
-    n::Int
+    n::Int64
 end
 
 struct Crescent <: State
@@ -33,11 +36,6 @@ struct Bogoliubov <: State
     n̄::Float64
 end
 
-# helpers
-function randnc(args...)
-    return randn(ComplexF64,args...)
-end
-
 function reject(P,w,N,Pmax)
     a,b = w
     samples = Array{Float64}(undef,0)
@@ -55,8 +53,26 @@ plaguerre_asymptotic(x,n) = exp(-(x-sqrt(n+1))^2)/sqrt(pi)
 laguerren(x,n) = sf_laguerre_n(n,0.0,x)
 
 #sampling methods
+function positiveP(state::Coherent,N)
+    @unpack β = state
+    α = β*ones(N)
+    ᾱ = conj(α)
+    return α,ᾱ
+end
+
+glauberP(state::Coherent,N) = positiveP(state,N)
+
+function positiveW(state::Coherent,N)
+    @unpack β = state
+    α = β .+ randnc(N)/sqrt(2)
+    ᾱ = conj(α)
+    return α, ᾱ
+end
+
+wigner(state::Coherent,N) = positiveW(state::Coherent,N)
+
 function positiveP(state::Thermal,N)
-    β,n̄ = state.β,state.n̄
+    @unpack β,n̄ = state
     α = β .+ sqrt(n̄)*randnc(N)
     ᾱ = conj(α)
     return α, ᾱ
@@ -65,20 +81,21 @@ end
 glauberP(state::Thermal,N) = positiveP(state,N)
 
 function husimiQ(state::Thermal,N)
+    @unpack β,n̄ = state
     α = β .+ sqrt(n̄+1.0)*randnc(N)
     ᾱ = conj(α)
     return α, ᾱ
 end
 
 function wigner(state::Thermal,N)
-    β,n̄ = state.β,state.n̄
+    @unpack β,n̄ = state
     α = β .+ sqrt(n̄+.5)*randnc(N)
     ᾱ = conj(α)
     return α, ᾱ
 end
 
 function positiveP(state::Squeezed,N)
-    β,ϵ = state.β,state.ϵ
+    @unpack β,ϵ = state
     r = abs(ϵ)
     ϕ = angle(ϵ)/2
     γ = randnc(N)
@@ -89,6 +106,7 @@ function positiveP(state::Squeezed,N)
 end
 
 function wigner(state::Squeezed,N)
+    @unpack β,ϵ = state
     r = abs(ϵ)
     ϕ = angle(ϵ)/2
     α = β .+ 0.5*(randn(N)*exp(-r) .+ im*randn(N)*exp(r))*exp(-im*ϕ)
@@ -96,26 +114,8 @@ function wigner(state::Squeezed,N)
     return α, ᾱ
 end
 
-function positiveP(state::Coherent,N)
-    β = state.β
-    α = β*ones(N)
-    ᾱ = conj(α)
-    return α,ᾱ
-end
-
-glauberP(state::Coherent,N) = positiveP(state,N)
-
-function positiveW(state::Coherent,N)
-    β = state.β
-    α = β .+ randnc(N)/sqrt(2)
-    ᾱ = conj(α)
-    return α, ᾱ
-end
-
-wigner(state::Coherent,N) = positiveW(state::Coherent,N)
-
 function positiveP(state::Crescent,N)
-    β,ϵ,q = state.β,state.ϵ,state.q
+    @unpack β,ϵ,q = state
     r = abs(ϵ)
     ϕ = angle(ϵ)/2
     μ = β .+ (randn(N)*exp(-r)+im*randn(N)*exp(r))/sqrt(2)
@@ -127,7 +127,7 @@ function positiveP(state::Crescent,N)
 end
 
 function husimiQ(state::Crescent,N)
-    β,ϵ,q = state.β,state.ϵ,state.q
+    @unpack β,ϵ,q = state
     r = abs(ϵ)
     ϕ = angle(ϵ)/2
     α = β .+ (randn(N)*exp(-r) .+ im*randn(N)*exp(r))/sqrt(2)
@@ -137,7 +137,7 @@ function husimiQ(state::Crescent,N)
 end
 
 function wigner(state::Crescent,N)
-    β,ϵ,q = state.β,state.ϵ,state.q
+    @unpack β,ϵ,q = state
     r = abs(ϵ)
     ϕ = angle(ϵ)/2
     α = β .+ 0.5*(randn(N)*exp(-r) .+ im*randn(N)*exp(r))*exp(-im*ϕ)
@@ -147,7 +147,7 @@ function wigner(state::Crescent,N)
 end
 
 function positiveP(state::Fock,N)
-    n = state.n
+    @unpack n = state
     γ = randnc(N)
     d = Gamma(n+1,1)
     z = rand(d,N)
@@ -158,7 +158,7 @@ function positiveP(state::Fock,N)
 end
 
 function wigner(state::Fock,N)
-    n = state.n
+    @unpack n = state
     n < 10 && warn("Fock state sampling for W is only valid for n ≫ 1.")
     p = 0.5*sqrt(2*n+1+2*sqrt(n^2+n))
     q = 1/(4*p)
@@ -168,7 +168,7 @@ function wigner(state::Fock,N)
 end
 
 function positiveW(state::Fock,N)
-    n = state.n
+    @unpack n = state
     if n<=320
     γ = randnc(N)
     x1 = max(0,sqrt(n)-5); x2 = sqrt(n)+5
@@ -190,6 +190,7 @@ end
 end
 
 function wigner(state::Bogoliubov,N)
+    @unpack u,v,n̄ = state
     b,b̄ = wigner(Thermal(0.0,n̄),N)
     a = u*b + conj(v)*b̄
     ā = conj.(a)
@@ -292,6 +293,7 @@ nbar = sinh(abs(ϵ)).^2+abs2(β)
 ϕ = π/16
 r = 1.5
 ϵ = r*exp(2*im*ϕ)
+state = Squeezed(β,ϵ)
 N = 10000
 a,ā = wigner(state,N)
 
@@ -304,8 +306,6 @@ nbar = sinh(abs(ϵ)).^2+abs2(β)
 @test abs(n̄ - nbar)/abs(β)^2 < 0.01
 
 #sample
-state = Bogoliubov(u,v,n̄)
-
 N = 100000
 u = randnc(1)[1]
 v = randnc(1)[1]
@@ -321,3 +321,6 @@ nbog = (abs2.(u) + abs2.(v))*(n̄+.5)
 
 #test
 @test isapprox(N̄,nbog,rtol=1e-2)
+
+#TODO Crescent tests
+#TODO Bogoliubov tests
