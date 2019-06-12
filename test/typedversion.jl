@@ -189,13 +189,6 @@ function positiveW(state::Fock,N)
 end
 end
 
-function wigner(state::Bogoliubov,N)
-    @unpack u,v,n̄ = state
-    b,b̄ = wigner(Thermal(0.0,n̄),N)
-    a = u*b + conj(v)*b̄
-    ā = conj.(a)
-    return a,ā
-end
 
 # test coherent
 using Test, LinearAlgebra
@@ -266,7 +259,7 @@ rel_num_var = sqrt(abs(Vn))/abs(n̄);
 
 #test
 @test absa < 0.1
-@test n̄ - n < 0.1
+@test (n̄ - n)/n < 0.01
 @test Vn < 30
 @test rel_num_var < 0.1
 
@@ -282,7 +275,7 @@ a,ā = positiveP(state,N)
 
 av_a = mean(a);absa = abs(av_a)
 n̄ = real(mean(a.*ā))
-nbar = sinh(abs(ϵ)).^2+abs2(β)
+nbar = sinh(abs(ϵ)).^2 + abs2(β)
 
 #test
 @test norm(av_a - β)/abs(β) < 0.01
@@ -305,22 +298,40 @@ nbar = sinh(abs(ϵ)).^2+abs2(β)
 @test norm(av_a - β)/abs(β) < 0.01
 @test abs(n̄ - nbar)/abs(β)^2 < 0.01
 
-#sample
-N = 100000
-u = randnc(1)[1]
-v = randnc(1)[1]
-n̄ = 307
 
+
+#TODO Bogoliubov
+function wigner(state::Bogoliubov,N)
+    @unpack u,v,n̄ = state
+    b,b̄ = wigner(Thermal(0.0,n̄),N)
+    a = u*b + conj(v)*b̄
+    ā = conj.(a)
+    return a,ā
+end
+
+#sample
+N = 1000000
+n̄ = 10
+
+a = randnc()
+b = randnc()
+u = a+b
+v = a-b
+nrm = abs2(u)-abs2(v)
+u /= sqrt(nrm)
+v /= sqrt(nrm)
+
+abs2(u)-abs2(v) ≈ 1.0
+state = Bogoliubov(u,v,n̄)
 a,ā = wigner(state,N)
 
 # thermal mode population (zero coherent amplitude)
-N̄ = real(mean(a.*ā))
+N̄ = real(mean(a.*ā)-.5)
+(abs2(u)+abs2(v))/2
 
 # analytic form for Bogoliubov state:
-nbog = (abs2.(u) + abs2.(v))*(n̄+.5)
 
 #test
-@test isapprox(N̄,nbog,rtol=1e-2)
+@test isapprox(N̄,n̄,rtol=1e-2)
 
 #TODO Crescent tests
-#TODO Bogoliubov tests
