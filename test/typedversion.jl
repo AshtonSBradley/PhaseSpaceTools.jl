@@ -180,7 +180,7 @@ function positiveW(state::Fock,N)
     return α, ᾱ
     else
     γ = randnc(N)
-    x1= max(0,sqrt(n)-5); x2 = sqrt(n)+5
+    x1 = max(0,sqrt(n)-5); x2 = sqrt(n)+5
     z = reject(x->plaguerre_asymptotic.(x,n),[x1,x2],N,0.6)
     μ = z.*exp.(2π*im*rand(N))
     α = μ .+ γ
@@ -310,28 +310,31 @@ function wigner(state::Bogoliubov,N)
 end
 
 #sample
-N = 1000000
+N = 100000
 n̄ = 10
 
 a = randnc()
 b = randnc()
-u = a+b
-v = a-b
+u = a+im*b
+v = a-im*b
+
 nrm = abs2(u)-abs2(v)
 u /= sqrt(nrm)
 v /= sqrt(nrm)
 
 abs2(u)-abs2(v) ≈ 1.0
+abs2(u)+abs2(v)
 state = Bogoliubov(u,v,n̄)
 a,ā = wigner(state,N)
 
-# thermal mode population (zero coherent amplitude)
-N̄ = real(mean(a.*ā)-.5)
-(abs2(u)+abs2(v))/2
+# particle mode population
+na = real(mean(a.*ā))-0.5
+naex = (abs2(u)+abs2(v))*(n̄+0.5) - 0.5
+
 
 # analytic form for Bogoliubov state:
 
 #test
-@test isapprox(N̄,n̄,rtol=1e-2)
+@test isapprox(na,naex,rtol=1e-2)
 
 #TODO Crescent tests
