@@ -22,13 +22,13 @@ function husimiQ(state::Coherent,N)
     return α, ᾱ
 end
 
-#TODO check this!
-function positiveW(state::Coherent,N)
-    @unpack β = state
-    α = β .+ crandn(N)/sqrt(2)
-    ᾱ = conj(α)
-    return α, ᾱ
-end
+# #TODO check this!
+# function positiveW(state::Coherent,N)
+#     @unpack β = state
+#     α = β .+ crandn(N)/sqrt(2)
+#     ᾱ = conj(α)
+#     return α, ᾱ
+# end
 
 function husimiQ(state::Thermal,N)
     @unpack β,n̄ = state
