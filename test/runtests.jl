@@ -3,17 +3,17 @@
 using PhaseSpaceTools
 using Test
 
-@testset "coherent state W" begin include("testcoherentW.jl") end
+@testset "Coherent state W" begin include("testcoherentW.jl") end
 
-@testset "fock state W" begin include("testfockW.jl") end
+@testset "Fock state W" begin include("testfockW.jl") end
 
-@testset "fock state +W" begin include("testfock+W.jl") end
+@testset "Fock state +W" begin include("testfock+W.jl") end
 
-@testset "fock state +W for large n " begin include("testfock+Wasymp.jl") end
+@testset "Fock state +W for large n " begin include("testfock+Wasymp.jl") end
 
-@testset "squeezed state +P " begin include("testsqueezed+P.jl") end
+@testset "Squeezed state +P " begin include("testsqueezed+P.jl") end
 
-@testset "squeezed state W" begin include("testsqueezed+P.jl") end
+@testset "Squeezed state W" begin include("testsqueezed+P.jl") end
 
 @testset "Bogoliubov W" begin include("testBogoliubov.jl") end
 

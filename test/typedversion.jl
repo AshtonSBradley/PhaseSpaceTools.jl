@@ -299,7 +299,7 @@ rel_num_var = sqrt(abs(Vn))/abs(n̄)
 
 # scatter(a)
 
-#sample
+#Squeezed
 β = 10
 ϕ = π/16
 r = 2
@@ -339,8 +339,6 @@ nbar = sinh(abs(ϵ)).^2+abs2(β)
 # scatter(a)
 
 # Bogoliubov
-
-#sample
 N = 100000
 n̄ = 10
 

@@ -1,6 +1,6 @@
 #test
 using Pkg
-Pkg.activate(".")
+Pkg.activate()
 
 using Test, LinearAlgebra, Revise, PhaseSpaceTools
 

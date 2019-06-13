@@ -1,13 +1,16 @@
 #test W
 
-α = 100*(randn()+im*randn())
+# Coherent
 N = 100000
-a,ā = coherent(α,N;dist=:W)
+α = 100
+state = Coherent(α)
 
-av_a = mean(a)
-n̄ = real(mean(a.*ā)-.5)
-Vn= abs(mean(a.*a.*ā.*ā)-mean(a.*ā)-n̄.^2);
+a,ā = wigner(state,N)
+meana = mean(a)
+n̄ = real(mean(@. ā*a)-.5)
+Vn = mean(@. ā^2*a^2)-mean(@. a*ā)-n̄^2 |> abs
 
-@test norm(av_a - α)/abs(α) < 0.01
+#test
+@test norm(meana - α)/abs(α) < 0.01
 @test abs(n̄ - abs(α).^2)/abs(α)^2 < 0.01
 @test abs(Vn - abs(α)^2)/abs(α)^2 < 0.05
