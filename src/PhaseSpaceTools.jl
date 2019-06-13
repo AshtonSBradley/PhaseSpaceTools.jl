@@ -8,9 +8,9 @@ using Reexport
 
 import GSL:sf_laguerre_n
 
+export Coherent, Squeezed, Fock, Thermal, Crescent, Bogoliubov
 export glauberP, husimiQ, wigner, positiveP, positiveW
 export crandn, realnoise, realbridge
-export Coherent, Squeezed, Fock, Thermal, Crescent, Bogoliubov
 
 include("types.jl")
 include("helpers.jl")
