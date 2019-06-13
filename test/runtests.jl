@@ -3,31 +3,19 @@
 using PhaseSpaceTools
 using Test
 
-#test coherent
-include("samplecoherentW.jl")
-@testset "coherent state W tests " begin include("testcoherentW.jl") end
+@testset "coherent state W" begin include("testcoherentW.jl") end
 
-# test fock
-include("samplefockW.jl")
-@testset "fock state W tests " begin include("testfockW.jl") end
+@testset "fock state W" begin include("testfockW.jl") end
 
-include("samplefock+W.jl")
-@testset "fock state +W tests " begin include("testfock+W.jl") end
+@testset "fock state +W" begin include("testfock+W.jl") end
 
-include("samplefock+Wasymp.jl")
-@testset "fock state +W tests for large n " begin include("testfock+Wasymp.jl") end
+@testset "fock state +W for large n " begin include("testfock+Wasymp.jl") end
 
-#test squeezed
-include("samplesqueezed+P.jl")
-@testset "squeezed state +P tests " begin include("testsqueezed+P.jl") end
+@testset "squeezed state +P " begin include("testsqueezed+P.jl") end
 
-#test squeezed
-include("samplesqueezedW.jl")
-@testset "squeezed state W tests " begin include("testsqueezed+P.jl") end
+@testset "squeezed state W" begin include("testsqueezed+P.jl") end
 
-#test squeezed
-include("sampleBogoliubovW.jl")
-@testset "Bogoliubov W tests " begin include("testBogoliubov.jl") end
+@testset "Bogoliubov W" begin include("testBogoliubov.jl") end
 
-#test thermal
-#include("samplethermalP.jl")
+#TODO
+# @testset "Glauber P" begin include("testthermalP.jl") end

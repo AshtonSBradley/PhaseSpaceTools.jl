@@ -1,6 +1,6 @@
 julia 1.0
 Reexport
-GSL 0.4.0
+GSL 0.5.0
 Distributions
 LinearAlgebra
 Statistics

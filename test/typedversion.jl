@@ -1,9 +1,6 @@
 using Distributions, Statistics, Parameters
 import GSL:sf_laguerre_n
 
-# helpers
-randnc(args...) = randn(ComplexF64,args...)
-
 abstract type State end
 
 struct Coherent <: State
@@ -16,7 +13,7 @@ end
 
 struct Crescent <: State
     β::Complex{Float64}
-    ϵ::Float64
+    ϵ::Complex{Float64}
     q::Float64
 end
 
@@ -35,6 +32,9 @@ struct Bogoliubov <: State
     v::Complex{Float64}
     n̄::Float64
 end
+
+# helpers
+crandn(args...) = randn(ComplexF64,args...)
 
 function reject(P,w,N,Pmax)
     a,b = w
@@ -64,7 +64,7 @@ glauberP(state::Coherent,N) = positiveP(state,N)
 
 function positiveW(state::Coherent,N)
     @unpack β = state
-    α = β .+ randnc(N)/sqrt(2)
+    α = β .+ crandn(N)/sqrt(2)
     ᾱ = conj(α)
     return α, ᾱ
 end
@@ -73,7 +73,7 @@ wigner(state::Coherent,N) = positiveW(state::Coherent,N)
 
 function positiveP(state::Thermal,N)
     @unpack β,n̄ = state
-    α = β .+ sqrt(n̄)*randnc(N)
+    α = β .+ sqrt(n̄)*crandn(N)
     ᾱ = conj(α)
     return α, ᾱ
 end
@@ -82,14 +82,14 @@ glauberP(state::Thermal,N) = positiveP(state,N)
 
 function husimiQ(state::Thermal,N)
     @unpack β,n̄ = state
-    α = β .+ sqrt(n̄+1.0)*randnc(N)
+    α = β .+ sqrt(n̄+1.0)*crandn(N)
     ᾱ = conj(α)
     return α, ᾱ
 end
 
 function wigner(state::Thermal,N)
     @unpack β,n̄ = state
-    α = β .+ sqrt(n̄+.5)*randnc(N)
+    α = β .+ sqrt(n̄+.5)*crandn(N)
     ᾱ = conj(α)
     return α, ᾱ
 end
@@ -98,7 +98,7 @@ function positiveP(state::Squeezed,N)
     @unpack β,ϵ = state
     r = abs(ϵ)
     ϕ = angle(ϵ)/2
-    γ = randnc(N)
+    γ = crandn(N)
     ν = sqrt(exp(-r)*cosh(r)/2)*randn(N) .+ im*sqrt(exp(r)*cosh(r)/2)*randn(N)
     α = β .+ exp(im*ϕ)*ν .+ γ
     ᾱ = conj(β) .+ exp(-im*ϕ)*conj(ν) .- conj(γ)
@@ -120,7 +120,7 @@ function positiveP(state::Crescent,N)
     ϕ = angle(ϵ)/2
     μ = β .+ (randn(N)*exp(-r)+im*randn(N)*exp(r))/sqrt(2)
     μ .*= exp.(im*q*randn(N))
-    γ = randnc(N)
+    γ = crandn(N)
     α = μ .+ γ
     ᾱ = conj(μ .- γ)
     return α,ᾱ
@@ -148,7 +148,7 @@ end
 
 function positiveP(state::Fock,N)
     @unpack n = state
-    γ = randnc(N)
+    γ = crandn(N)
     d = Gamma(n+1,1)
     z = rand(d,N)
     μ = sqrt.(z).*exp.(2π*im*rand(N))
@@ -170,7 +170,7 @@ end
 function positiveW(state::Fock,N)
     @unpack n = state
     if n<=320
-    γ = randnc(N)
+    γ = crandn(N)
     x1 = max(0,sqrt(n)-5); x2 = sqrt(n)+5
     (n==0||n==1) ? Pmax=0.71 : Pmax=0.6
     z = reject(x->plaguerre.(x,n),[x1,x2],N,Pmax)
@@ -179,7 +179,7 @@ function positiveW(state::Fock,N)
     ᾱ = conj(μ .- γ)
     return α, ᾱ
     else
-    γ = randnc(N)
+    γ = crandn(N)
     x1 = max(0,sqrt(n)-5); x2 = sqrt(n)+5
     z = reject(x->plaguerre_asymptotic.(x,n),[x1,x2],N,0.6)
     μ = z.*exp.(2π*im*rand(N))
@@ -189,13 +189,41 @@ function positiveW(state::Fock,N)
 end
 end
 
+function positiveP(state::Bogoliubov,N)
+    @unpack u,v,n̄ = state
+    b,b̄ = positiveP(Thermal(0.0,n̄),N)
+    a = u*b + conj(v)*b̄
+    ā = conj.(a)
+    return a,ā
+end
+
+glauberP(state::Bogoliubov,N) = positiveP(state,N)
+
+function wigner(state::Bogoliubov,N)
+    @unpack u,v,n̄ = state
+    b,b̄ = wigner(Thermal(0.0,n̄),N)
+    a = u*b + conj(v)*b̄
+    ā = conj.(a)
+    return a,ā
+end
+
+function husimiQ(state::Bogoliubov,N)
+    @unpack u,v,n̄ = state
+    b,b̄ = husimiQ(Thermal(0.0,n̄),N)
+    a = u*b + conj(v)*b̄
+    ā = conj.(a)
+    return a,ā
+end
 
 # test coherent
 using Test, LinearAlgebra
 
-# sample
-N = 100000
-α = 100*randnc()
+using Plots
+gr(size=(300,300),legend=false,ms=1)
+
+# Coherent
+N = 1000
+α = 100
 state = Coherent(α)
 
 a,ā = wigner(state,N)
@@ -208,7 +236,9 @@ Vn = mean(@. ā^2*a^2)-mean(@. a*ā)-n̄^2 |> abs
 @test abs(n̄ - abs(α).^2)/abs(α)^2 < 0.01
 @test abs(Vn - abs(α)^2)/abs(α)^2 < 0.05
 
-#sample
+# scatter(a)
+
+# Fock
 n = 100
 N = 100000
 state = Fock(n)
@@ -226,7 +256,9 @@ rel_num_var = sqrt(abs(Vn))/abs(n̄);
 @test Vn < 0.01
 @test rel_num_var < 0.001
 
-#sample
+# scatter(a)
+
+
 n = 99
 N = 100000
 state = Fock(n)
@@ -244,6 +276,8 @@ rel_num_var = sqrt(abs(Vn))/abs(n̄);
 @test Vn < 50
 @test rel_num_var < 0.1
 
+# scatter(a)
+
 #sample
 n = 101
 state = Fock(n)
@@ -255,13 +289,15 @@ av_a = mean(a)
 absa = abs(av_a)
 n̄ = real(mean(a.*ā)-.5)
 Vn= abs(mean(a.*a.*ā.*ā)-mean(a.*ā)-n̄.^2)
-rel_num_var = sqrt(abs(Vn))/abs(n̄);
+rel_num_var = sqrt(abs(Vn))/abs(n̄)
 
 #test
 @test absa < 0.1
 @test (n̄ - n)/n < 0.01
 @test Vn < 30
 @test rel_num_var < 0.1
+
+# scatter(a)
 
 #sample
 β = 10
@@ -281,7 +317,9 @@ nbar = sinh(abs(ϵ)).^2 + abs2(β)
 @test norm(av_a - β)/abs(β) < 0.01
 @test abs(n̄ - nbar)/abs(β)^2 < 0.01
 
-#sample
+# scatter(a)
+
+# Squeezed
 β = 10
 ϕ = π/16
 r = 1.5
@@ -298,43 +336,55 @@ nbar = sinh(abs(ϵ)).^2+abs2(β)
 @test norm(av_a - β)/abs(β) < 0.01
 @test abs(n̄ - nbar)/abs(β)^2 < 0.01
 
+# scatter(a)
 
-
-#TODO Bogoliubov
-function wigner(state::Bogoliubov,N)
-    @unpack u,v,n̄ = state
-    b,b̄ = wigner(Thermal(0.0,n̄),N)
-    a = u*b + conj(v)*b̄
-    ā = conj.(a)
-    return a,ā
-end
+# Bogoliubov
 
 #sample
 N = 100000
 n̄ = 10
 
-a = randnc()
-b = randnc()
-u = a+im*b
-v = a-im*b
+function randuv()
+    u,v = crandn(2)
+    nrm = abs2(u)-abs2(v)
+    if nrm < 0
+         new = [0 1;1 0]*[u; v]
+         u,v = new
+     end
+    u /=sqrt(abs(nrm))
+    v /=sqrt(abs(nrm))
+    return u,v
+end
 
-nrm = abs2(u)-abs2(v)
-u /= sqrt(nrm)
-v /= sqrt(nrm)
-
+u,v = randuv()
 abs2(u)-abs2(v) ≈ 1.0
 abs2(u)+abs2(v)
+
+#thermal state
 state = Bogoliubov(u,v,n̄)
 a,ā = wigner(state,N)
 
 # particle mode population
 na = real(mean(a.*ā))-0.5
-naex = (abs2(u)+abs2(v))*(n̄+0.5) - 0.5
+nth = (abs2(u)+abs2(v))*(n̄+0.5) - 0.5
+@test isapprox(na,nth,rtol=1e-2)
 
+#test vacuum limit
+state = Bogoliubov(u,v,0)
+a,ā = wigner(state,N)
 
-# analytic form for Bogoliubov state:
-
-#test
-@test isapprox(na,naex,rtol=1e-2)
+na = real(mean(a.*ā))-0.5
+nvac = abs2(v)
+@test isapprox(na,nvac,atol=5e-2)
 
 #TODO Crescent tests
+# β = 10
+# ϕ = 0
+# r = 2
+# ϵ = r*exp(2*im*ϕ)
+# q = 0.04
+# state = Crescent(β,ϵ,q)
+# N = 1000
+# a,ā = wigner(state,N)
+#
+# scatter(a,ms=1)

@@ -4,19 +4,16 @@ using Reexport
 @reexport using Distributions
 @reexport using Statistics
 @reexport using LinearAlgebra
+@reexport using Parameters
 
 import GSL:sf_laguerre_n
 
-export coherent, thermal, squeezed, fock, crescent, bogoliubov, crandn, realnoise, realbridge
+export glauberP, husimiQ, wigner, positiveP, positiveW
+export crandn, realnoise, realbridge
+export Coherent, Squeezed, Fock, Thermal, Crescent, Bogoliubov
 
+include("types.jl")
 include("helpers.jl")
-include("reject.jl")
-include("coherent.jl")
-include("thermal.jl")
-include("squeezed.jl")
-include("fock.jl")
-include("crescent.jl")
-include("bogoliubov.jl")
-include("real_noise.jl")
+include("methods.jl")
 
 end #end of module
