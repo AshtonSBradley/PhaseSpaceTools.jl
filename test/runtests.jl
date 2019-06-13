@@ -5,6 +5,8 @@ using Test
 
 @testset "Coherent state W" begin include("testcoherentW.jl") end
 
+@testset "Coherent state +P" begin include("testcoherent+P.jl") end
+
 @testset "Fock state W" begin include("testfockW.jl") end
 
 @testset "Fock state +W" begin include("testfock+W.jl") end

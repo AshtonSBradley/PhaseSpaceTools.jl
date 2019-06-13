@@ -1,12 +1,4 @@
 #sampling methods
-function positiveP(state::Coherent,N)
-    @unpack β = state
-    α = β*ones(N)
-    ᾱ = conj(α)
-    return α,ᾱ
-end
-
-glauberP(state::Coherent,N) = positiveP(state,N)
 
 function wigner(state::Coherent,N)
     @unpack β = state
@@ -22,28 +14,22 @@ function husimiQ(state::Coherent,N)
     return α, ᾱ
 end
 
-# #TODO check this!
-# function positiveW(state::Coherent,N)
-#     @unpack β = state
-#     α = β .+ crandn(N)/sqrt(2)
-#     ᾱ = conj(α)
-#     return α, ᾱ
-# end
-
-function husimiQ(state::Thermal,N)
-    @unpack β,n̄ = state
-    α = β .+ sqrt(n̄+1.0)*crandn(N)
-    ᾱ = conj(α)
-    return α, ᾱ
-end
-
-function positiveP(state::Thermal,N)
+function positiveP(state::T,N) where T
     μ,μ̄ = husimiQ(state,N)
     γ = crandn(N)
     α = μ .+ γ
     ᾱ = conj(μ .- γ)
     return α, ᾱ
 end
+
+function positiveP(state::Coherent,N)
+    @unpack β = state
+    α = β*ones(N)
+    ᾱ = conj(α)
+    return α,ᾱ
+end
+
+glauberP(state::Coherent,N) = positiveP(state,N)
 
 function glauberP(state::Thermal,N)
     @unpack β,n̄ = state
@@ -59,6 +45,13 @@ function wigner(state::Thermal,N)
     return α, ᾱ
 end
 
+function husimiQ(state::Thermal,N)
+    @unpack β,n̄ = state
+    α = β .+ sqrt(n̄+1.0)*crandn(N)
+    ᾱ = conj(α)
+    return α, ᾱ
+end
+
 function husimiQ(state::Squeezed,N)
     @unpack β,ϵ = state
     r = abs(ϵ)
@@ -66,15 +59,6 @@ function husimiQ(state::Squeezed,N)
     ν = sqrt(exp(-r)*cosh(r)/2)*randn(N) .+ im*sqrt(exp(r)*cosh(r)/2)*randn(N)
     α = β .+ exp(im*ϕ)*ν
     ᾱ = conj(α)
-    return α, ᾱ
-end
-
-function positiveP(state::Squeezed,N)
-    @unpack β,ϵ = state
-    μ,μ̄ = husimiQ(state,N)
-    γ = crandn(N)
-    α = μ .+ γ
-    ᾱ = conj(μ .- γ)
     return α, ᾱ
 end
 
@@ -97,15 +81,6 @@ function husimiQ(state::Crescent,N)
     return α,ᾱ
 end
 
-function positiveP(state::Crescent,N)
-    @unpack β,ϵ,q = state
-    μ,μ̄ = husimiQ(state,N)
-    γ = crandn(N)
-    α = μ .+ γ
-    ᾱ = conj(μ .- γ)
-    return α,ᾱ
-end
-
 function wigner(state::Crescent,N)
     @unpack β,ϵ,q = state
     r = abs(ϵ)
@@ -122,15 +97,6 @@ function husimiQ(state::Fock,N)
     z = rand(d,N)
     α = sqrt.(z).*exp.(2π*im*rand(N))
     ᾱ = conj(α)
-    return α, ᾱ
-end
-
-function positiveP(state::Fock,N)
-    @unpack n = state
-    μ,μ̄ = husimiQ(state,N)
-    γ = crandn(N)
-    α = μ .+ γ
-    ᾱ = conj(μ .- γ)
     return α, ᾱ
 end
 
@@ -190,10 +156,10 @@ function husimiQ(state::Bogoliubov,N)
     return a,ā
 end
 
-function positiveP(state::Bogoliubov,N)
-    μ,μ̄ = husimiQ(state,N)
-    γ = crandn(N)
-    α = μ .+ γ
-    ᾱ = conj(μ .- γ)
-    return α, ᾱ
-end
+# #TODO check this!
+# function positiveW(state::Coherent,N)
+#     @unpack β = state
+#     α = β .+ crandn(N)/sqrt(2)
+#     ᾱ = conj(α)
+#     return α, ᾱ
+# end
