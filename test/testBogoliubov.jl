@@ -16,7 +16,6 @@ end
 
 u,v = randuv()
 abs2(u)-abs2(v) ≈ 1.0
-abs2(u)+abs2(v)
 
 #thermal state
 state = Bogoliubov(u,v,n̄)
