@@ -7,6 +7,19 @@
 
 Package for sampling some of the quantum initial states commonly encountered in quantum-optical and matter-wave bosonic phase space simulations. Wigner (`W`) and positive-P (`+P`) representations are implemented, being the most useful for dynamical simulations. Currently supports only single mode sampling.
 
+Note: this package is being refactored at present, but should also now be fairly self documenting. 
+
+Available distributions are `glauberP`, `wigner`, husimiQ`, `positiveP`, `positiveW`
+
+To get help on implemented methods, e.g.
+
+```julia
+> methods(positiveP)
+
+```
+
+for a list of what is implemented
+
 ## Install
 
 ```julia
@@ -42,18 +55,20 @@ search: squeezed
 #### Coherent state
 A coherent state |α⟩ is "sampled" as
 ```julia
-α = 1.0+im*2.0 #coherent state |α⟩
+α = 1.0+im*2.0 #coherent state amplitude
+state = Coherent(α) # create state |α⟩
 N = 1000 #number of samples
-a,ā = coherent(α,N,dist=:posP)
+a,ā = positiveP(state,N)
 ```
 This is a special case where the two phase space variables `a` and `ā` are complex conjugate, and non-stochastic in the `+P` representation.
 
 #### Fock state
 An approximate fock state sampler in the Wigner representation:
 ```julia
-n = 100 #fock state |n⟩
+n = 100 
+state = Fock(n)  
 N = 1000 #number of samples
-a,ā = fock(n,N,dist=:W)
+a,ā = wigner(state,N)
 ```
 Provides an approximate sampling of `W` that reproduces operator averages for large `n`.
 
