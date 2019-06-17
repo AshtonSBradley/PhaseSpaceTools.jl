@@ -9,7 +9,7 @@ Package for sampling some of the quantum initial states commonly encountered in 
 
 Note: this package is being refactored at present, but should also now be fairly self documenting. 
 
-Available distributions are `glauberP`, `wigner`, husimiQ`, `positiveP`, `positiveW`
+Available distributions are `glauberP`, `wigner`, `husimiQ`, `positiveP`, `positiveW`
 
 To get help on implemented methods, e.g.
 
