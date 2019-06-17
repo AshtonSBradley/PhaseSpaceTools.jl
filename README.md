@@ -11,7 +11,7 @@ Note: this package is being refactored at present, but should also now be fairly
 
 Available distributions are `glauberP`, `wigner`, `husimiQ`, `positiveP`, `positiveW`
 
-To get help on implemented methods, e.g.
+To get help type, e.g.
 
 ```julia
 > methods(positiveP)
