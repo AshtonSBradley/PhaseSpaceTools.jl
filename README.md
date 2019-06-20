@@ -7,7 +7,7 @@
 
 Package for sampling some of the quantum initial states commonly encountered in quantum-optical and matter-wave bosonic phase space simulations. Wigner (`W`) and positive-P (`+P`) representations are implemented, being the most useful for dynamical simulations.
 
-Available distributions are `glauberP`, `positiveP` `wigner`, `positiveW`, `husimiQ`
+Available distributions are `glauberP`, `positiveP` `wigner`, `positiveW`, `husimiQ`.
 
 ## Install
 
@@ -51,8 +51,6 @@ search: positiveP positiveW
   generate quantum operator averages that are
   normally ordered.
 ```
-
-Distributions: `glauberP, positiveP, wigner, positiveW, husimiQ`.
 
 #### Coherent state
 A coherent state |α⟩ is sampled as
