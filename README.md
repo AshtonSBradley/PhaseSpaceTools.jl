@@ -5,20 +5,9 @@
 [![Coverage Status](https://coveralls.io/repos/AshtonSBradley/PhaseSpaceTools.jl/badge.svg?branch=master&service=github)](https://coveralls.io/github/AshtonSBradley/PhaseSpaceTools.jl?branch=master)
 [![codecov.io](http://codecov.io/github/AshtonSBradley/PhaseSpaceTools.jl/coverage.svg?branch=master)](http://codecov.io/github/AshtonSBradley/PhaseSpaceTools.jl?branch=master)
 
-Package for sampling some of the quantum initial states commonly encountered in quantum-optical and matter-wave bosonic phase space simulations. Wigner (`W`) and positive-P (`+P`) representations are implemented, being the most useful for dynamical simulations. Currently supports only single mode sampling.
+Package for sampling some of the quantum initial states commonly encountered in quantum-optical and matter-wave bosonic phase space simulations. Wigner (`W`) and positive-P (`+P`) representations are implemented, being the most useful for dynamical simulations.
 
-Note: this package is being refactored at present, but should also now be fairly self documenting. 
-
-Available distributions are `glauberP`, `wigner`, `husimiQ`, `positiveP`, `positiveW`
-
-To get help type, e.g.
-
-```julia
-> methods(positiveP)
-
-```
-
-for a list of what is implemented
+Available distributions are `glauberP`, `positiveP` `wigner`, `positiveW`, `husimiQ`
 
 ## Install
 
@@ -26,34 +15,47 @@ for a list of what is implemented
 ] add https://github.com/AshtonSBradley/PhaseSpaceTools.jl.git
 ```
 
+To get help type, e.g.
+
+```julia
+julia> methods(positiveP)
+```
+for a list of available methods.
+
 ## Usage
 ```julia
-julia>using PhaseSpaceTools
-help?> squeezed
-search: squeezed
+julia> using PhaseSpaceTools
+help?> positiveP
+search: positiveP positiveW
 
-  a,ā = squeezed(β,ϵ,N;dist=:posP)
+  a,ā = positiveP(state <: State,N)
 
-  Sample the phase-space distribution for a squeezed state.
+  Generate N samples from the positive-P
+  phase-space distribution for state.
 
-  β: coherent (complex) amplitude.
+  Implemented states are
 
-  ϵ: complex valued squeezing parameter.
+    •    Coherent(α)
 
-  N: number of samples.
+    •    Thermal(α,n̄)
 
-  dist: phase-space distribution; can be :W or :posP.
+    •    Squeezed(α,ϵ)
 
-  For standard P,Q,W distributions, a and ā are complex conjugate, while for +P etc, a and ā are independent
-  variables.
+    •    Crescent(α,ϵ,q)
+
+    •    Fock(N)
+
+    •    Bogoliubov(u,v,n̄)
+
+  Moments of the positive-P distribution
+  generate quantum operator averages that are
+  normally ordered.
 ```
 
-
-### States
-`coherent`, `thermal`, `squeezed`, `fock`, `crescent`
+Distributions: `glauberP, positiveP, wigner, positiveW, husimiQ`.
 
 #### Coherent state
-A coherent state |α⟩ is "sampled" as
+A coherent state |α⟩ is sampled as
 ```julia
 α = 1.0+im*2.0 #coherent state amplitude
 state = Coherent(α) # create state |α⟩
@@ -65,7 +67,7 @@ This is a special case where the two phase space variables `a` and `ā` are comp
 #### Fock state
 An approximate fock state sampler in the Wigner representation:
 ```julia
-n = 100 
+n = 100
 state = Fock(n)  
 N = 1000 #number of samples
 a,ā = wigner(state,N)

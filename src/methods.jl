@@ -13,7 +13,7 @@ Implemented states are
 
 - `Crescent(α,ϵ,q)`
 
-- `Fock(N)`
+- `Fock(n)`
 
 - `Bogoliubov(u,v,n̄)`
 
@@ -41,7 +41,7 @@ Implemented states are
 
 - `Crescent(α,ϵ,q)`
 
-- `Fock(N)`
+- `Fock(n)`
 
 - `Bogoliubov(u,v,n̄)`
 
@@ -69,7 +69,7 @@ Implemented states are
 
 - `Crescent(α,ϵ,q)`
 
-- `Fock(N)`
+- `Fock(n)`
 
 - `Bogoliubov(u,v,n̄)`
 
@@ -105,7 +105,7 @@ Implemented states are
 
 - `Crescent(α,ϵ,q)`
 
-- `Fock(N)`
+- `Fock(n)`
 
 - `Bogoliubov(u,v,n̄)`
 
