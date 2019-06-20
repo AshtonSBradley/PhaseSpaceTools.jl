@@ -249,7 +249,7 @@ function husimiQ(state::Bogoliubov,N)
     return a,ā
 end
 
-# #TODO check this!
+# #TODO
 # function positiveW(state::Coherent,N)
 #     @unpack β = state
 #     α = β .+ crandn(N)/sqrt(2)
