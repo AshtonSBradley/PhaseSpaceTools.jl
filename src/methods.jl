@@ -1,5 +1,24 @@
-#sampling methods
+"""
+    a,ā = wigner(state <: State,N)
 
+Generate `N` samples from wigner phase-space distribution for `state`.
+
+Implemented states are
+
+- `Coherent(α)`
+
+- `Thermal(α,n̄)`
+
+- `Squeezed(α,ϵ)`
+
+- `Crescent(α,ϵ,q)`
+
+- `Fock(N)`
+
+- `Bogoliubov(u,v,n̄)`
+
+Moments of the Wigner distribution generate quantum operator averages that are symmetrically ordered.
+"""
 function wigner(state::Coherent,N)
     @unpack β = state
     α = β .+ crandn(N)/sqrt(2)
@@ -7,6 +26,27 @@ function wigner(state::Coherent,N)
     return α, ᾱ
 end
 
+"""
+    a,ā = husimiQ(state <: State,N)
+
+Generate `N` samples from the Husimi-Q phase-space distribution for `state`.
+
+Implemented states are
+
+- `Coherent(α)`
+
+- `Thermal(α,n̄)`
+
+- `Squeezed(α,ϵ)`
+
+- `Crescent(α,ϵ,q)`
+
+- `Fock(N)`
+
+- `Bogoliubov(u,v,n̄)`
+
+Moments of the Husimi-Q distribution generate quantum operator averages that are anti-normally ordered.
+"""
 function husimiQ(state::Coherent,N)
     @unpack β = state
     α = β .+ crandn(N)
@@ -14,6 +54,27 @@ function husimiQ(state::Coherent,N)
     return α, ᾱ
 end
 
+"""
+    a,ā = positiveP(state <: State,N)
+
+Generate `N` samples from the positive-P phase-space distribution for `state`.
+
+Implemented states are
+
+- `Coherent(α)`
+
+- `Thermal(α,n̄)`
+
+- `Squeezed(α,ϵ)`
+
+- `Crescent(α,ϵ,q)`
+
+- `Fock(N)`
+
+- `Bogoliubov(u,v,n̄)`
+
+Moments of the positive-P distribution generate quantum operator averages that are normally ordered.
+"""
 function positiveP(state::T,N) where T
     μ,μ̄ = husimiQ(state,N)
     γ = crandn(N)
@@ -29,6 +90,27 @@ function positiveP(state::Coherent,N)
     return α,ᾱ
 end
 
+"""
+    a,ā = glauberP(state <: State,N)
+
+Generate `N` samples from the Glauber-Sudarshan-P phase-space distribution for `state`.
+
+Implemented states are
+
+- `Coherent(α)`
+
+- `Thermal(α,n̄)`
+
+- `Squeezed(α,ϵ)`
+
+- `Crescent(α,ϵ,q)`
+
+- `Fock(N)`
+
+- `Bogoliubov(u,v,n̄)`
+
+Moments of the Glauber-Sudarshan-P distribution generate quantum operator averages that are normally ordered.
+"""
 glauberP(state::Coherent,N) = positiveP(state,N)
 
 function glauberP(state::Thermal,N)
@@ -110,6 +192,17 @@ function wigner(state::Fock,N)
     return α, ᾱ
 end
 
+"""
+    a,ā = positiveW(state <: State,N)
+
+Generate `N` samples from the positive-W phase-space distribution for `state`.
+
+Implemented states are
+
+- `Fock(N)`
+
+The moments of the positive-W distribution generate quantum operator averages that are symmmetrically ordered.
+"""
 function positiveW(state::Fock,N)
     @unpack n = state
     if n<=320

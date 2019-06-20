@@ -49,9 +49,11 @@ plaguerre_asymptotic(x,n) = exp(-(x-sqrt(n+1))^2)/sqrt(pi)
 laguerren(x,n) = sf_laguerre_n(n,0.0,x)
 
 
-# Complex variable SDE's in DifferentialEquations.jl
-# have complex noises by default.
-# Define real noise and bridge for adaptive solver
+"""
+Complex variable SDE's in `DifferentialEquations.jl`
+have complex noises by default dispatch on complex fields.
+This method defines a real noise for use with the library.
+"""
 function realnoise(rand_vec,W,dt,rng)
 for i in eachindex(rand_vec)
     rand_vec[i] = randn(rng)
@@ -59,6 +61,11 @@ for i in eachindex(rand_vec)
     rand_vec .*= sqrt(abs(dt))
 end
 
+"""
+Complex variable SDE's in `DifferentialEquations.jl`
+have complex noises by default dispatch on complex fields.
+This method defines a real brownian bridge for use with the library.
+"""
 function realbridge(rand_vec,W,W0,Wh,q,h,rng)
 for i in eachindex(rand_vec)
     rand_vec[i] = randn(rng)
