@@ -28,7 +28,7 @@ julia> using PhaseSpaceTools
 help?> positiveP
 search: positiveP positiveW
 
-  a,ā = positiveP(state <: State,N)
+  a,ā = positiveP(state <: State,N)
 
   Generate N samples from the positive-P
   phase-space distribution for state.
@@ -56,8 +56,11 @@ search: positiveP positiveW
 A coherent state |α⟩ is sampled as
 ```julia
 α = 1.0+im*2.0 #coherent state amplitude
+
 state = Coherent(α) # create state |α⟩
+
 N = 1000 #number of samples
+
 a,ā = positiveP(state,N)
 ```
 This is a special case where the two phase space variables `a` and `ā` are complex conjugate, and non-stochastic in the `+P` representation.
@@ -66,8 +69,11 @@ This is a special case where the two phase space variables `a` and `ā` are comp
 An approximate fock state sampler in the Wigner representation:
 ```julia
 n = 100
+
 state = Fock(n)  
+
 N = 1000 #number of samples
+
 a,ā = wigner(state,N)
 ```
 Provides an approximate sampling of `W` that reproduces operator averages for large `n`.
