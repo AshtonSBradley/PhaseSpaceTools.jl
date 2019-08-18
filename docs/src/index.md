@@ -1,91 +1,136 @@
-# PhaseSpaceTools.jl Documentation
+# PhaseSpaceTools.jl
+_A julia package for working with quantum phase space distributions._
 
+# Contents
 ```@contents
 ```
 
-# Introduction
+# Overview
 
-This package provides sampling methods for some commonly used quantum states in various quantum phase space representations.
+The main aim of this package is to provide sampling methods for commonly used quantum states in various quantum phase-space representations, including Glauber-P, Positive-P, HusimiQ, and Wigner distributions. There are also convenience methods for calculating operator averages from phase-space averages, and for sampling noises for solving SDEs in [DifferentialEquations.jl](https://github.com/JuliaDiffEq/DifferentialEquations.jl).
 
-# Installation and testing
+# Installation
+In the julia REPL
 
-# Sampling examples
+`]add https://github.com/AshtonSBradley/PhaseSpaceTools.jl`
+
+# Usage Examples
 
 ## Coherent state
+A trivial example is provided by the coherent state
 
-### GlauberP
+```math
+|\alpha\rangle = e^{-|\alpha|^2/2}\sum_{n=0}^\infty\frac{\alpha^n}{n!}|n\rangle.
+```
 
-### positiveP
+As eigenstate of the Bose annihilation operator
+
+```math
+ {\hat a}|\alpha\rangle = \alpha|\alpha\rangle
+```
+
+coherent states play a central role in quantum phase space methods, providing a mapping of many-body boson dynamical problems to equivalent stochastic differential equations.
+
+### Glauber-P
+In the `glauberP` representation the state may be sampled as a single point on the complex plane
+
+```julia
+N = 10000
+state = Coherent(12.0)
+a,ā = glauberP(state,N)
+```
+### Positive-P
+In the `positiveP` representation the simples way to sample the state is again as a point on the complex plane
+
+```julia
+a,ā = positiveP(state,N)
+```
 
 ## Fock state
-
+A more difficult state to sample is the eigenstate of the number operator
 ### GlauberP
 
 ### positiveP
 
-# Phase-space distributions
-
-```@docs
-glauberP
-```
-
-```@docs
-positiveP
-```
-
-```@docs
-wigner
-```
-
-```@docs
-positiveW
-```
-
-```@docs
-husimiQ
-```
-
 # Quantum states
+Quantum states available in `PhaseSpaceTools.jl` are
 
+## Coherent
 ```@docs
 Coherent
 ```
-
+## Fock
 ```@docs
 Fock
 ```
-
+## Crescent
 ```@docs
 Crescent
 ```
-
+## Squeezed
 ```@docs
 Squeezed
 ```
-
+## Thermal
 ```@docs
 Thermal
 ```
-
+## Bogoliubov
 ```@docs
 Bogoliubov
 ```
 
-# Helpers
+# Phase-space distributions
+The phase-space distributions supported for these states are
 
+## Husimi-Q
+```@docs
+husimiQ
+```
+## Glauber-P
+```@docs
+glauberP
+```
+## Positive-P
+```@docs
+positiveP
+```
+## Wigner
+```@docs
+wigner
+```
+## Positive-W
+```@docs
+positiveW
+```
+
+# Noises
+
+## randnc
 ```@docs
 randnc
 ```
 
+## realnoise
 ```@docs
 realnoise
 ```
-
+## realbridge
 ```@docs
 realbridge
 ```
 
-## Index
+# Solving SDEs
+
+## Complex noise example
+
+## Real noise example
+
+# Recovering normal order
+
+# Citing
+
+# Index
 
 ```@index
 ```
