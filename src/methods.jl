@@ -21,7 +21,7 @@ Moments of the Wigner distribution generate quantum operator averages that are s
 """
 function wigner(state::Coherent,N)
     @unpack β = state
-    α = β .+ crandn(N)/sqrt(2)
+    α = β .+ randnc(N)/sqrt(2)
     ᾱ = conj(α)
     return α, ᾱ
 end
@@ -49,7 +49,7 @@ Moments of the Husimi-Q distribution generate quantum operator averages that are
 """
 function husimiQ(state::Coherent,N)
     @unpack β = state
-    α = β .+ crandn(N)
+    α = β .+ randnc(N)
     ᾱ = conj(α)
     return α, ᾱ
 end
@@ -77,7 +77,7 @@ Moments of the positive-P distribution generate quantum operator averages that a
 """
 function positiveP(state::T,N) where T
     μ,μ̄ = husimiQ(state,N)
-    γ = crandn(N)
+    γ = randnc(N)
     α = μ .+ γ
     ᾱ = conj(μ .- γ)
     return α, ᾱ
@@ -115,21 +115,21 @@ glauberP(state::Coherent,N) = positiveP(state,N)
 
 function glauberP(state::Thermal,N)
     @unpack β,n̄ = state
-    α = β .+ sqrt(n̄)*crandn(N)
+    α = β .+ sqrt(n̄)*randnc(N)
     ᾱ = conj(α)
     return α, ᾱ
 end
 
 function wigner(state::Thermal,N)
     @unpack β,n̄ = state
-    α = β .+ sqrt(n̄+.5)*crandn(N)
+    α = β .+ sqrt(n̄+.5)*randnc(N)
     ᾱ = conj(α)
     return α, ᾱ
 end
 
 function husimiQ(state::Thermal,N)
     @unpack β,n̄ = state
-    α = β .+ sqrt(n̄+1.0)*crandn(N)
+    α = β .+ sqrt(n̄+1.0)*randnc(N)
     ᾱ = conj(α)
     return α, ᾱ
 end
@@ -210,7 +210,7 @@ function positiveW(state::Fock,N)
     (n==0||n==1) ? Pmax=0.71 : Pmax=0.6
     z = reject(x->plaguerre.(x,n),[x1,x2],N,Pmax)
     μ = z.*exp.(2π*im*rand(N))
-    γ = crandn(N)
+    γ = randnc(N)
     α = μ .+ γ
     ᾱ = conj(μ .- γ)
     return α, ᾱ
@@ -218,7 +218,7 @@ function positiveW(state::Fock,N)
     x1 = max(0,sqrt(n)-5); x2 = sqrt(n)+5
     z = reject(x->plaguerre_asymptotic.(x,n),[x1,x2],N,0.6)
     μ = z.*exp.(2π*im*rand(N))
-    γ = crandn(N)
+    γ = randnc(N)
     α = μ .+ γ
     ᾱ = conj(μ .- γ)
     return α, ᾱ
@@ -252,7 +252,7 @@ end
 # #TODO
 # function positiveW(state::Coherent,N)
 #     @unpack β = state
-#     α = β .+ crandn(N)/sqrt(2)
+#     α = β .+ randnc(N)/sqrt(2)
 #     ᾱ = conj(α)
 #     return α, ᾱ
 # end

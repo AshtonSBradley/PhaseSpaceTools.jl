@@ -16,15 +16,15 @@ For standard `P,Q,W` distributions, `a` and `ā` are complex conjugate, while f
 """
 function thermal(β,n̄,N;dist=:P)
 if dist==:P
-    α = β .+ sqrt(n̄)*crandn(N)
+    α = β .+ sqrt(n̄)*randnc(N)
     ᾱ = conj(α)
     return α, ᾱ
 elseif dist==:W
-    α = β .+ sqrt(n̄+.5)*crandn(N)
+    α = β .+ sqrt(n̄+.5)*randnc(N)
     ᾱ = conj(α)
     return α, ᾱ
 elseif dist==:Q
-    α = β .+ sqrt(n̄+1.0)*crandn(N)
+    α = β .+ sqrt(n̄+1.0)*randnc(N)
     ᾱ = conj(α)
     return α, ᾱ
 else error("distribution not implemented")

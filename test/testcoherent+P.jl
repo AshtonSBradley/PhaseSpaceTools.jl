@@ -1,5 +1,5 @@
 N = 1000
-α = 100*crandn()
+α = 100*randnc()
 state = Coherent(α)
 a,ā = positiveP(state,N)
 

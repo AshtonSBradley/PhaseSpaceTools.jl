@@ -24,7 +24,7 @@ if dist==:posP
     ϕ = angle(ϵ)/2
     μ = β .+ (randn(N)*exp(-r)+im*randn(N)*exp(r))/sqrt(2)
     μ .*= exp.(im*q*randn(N))
-    γ = crandn(N)
+    γ = randnc(N)
     α = μ .+ γ
     ᾱ = conj(μ .- γ)
     return α,ᾱ

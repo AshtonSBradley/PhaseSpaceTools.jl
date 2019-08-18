@@ -1,37 +1,88 @@
-# PhaseSpaceTools Documentation
+# PhaseSpaceTools.jl Documentation
 
 ```@contents
 ```
-This package aims to provide fast accurate sampling for a number of phase space distributions that are required for simulations of  quantum optical and ultra-cold atomic systems.
 
-# Functions
+# Introduction
+
+This package provides sampling methods for some commonly used quantum states in various quantum phase space representations.
+
+# Installation and testing
+
+# Sampling examples
+
+## Coherent state
+
+### GlauberP
+
+### positiveP
+
+## Fock state
+
+### GlauberP
+
+### positiveP
+
+# Phase-space distributions
 
 ```@docs
-coherent(β,N;dist=:posP)
+glauberP
 ```
 
 ```@docs
-fock(n,N;dist=:posP)
+positiveP
 ```
 
 ```@docs
-thermal(β,n̄,N;dist=:P)
+wigner
 ```
 
 ```@docs
-squeezed(β,ϵ,N;dist=:posP)
+positiveW
 ```
 
 ```@docs
-crescent(β,ϵ,q,N;dist=:posP)
+husimiQ
+```
+
+# Quantum states
+
+```@docs
+Coherent
 ```
 
 ```@docs
-bogoliubov(u,v,n̄,N;dist=:W)
+Fock
 ```
 
 ```@docs
-crandn(args...)
+Crescent
+```
+
+```@docs
+Squeezed
+```
+
+```@docs
+Thermal
+```
+
+```@docs
+Bogoliubov
+```
+
+# Helpers
+
+```@docs
+randnc
+```
+
+```@docs
+realnoise
+```
+
+```@docs
+realbridge
 ```
 
 ## Index

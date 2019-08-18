@@ -34,7 +34,7 @@ struct Bogoliubov <: State
 end
 
 # helpers
-crandn(args...) = randn(ComplexF64,args...)
+randnc(args...) = randn(ComplexF64,args...)
 
 function reject(P,w,N,Pmax)
     a,b = w
@@ -64,7 +64,7 @@ glauberP(state::Coherent,N) = positiveP(state,N)
 
 function positiveW(state::Coherent,N)
     @unpack β = state
-    α = β .+ crandn(N)/sqrt(2)
+    α = β .+ randnc(N)/sqrt(2)
     ᾱ = conj(α)
     return α, ᾱ
 end
@@ -73,7 +73,7 @@ wigner(state::Coherent,N) = positiveW(state::Coherent,N)
 
 function positiveP(state::Thermal,N)
     @unpack β,n̄ = state
-    α = β .+ sqrt(n̄)*crandn(N)
+    α = β .+ sqrt(n̄)*randnc(N)
     ᾱ = conj(α)
     return α, ᾱ
 end
@@ -82,14 +82,14 @@ glauberP(state::Thermal,N) = positiveP(state,N)
 
 function husimiQ(state::Thermal,N)
     @unpack β,n̄ = state
-    α = β .+ sqrt(n̄+1.0)*crandn(N)
+    α = β .+ sqrt(n̄+1.0)*randnc(N)
     ᾱ = conj(α)
     return α, ᾱ
 end
 
 function wigner(state::Thermal,N)
     @unpack β,n̄ = state
-    α = β .+ sqrt(n̄+.5)*crandn(N)
+    α = β .+ sqrt(n̄+.5)*randnc(N)
     ᾱ = conj(α)
     return α, ᾱ
 end
@@ -98,7 +98,7 @@ function positiveP(state::Squeezed,N)
     @unpack β,ϵ = state
     r = abs(ϵ)
     ϕ = angle(ϵ)/2
-    γ = crandn(N)
+    γ = randnc(N)
     ν = sqrt(exp(-r)*cosh(r)/2)*randn(N) .+ im*sqrt(exp(r)*cosh(r)/2)*randn(N)
     α = β .+ exp(im*ϕ)*ν .+ γ
     ᾱ = conj(β) .+ exp(-im*ϕ)*conj(ν) .- conj(γ)
@@ -120,7 +120,7 @@ function positiveP(state::Crescent,N)
     ϕ = angle(ϵ)/2
     μ = β .+ (randn(N)*exp(-r)+im*randn(N)*exp(r))/sqrt(2)
     μ .*= exp.(im*q*randn(N))
-    γ = crandn(N)
+    γ = randnc(N)
     α = μ .+ γ
     ᾱ = conj(μ .- γ)
     return α,ᾱ
@@ -148,7 +148,7 @@ end
 
 function positiveP(state::Fock,N)
     @unpack n = state
-    γ = crandn(N)
+    γ = randnc(N)
     d = Gamma(n+1,1)
     z = rand(d,N)
     μ = sqrt.(z).*exp.(2π*im*rand(N))
@@ -170,7 +170,7 @@ end
 function positiveW(state::Fock,N)
     @unpack n = state
     if n<=320
-    γ = crandn(N)
+    γ = randnc(N)
     x1 = max(0,sqrt(n)-5); x2 = sqrt(n)+5
     (n==0||n==1) ? Pmax=0.71 : Pmax=0.6
     z = reject(x->plaguerre.(x,n),[x1,x2],N,Pmax)
@@ -179,7 +179,7 @@ function positiveW(state::Fock,N)
     ᾱ = conj(μ .- γ)
     return α, ᾱ
     else
-    γ = crandn(N)
+    γ = randnc(N)
     x1 = max(0,sqrt(n)-5); x2 = sqrt(n)+5
     z = reject(x->plaguerre_asymptotic.(x,n),[x1,x2],N,0.6)
     μ = z.*exp.(2π*im*rand(N))
@@ -343,7 +343,7 @@ N = 100000
 n̄ = 10
 
 function randuv()
-    u,v = crandn(2)
+    u,v = randnc(2)
     nrm = abs2(u)-abs2(v)
     if nrm < 0
          new = [0 1;1 0]*[u; v]

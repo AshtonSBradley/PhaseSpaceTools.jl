@@ -3,7 +3,7 @@ N = 100000
 n̄ = 10
 
 function randuv()
-    u,v = crandn(2)
+    u,v = randnc(2)
     nrm = abs2(u)-abs2(v)
     if nrm < 0
          new = [0 1;1 0]*[u; v]

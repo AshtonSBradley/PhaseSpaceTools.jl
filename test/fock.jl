@@ -26,7 +26,7 @@ ___Numerical representation of quantum states in the positive-P and Wigner repre
 """
 function fock(n,N;dist=:posP)
 if dist==:posP
-    γ = crandn(N)
+    γ = randnc(N)
     d = Gamma(n+1,1)
     z = rand(d,N)
     μ = sqrt.(z).*exp.(2π*im*rand(N))
@@ -42,7 +42,7 @@ elseif dist==:W
     return α, ᾱ
 elseif dist==:posW
     if n<=320
-    γ = crandn(N)
+    γ = randnc(N)
     x1 = max(0,sqrt(n)-5); x2 = sqrt(n)+5
     (n==0||n==1) ? Pmax=0.71 : Pmax=0.6
     z = reject(x->plaguerre.(x,n),[x1,x2],N,Pmax)
@@ -51,7 +51,7 @@ elseif dist==:posW
     ᾱ = conj(μ .- γ)
     return α, ᾱ
     else
-    γ = crandn(N)
+    γ = randnc(N)
     x1= max(0,sqrt(n)-5); x2 = sqrt(n)+5
     z = reject(x->plaguerre_asymptotic.(x,n),[x1,x2],N,0.6)
     μ = z.*exp.(2π*im*rand(N))

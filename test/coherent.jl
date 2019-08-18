@@ -21,11 +21,11 @@ if dist==:posP
     ᾱ = conj(α)
     return α, ᾱ
 elseif dist==:W
-    α = β .+ crandn(N)/sqrt(2)
+    α = β .+ randnc(N)/sqrt(2)
     ᾱ = conj(α)
     return α, ᾱ
 elseif dist==:posW
-    α = β .+ crandn(N)/sqrt(2)
+    α = β .+ randnc(N)/sqrt(2)
     ᾱ = conj(α)
     return α, ᾱ
 else error("distribution not implemented")
