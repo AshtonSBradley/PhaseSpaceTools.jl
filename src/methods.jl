@@ -17,7 +17,7 @@ Implemented states are
 
 - `Bogoliubov(u,v,n̄)`
 
-Moments of the Wigner distribution generate quantum operator averages that are symmetrically ordered.
+Moments of the Wigner distribution generate symmetrically ordered quantum operator averages.
 """
 function wigner(state::Coherent,N)
     @unpack β = state
