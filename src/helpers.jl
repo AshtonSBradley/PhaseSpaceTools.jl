@@ -2,7 +2,7 @@
 """
     a = randnc(N...)
 
-Returns an array of dimension `length(N)`, containing samples of complex random variates with mean zero and variance one:
+Returns an array of dimension `length(N)`, containing samples of complex random variables with mean zero and variance one:
 ```math
 \\langle |a|^2\\rangle = 1; \\quad\\quad\\langle a^2\\rangle = \\langle (a^*) ^2\\rangle = 0,
 ```
