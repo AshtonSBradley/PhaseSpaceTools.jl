@@ -3,6 +3,7 @@ _A julia package for working with quantum phase space distributions._
 
 # Contents
 ```@contents
+Depth=1
 ```
 
 # Overview
