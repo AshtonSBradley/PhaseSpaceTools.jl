@@ -1,9 +1,9 @@
 # PhaseSpaceTools.jl
 _A julia package for working with quantum phase space distributions._
 
-# Contents
+<!-- # Contents
 ```@contents
-```
+``` -->
 
 # Overview
 
