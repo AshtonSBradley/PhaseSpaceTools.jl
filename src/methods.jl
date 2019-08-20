@@ -3,20 +3,6 @@
 
 Generate `N` samples from wigner phase-space distribution for `state`.
 
-Implemented states are
-
-- `Coherent(α)`
-
-- `Thermal(α,n̄)`
-
-- `Squeezed(α,ϵ)`
-
-- `Crescent(α,ϵ,q)`
-
-- `Fock(n)`
-
-- `Bogoliubov(u,v,n̄)`
-
 Moments of the Wigner distribution generate symmetrically ordered quantum operator averages.
 """
 function wigner(state::Coherent,N)
@@ -31,20 +17,6 @@ end
 
 Generate `N` samples from the Husimi-Q phase-space distribution for `state`.
 
-Implemented states are
-
-- `Coherent(α)`
-
-- `Thermal(α,n̄)`
-
-- `Squeezed(α,ϵ)`
-
-- `Crescent(α,ϵ,q)`
-
-- `Fock(n)`
-
-- `Bogoliubov(u,v,n̄)`
-
 Moments of the Husimi-Q distribution generate quantum operator averages that are anti-normally ordered.
 """
 function husimiQ(state::Coherent,N)
@@ -58,20 +30,6 @@ end
     a,ā = positiveP(state <: State,N)
 
 Generate `N` samples from the positive-P phase-space distribution for `state`.
-
-Implemented states are
-
-- `Coherent(α)`
-
-- `Thermal(α,n̄)`
-
-- `Squeezed(α,ϵ)`
-
-- `Crescent(α,ϵ,q)`
-
-- `Fock(n)`
-
-- `Bogoliubov(u,v,n̄)`
 
 Moments of the positive-P distribution generate quantum operator averages that are normally ordered.
 """
@@ -94,20 +52,6 @@ end
     a,ā = glauberP(state <: State,N)
 
 Generate `N` samples from the Glauber-Sudarshan-P phase-space distribution for `state`.
-
-Implemented states are
-
-- `Coherent(α)`
-
-- `Thermal(α,n̄)`
-
-- `Squeezed(α,ϵ)`
-
-- `Crescent(α,ϵ,q)`
-
-- `Fock(n)`
-
-- `Bogoliubov(u,v,n̄)`
 
 Moments of the Glauber-Sudarshan-P distribution generate quantum operator averages that are normally ordered.
 """

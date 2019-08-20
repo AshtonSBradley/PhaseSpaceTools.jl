@@ -1,3 +1,5 @@
+import Pkg; Pkg.add("Documenter")
+
 using Documenter, PhaseSpaceTools
 
 makedocs(sitename="PhaseSpaceTools.jl")

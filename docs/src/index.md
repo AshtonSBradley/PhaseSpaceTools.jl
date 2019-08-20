@@ -1,18 +1,15 @@
 # PhaseSpaceTools.jl
 _A julia package for working with quantum phase space distributions._
 
-# Contents
-```@contents
-```
-
 # Overview
-
 The main aim of this package is to provide sampling methods for commonly used quantum states in various quantum phase-space representations, including Glauber-P, Positive-P, HusimiQ, and Wigner distributions. There are also convenience methods for calculating operator averages from phase-space averages, and for sampling noises for solving SDEs in [DifferentialEquations.jl](https://github.com/JuliaDiffEq/DifferentialEquations.jl).
 
 # Installation
 In the julia REPL, enter
 
-`]add https://github.com/AshtonSBradley/PhaseSpaceTools.jl`
+`julia> ]add https://github.com/AshtonSBradley/PhaseSpaceTools.jl`
+
+`Pkg> test PhaseSpaceTools`
 
 # Usage Examples
 
@@ -133,6 +130,11 @@ realbridge
 ## Real noise example
 
 # Recovering normal order
+A common approach to quantum phase space simulations involves performing truncated Wigner simulations, necessitating symmetric order of operator moments. We can easily recover normal order, the experimentally relevant form, using
+
+```math
+\langle (a^\dagger)^p a^q\rangle = \sum_{n=0}^{\textrm{min}(p,q)}
+```
 
 # Citing
 
