@@ -1,8 +1,10 @@
 # PhaseSpaceTools.jl
-_A julia package for working with quantum phase space distributions._
+A julia package for working with quantum phase space distributions.
 
 # Overview
-The main aim of this package is to provide sampling methods for commonly used quantum states in various quantum phase-space representations, including Glauber-P, Positive-P, HusimiQ, and Wigner distributions. There are also convenience methods for calculating operator averages from phase-space averages, and for sampling noises for solving SDEs in [DifferentialEquations.jl](https://github.com/JuliaDiffEq/DifferentialEquations.jl).
+This package provides sampling methods for commonly used quantum states in various quantum phase-space representations, including Glauber-P, Positive-P, HusimiQ, and Wigner distributions.
+
+There are also convenience methods for calculating operator averages from phase-space averages, and for sampling noises for solving SDEs in [DifferentialEquations.jl](https://github.com/JuliaDiffEq/DifferentialEquations.jl).
 
 # Installation
 In the julia REPL, enter
@@ -20,10 +22,10 @@ A trivial example is provided by the coherent state
 |\alpha\rangle = e^{-|\alpha|^2/2}\sum_{n=0}^\infty\frac{\alpha^n}{n!}|n\rangle.
 ```
 
-As eigenstate of the Bose annihilation operator
+As eigenstate of the Bose annihilation operator ``a`` with commutator ``[a,a^\dagger]=1``, satisfying
 
 ```math
- {\hat a}|\alpha\rangle = \alpha|\alpha\rangle
+ {\hat a}|\alpha\rangle = \alpha|\alpha\rangle,
 ```
 
 coherent states play a central role in quantum phase space methods, providing a mapping of many-body boson dynamical problems to equivalent stochastic differential equations.
@@ -34,20 +36,19 @@ In the `glauberP` representation the state may be sampled as a single point on t
 ```julia
 N = 10000
 state = Coherent(12.0)
-a,ā = glauberP(state,N)
+α,ᾱ = glauberP(state,N)
 ```
 ### Positive-P
 In the `positiveP` representation the simples way to sample the state is again as a point on the complex plane
 
 ```julia
-a,ā = positiveP(state,N)
+α,ᾱ = positiveP(state,N)
 ```
 
 ## Fock state
-A more difficult state to sample is the eigenstate of the number operator
-### GlauberP
+A more difficult state to sample is the eigenstate of the number operator...
 
-### positiveP
+
 
 # Quantum states
 Quantum states available in `PhaseSpaceTools.jl` are
@@ -77,8 +78,8 @@ Thermal
 Bogoliubov
 ```
 
-# Phase-space distributions
-The phase-space distributions supported for these states are
+# Distributions
+The phase-space distributions that may be sampled for these states are
 
 ## Husimi-Q
 ```@docs

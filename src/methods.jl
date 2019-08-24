@@ -1,5 +1,5 @@
 """
-    a,ā = wigner(state <: State,N)
+    α,ᾱ = wigner(state <: State,N)
 
 Generate `N` samples from wigner phase-space distribution for `state`.
 
@@ -13,7 +13,7 @@ function wigner(state::Coherent,N)
 end
 
 """
-    a,ā = husimiQ(state <: State,N)
+    α,ᾱ = husimiQ(state <: State,N)
 
 Generate `N` samples from the Husimi-Q phase-space distribution for `state`.
 
@@ -27,7 +27,7 @@ function husimiQ(state::Coherent,N)
 end
 
 """
-    a,ā = positiveP(state <: State,N)
+    α,ᾱ = positiveP(state <: State,N)
 
 Generate `N` samples from the positive-P phase-space distribution for `state`.
 
@@ -49,7 +49,7 @@ function positiveP(state::Coherent,N)
 end
 
 """
-    a,ā = glauberP(state <: State,N)
+    α,ᾱ = glauberP(state <: State,N)
 
 Generate `N` samples from the Glauber-Sudarshan-P phase-space distribution for `state`.
 
@@ -137,7 +137,7 @@ function wigner(state::Fock,N)
 end
 
 """
-    a,ā = positiveW(state <: State,N)
+    α,ᾱ = positiveW(state <: State,N)
 
 Generate `N` samples from the positive-W phase-space distribution for `state`.
 
