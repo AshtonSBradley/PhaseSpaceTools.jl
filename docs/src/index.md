@@ -16,19 +16,32 @@ In the julia REPL, enter
 # Usage Examples
 
 ## Coherent state
-A trivial example is provided by the coherent state
+A trivial example is provided by the coherent state $|\alpha\rangle$. These are eigenstate of the Bose annihilation operator $a$, with commutation relation $[a,a^\dagger]=1$. They satisfy the eigenvalue equation
 
 ```math
-|\alpha\rangle = e^{-|\alpha|^2/2}\sum_{n=0}^\infty\frac{\alpha^n}{n!}|n\rangle.
+ {\hat a}|\alpha\rangle = \alpha|\alpha\rangle
 ```
 
+<<<<<<< HEAD
 As eigenstate of the Bose annihilation operator ``a`` with commutator ``[a,a^\dagger]=1``, satisfying
 
 ```math
  {\hat a}|\alpha\rangle = \alpha|\alpha\rangle,
+=======
+where $\alpha\in ℂ$. The Fock basis $|n\rangle$ is often convenient to work in. Fock states are eigenstates of the number operator $n=a^† a$:
+
+```math
+a^† a|n\rangle = n|n\rangle.
 ```
 
-coherent states play a central role in quantum phase space methods, providing a mapping of many-body boson dynamical problems to equivalent stochastic differential equations.
+In the Fock basis, the coherent states take the form
+
+```math
+|\alpha\rangle = e^{-|\alpha|^2/2}\sum_{n=0}^\infty\frac{\alpha^n}{n!}|n\rangle.
+>>>>>>> c8343b6cbae37cd25cc96f4e9d67dae17649af6c
+```
+
+Coherent states play a central role in quantum phase space methods, providing a mapping of many-body boson dynamical problems to equivalent stochastic differential equations.
 
 ### Glauber-P
 In the `glauberP` representation the state may be sampled as a single point on the complex plane
