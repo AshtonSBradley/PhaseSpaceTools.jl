@@ -22,12 +22,7 @@ A trivial example is provided by the coherent state $|\alpha\rangle$. These are 
  a|\alpha\rangle = \alpha|\alpha\rangle
 ```
 
-As eigenstate of the Bose annihilation operator ``a`` with commutator ``[a,a^\dagger]=1``, satisfying
-
-```math
- {\hat a}|\alpha\rangle = \alpha|\alpha\rangle,
- ```
-where ``\alpha\in ℂ``. The Fock basis ``|n\rangle`` is often convenient to work in. Fock states are eigenstates of the number operator ``n=a^\dagger a``:
+The Fock basis ``|n\rangle`` is often convenient to work in. Fock states are eigenstates of the number operator ``n=a^\dagger a``:
 
 ```math
 a^\dagger a|n\rangle = n|n\rangle.
