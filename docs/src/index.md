@@ -27,7 +27,7 @@ As eigenstate of the Bose annihilation operator ``a`` with commutator ``[a,a^\da
 ```math
  {\hat a}|\alpha\rangle = \alpha|\alpha\rangle,
  ```
-where $\alpha\in ℂ$. The Fock basis $|n\rangle$ is often convenient to work in. Fock states are eigenstates of the number operator ``n=a^\dagger a``:
+where ``\alpha\in ℂ``. The Fock basis ``|n\rangle`` is often convenient to work in. Fock states are eigenstates of the number operator ``n=a^\dagger a``:
 
 ```math
 a^\dagger a|n\rangle = n|n\rangle.
