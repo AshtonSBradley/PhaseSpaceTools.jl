@@ -16,7 +16,7 @@ In the julia REPL, enter
 # Usage Examples
 
 ## Coherent state
-A trivial example is provided by the coherent state $|\alpha\rangle$. These are eigenstate of the Bose annihilation operator $a$, with commutation relation $[a,a^\dagger]=1$. They satisfy the eigenvalue equation
+A trivial example is provided by the coherent state $|\alpha\rangle$. These are eigenstate of the Bose annihilation operator ``a``, with commutation relation ``[a,a^\dagger]=1``. They satisfy the eigenvalue equation
 
 ```math
  a|\alpha\rangle = \alpha|\alpha\rangle
