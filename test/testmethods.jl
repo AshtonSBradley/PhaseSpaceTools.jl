@@ -48,3 +48,11 @@ state = Crescent(1.0,0.1,0.1)
 @test typeof(wigner(state,1)[1][1]) == Complex{Float64}
 @test typeof(husimiQ(state,1)[1][1]) == Complex{Float64}
 @test typeof(positiveP(state,1)[1][1]) == Complex{Float64}
+
+# Helpers
+f(x) = exp(-x^2)
+@test typeof(reject(f,[-1,1],1,1.1)[1]) == Float64
+@test typeof(plaguerre(.1,1)) == Float64
+@test typeof(plaguerre_asymptotic(.1,1)) == Float64
+@test typeof(laguerren(.1,1)) == Float64
+@test typeof(plaguerre_asymptotic(.1,1)) == Float64
