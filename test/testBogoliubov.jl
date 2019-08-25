@@ -33,4 +33,4 @@ a,ā = wigner(state,N)
 
 na = real(mean(a.*ā))-0.5
 nvac = abs2(v)
-@test isapprox(na,nvac,atol=1e-1)
+@test isapprox(na,nvac,atol=0.3)
