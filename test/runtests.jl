@@ -19,5 +19,7 @@ using Test
 
 @testset "Bogoliubov W" begin include("testBogoliubov.jl") end
 
+@testset "Noises" begin include("testNoises.jl") end
+
 #TODO
 # @testset "Glauber P" begin include("testthermalP.jl") end

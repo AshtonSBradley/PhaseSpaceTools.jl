@@ -1,7 +1,7 @@
 #test +W
 
 n = 99
-N = 100000
+N = 100_000
 state = Fock(n)
 a,ā = positiveW(state,N)
 
