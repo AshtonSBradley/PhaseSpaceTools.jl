@@ -1,7 +1,7 @@
 #!/usr/bin/env julia
 
-using PhaseSpaceTools
-using Test
+using PhaseSpaceTools, Test
+@testset "Testing methods" begin include("testmethods.jl") end
 
 @testset "Coherent state W" begin include("testcoherentW.jl") end
 
