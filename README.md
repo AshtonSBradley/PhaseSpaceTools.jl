@@ -7,7 +7,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/AshtonSBradley/PhaseSpaceTools.jl/badge.svg?branch=master)](https://coveralls.io/github/AshtonSBradley/PhaseSpaceTools.jl?branch=master)
 [![codecov](https://codecov.io/gh/AshtonSBradley/PhaseSpaceTools.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/AshtonSBradley/PhaseSpaceTools.jl)
 
-Package for sampling some of the quantum initial states commonly encountered in quantum-optical and matter-wave bosonic phase space simulations. Wigner (`W`) and positive-P (`+P`) representations are implemented, being the most useful for dynamical simulations.
+Package for sampling some of the quantum initial states commonly encountered in quantum-optical and matter-wave bosonic phase space simulations. Wigner and positive-P distributions are available, being the most useful for dynamical simulations.
 
 Available distributions are `glauberP`, `positiveP` `wigner`, `positiveW`, `husimiQ`.
 
@@ -28,54 +28,40 @@ for a list of available methods.
 ```julia
 julia> using PhaseSpaceTools
 help?> positiveP
-search: positiveP positiveW
 
-  a,ā = positiveP(state <: State,N)
+  search: positiveP positiveW
 
-  Generate N samples from the positive-P
-  phase-space distribution for state.
+    α,ᾱ = positiveP(state <: State,N)
 
-  Implemented states are
+    Generate N samples from the positive-P phase-space distribution for state.
 
-    •    Coherent(α)
-
-    •    Thermal(α,n̄)
-
-    •    Squeezed(α,ϵ)
-
-    •    Crescent(α,ϵ,q)
-
-    •    Fock(N)
-
-    •    Bogoliubov(u,v,n̄)
-
-  Moments of the positive-P distribution
-  generate quantum operator averages that are
-  normally ordered.
+    Moments of the positive-P distribution generate quantum operator averages that are normally ordered.
 ```
+## Implemented states
 
-#### Coherent state
+* Coherent(α)
+* Thermal(α,n̄)
+* Squeezed(α,ϵ)
+* Fock(N)
+* Bogoliubov(u,v,n̄)
+* Crescent(α,ϵ,q)
+
+### Coherent state
 A coherent state |α⟩ is sampled as
 ```julia
 α = 1.0+im*2.0 #coherent state amplitude
-
 state = Coherent(α) # create state |α⟩
-
 N = 1000 #number of samples
-
-a,ā = positiveP(state,N)
+α,ᾱ = positiveP(state,N)
 ```
-This is a special case where the two phase space variables `a` and `ā` are complex conjugate, and non-stochastic in the `+P` representation.
+This is a special case where the two phase space variables `\alpha` and `\bar\alpha` are complex conjugate, and non-stochastic in the `+P` representation.
 
-#### Fock state
+### Fock state
 An approximate fock state sampler in the Wigner representation:
 ```julia
 n = 100
-
 state = Fock(n)  
-
 N = 1000 #number of samples
-
 a,ā = wigner(state,N)
 ```
 Provides an approximate sampling of `W` that reproduces operator averages for large `n`.

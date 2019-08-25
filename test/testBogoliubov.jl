@@ -24,7 +24,7 @@ a,ā = wigner(state,N)
 # particle mode population
 na = real(mean(a.*ā))-0.5
 nth = (abs2(u)+abs2(v))*(n̄+0.5) - 0.5
-@test isapprox(na,nth,rtol=1e-2)
+@test isapprox(na,nth,rtol=1e-1)
 
 
 #test vacuum limit
