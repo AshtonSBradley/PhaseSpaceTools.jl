@@ -19,17 +19,18 @@ In the julia REPL, enter
 A trivial example is provided by the coherent state $|\alpha\rangle$. These are eigenstate of the Bose annihilation operator $a$, with commutation relation $[a,a^\dagger]=1$. They satisfy the eigenvalue equation
 
 ```math
- {\hat a}|\alpha\rangle = \alpha|\alpha\rangle
+ a|\alpha\rangle = \alpha|\alpha\rangle
 ```
 
 As eigenstate of the Bose annihilation operator ``a`` with commutator ``[a,a^\dagger]=1``, satisfying
 
 ```math
  {\hat a}|\alpha\rangle = \alpha|\alpha\rangle,
-where $\alpha\in ℂ$. The Fock basis $|n\rangle$ is often convenient to work in. Fock states are eigenstates of the number operator $n=a^† a$:
+ ```
+where $\alpha\in ℂ$. The Fock basis $|n\rangle$ is often convenient to work in. Fock states are eigenstates of the number operator ``n=a^\dagger a``:
 
 ```math
-a^† a|n\rangle = n|n\rangle.
+a^\dagger a|n\rangle = n|n\rangle.
 ```
 
 In the Fock basis, the coherent states take the form
@@ -41,7 +42,7 @@ In the Fock basis, the coherent states take the form
 Coherent states play a central role in quantum phase space methods, providing a mapping of many-body boson dynamical problems to equivalent stochastic differential equations.
 
 ### Glauber-P
-In the `glauberP` representation the state may be sampled as a single point on the complex plane
+In the Glauber-P representation the state may be sampled as a single point on the complex plane
 
 ```julia
 N = 10000
@@ -49,7 +50,7 @@ state = Coherent(12.0)
 α,ᾱ = glauberP(state,N)
 ```
 ### Positive-P
-In the `positiveP` representation the simples way to sample the state is again as a point on the complex plane
+In the Positive-P representation the simples way to sample the state is again as a point on the complex plane
 
 ```julia
 α,ᾱ = positiveP(state,N)
