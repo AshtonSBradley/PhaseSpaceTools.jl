@@ -13,5 +13,5 @@ n̄ = real(mean(a.*ā))
 nbar = sinh(abs(ϵ)).^2 + abs2(β)
 
 #test
-@test norm(av_a - β)/abs(β) < 0.05
-@test abs(n̄ - nbar)/abs(β)^2 < 0.05
+@test norm(av_a - β)/abs(β) < 0.02
+@test abs(n̄ - nbar)/abs(β)^2 < 0.02
