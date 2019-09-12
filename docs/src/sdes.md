@@ -1,17 +1,17 @@
 # Solving SDEs
 
-# Noises
+## Noises
 
-## randnc
+### randnc
 ```@docs
 randnc
 ```
 
-## realnoise
+### realnoise
 ```@docs
 realnoise
 ```
-## realbridge
+### realbridge
 ```@docs
 realbridge
 ```
@@ -20,7 +20,7 @@ realbridge
 
 ## Real noise example
 
-# Recovering normal order
+## Recovering normal order
 A common approach to quantum phase space simulations involves performing truncated Wigner simulations, necessitating symmetric order of operator moments. We can easily recover normal order, the experimentally relevant form, using
 
 ```math
