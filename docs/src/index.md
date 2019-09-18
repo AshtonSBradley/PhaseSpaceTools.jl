@@ -71,7 +71,7 @@ with inverse
 ```
 The problem reduces to that of sampling the  distribution
 ```math
-P(\mu,\gamma)=Q(\mu,\mu^*)e^{-|gamma|^2}{\pi}
+P(\mu,\gamma)=Q(\mu,\mu^*)\frac{e^{-|\gamma|^2}}{\pi}
 ```
 where
 ```math
