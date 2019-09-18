@@ -2,7 +2,17 @@ import Pkg; Pkg.add("Documenter")
 
 using Documenter, PhaseSpaceTools
 
-makedocs(sitename="PhaseSpaceTools.jl")
+makedocs(sitename="PhaseSpaceTools.jl",
+pages = [
+"Overview" => "index.md",
+"Usage Examples" => "examples.md",
+"Quantum States" => "states.md",
+"Distributions" => "distributions.md",
+"Solving SDES" => "sdes.md"
+],
+format = Documenter.HTML(
+        prettyurls = get(ENV, "CI", nothing) == "true")
+)
 
 deploydocs(
     repo = "github.com/AshtonSBradley/PhaseSpaceTools.jl.git",
