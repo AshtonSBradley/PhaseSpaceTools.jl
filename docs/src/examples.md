@@ -2,7 +2,7 @@
 
 Coherent states play a central role in quantum phase space methods, providing a mapping of many-body boson dynamics to equivalent stochastic differential equations.
 
-### Glauber-P
+## Glauber-P
 In the Glauber-P representation the state may be sampled as a single point on the complex plane
 
 ```julia
@@ -12,7 +12,7 @@ state = Coherent(12.0)
 ```
 
 In any other distribution the coherent state is more interesting to sample.
-### Positive-P
+## Positive-P
 In the Positive-P representation the simples way to sample the state is again as a point on the complex plane
 
 ```julia
