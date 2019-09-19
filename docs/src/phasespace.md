@@ -1,7 +1,30 @@
-# Usage Examples
+# Phase Space
+For systems of Bose particles, the most important states are [coherent states](https://en.wikipedia.org/wiki/Coherent_states). These states allow representation of a large class of dynamical quantum evolution in terms of equivalent stochastic processes.
 
-Coherent states play a central role in quantum phase space methods, providing a mapping of many-body boson dynamics to equivalent stochastic differential equations.
+## Fock states
+Coherent states may be represented in terms of [Fock states](https://en.wikipedia.org/wiki/Fock_state). For a single mode, these are just eigenstates of the number operator $a^\dagger a$, satisfying
+```math
+a^\dagger a|n\rangle = n|n\rangle
+```
+and these states are orthonormal $\langle n|m\rangle = \delta_{nm}$.
 
+## Coherent states
+[Coherent states](https://en.wikipedia.org/wiki/Coherent_states) play a central role in quantum phase space methods, providing a mapping of many-body boson dynamics to equivalent stochastic differential equations.
+
+For a single bosonic mode, with creation and destruction operators $a^\dagger$, and $a$, with commutator $[a,a^\dagger]=1$, the coherent states are eigenstates of the annihilation operator
+```math
+a|\alpha\rangle =\alpha|\alpha\rangle.
+```
+where $\alpha$ can vary of the complex plane and plays the role of a classical amplitude.
+
+In terms of Fock states, the coherent states take the form
+```math
+|\alpha\rangle = e^{-|\alpha|^2/2}\sum_{n=0}^\infty \frac{\alpha^n}{\sqrt{n!}}|n\rangle
+```
+These states are overcomplete, with identity
+```math
+1 = \frac{1}{\pi}\int d^2\alpha |\alpha\rangle\langle\alpha|
+```
 ## Glauber-Sudarshan P-representation
 One of the most well-known representations is the Glauber-Sudarshan P distribution (here referred to as P). For a single mode optical field, the representation of the density matrix is given by
 
@@ -62,5 +85,5 @@ Here ``\eta_j`` are independent normal random variates with zero mean and unit v
 \langle \eta_j \rangle = 0\quad\quad \langle \eta_i\eta_j\rangle =\delta_{ij}.
 ```
 Normally distributed Gaussian variates are sampled using `randn()`.
-## Fock state
-A more difficult state to sample an eigenstate of the number operator.
+
+## Wigner function
