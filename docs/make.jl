@@ -5,7 +5,7 @@ using Documenter, PhaseSpaceTools
 makedocs(sitename="PhaseSpaceTools.jl",
 pages = [
 "Overview" => "index.md",
-"Phase Space Distributions" => "phasespace.md",
+"Introduction to Phase Space" => "phasespace.md",
 "Quantum States" => "states.md",
 "Distributions" => "distributions.md",
 "Solving SDES" => "sdes.md"
