@@ -22,14 +22,15 @@ In the Positive-P representation the simples way to sample the state is again as
 Here ``α,ᾱ`` are once again complex conjugates.
 However, we emphasize that this is no longer the case in any subsequent dynamical evolution of the ensemble of phase space points. Furthermore, unlike the Glauber-P distribution, the positive-P distribution for a particular quantum state is not unique.
 
-In this package, we treat single mode problems, taking the general approach of sampling the Husimi-Q funcion, and then exploiting the simple convolutional relationship between the Husimi-Q and the positive-P representations:
+In this package we primarily focus on single mode problems, taking the general approach of sampling the Husimi-Q funcion, and then exploiting a simple convolutional relationship between the Husimi-Q and a particular choice of positive-P representation.
 
+Once choice of positive-P that can be made for any single mode density matrix is given by
 ```math
 P(\alpha,\bar\alpha) = \frac{1}{4\pi^2}\langle (\alpha+\bar\alpha^*)/2|\rho|(\alpha+\bar\alpha^*)/2\rangle e^{-|\alpha-\bar\alpha^*|^2/4}
 ```
-We use the transformation
+We can then use the transformation
 ```math
-\mu = (\alpha+\bar\alpha^*)/2,\quad\quad\gamma = (\alpha-\bar\alpha^*)/2
+\mu = (\alpha+\bar\alpha^*)/2,\quad\quad\gamma = (\alpha-\bar\alpha^*)/2,
 ```
 with inverse
 ```math
@@ -43,6 +44,15 @@ where
 ```math
 Q(\alpha,\alpha^*)\equiv \frac{\langle \alpha|\rho|\alpha\rangle}{\pi}
 ```
-is the Husimi-Q function, and the remaining Gaussian is readily sampled.
+is the [Husimi-Q function](https://en.wikipedia.org/wiki/Husimi_Q_representation), and the remaining complex Gaussian distribution is readily sampled as
+```math
+\gamma = \frac{1}{\sqrt{2}}\left(\eta_1+i\eta_2\right).
+```
+Here ``\eta_j`` are independent normal random variates with zero mean and unit variance:
+
+```math
+\langle \eta_j \rangle = 0\quad\quad \langle \eta_i\eta_j\rangle =\delta_{ij}.
+```
+Normally distributed Gaussian variates are sampled using `randn()`.
 ## Fock state
 A more difficult state to sample an eigenstate of the number operator.
