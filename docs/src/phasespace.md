@@ -2,8 +2,15 @@
 
 Coherent states play a central role in quantum phase space methods, providing a mapping of many-body boson dynamics to equivalent stochastic differential equations.
 
-## Glauber-P
-In the Glauber-P representation the state may be sampled as a single point on the complex plane
+## Glauber-Sudarshan P-representation
+One of the most well-known representations is the Glauber-Sudarshan P distribution (here referred to as P). For a single mode optical field, the representation of the density matrix is given by
+
+```math
+\rho = \int d^2\alpha |\alpha\rangle\langle\alpha|P(\alpha,\alpha^*)
+```
+where the integral is taken over the entire complex plane. The P-representation occurs in a single complex variable phase space, as seen from the expansion over diagonal coherent state projectors.
+
+In the P-representation a coherent state may be sampled as a single point on the complex plane
 
 ```julia
 N = 10000
@@ -12,6 +19,7 @@ state = Coherent(12.0)
 ```
 
 In any other distribution the coherent state is more interesting to sample.
+
 ## Positive-P
 In the Positive-P representation the simples way to sample the state is again as a point on the complex plane
 
