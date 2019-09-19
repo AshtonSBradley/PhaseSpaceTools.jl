@@ -15,23 +15,25 @@ For a single bosonic mode, with creation and destruction operators $a^\dagger$, 
 ```math
 a|\alpha\rangle =\alpha|\alpha\rangle.
 ```
-where $\alpha$ can vary of the complex plane and plays the role of a classical amplitude.
+where $\alpha\in \mathbb{C}$ can vary over the complex plane and plays the role of a classical amplitude.
 
 In terms of Fock states, the coherent states take the form
 ```math
 |\alpha\rangle = e^{-|\alpha|^2/2}\sum_{n=0}^\infty \frac{\alpha^n}{\sqrt{n!}}|n\rangle
 ```
-These states are overcomplete, with identity
+These states are overcomplete, with resolution of the identity
 ```math
-1 = \frac{1}{\pi}\int d^2\alpha |\alpha\rangle\langle\alpha|
+\mathbb{1} = \frac{1}{\pi}\int d^2\alpha |\alpha\rangle\langle\alpha|.
 ```
+This property is responsible for much of the practical utility of coherent states, furnishing a mapping from quantum operators in Hilbert space to differential operators in phase space.
+
 ## Glauber-Sudarshan P-representation
-One of the most well-known representations is the Glauber-Sudarshan P distribution (here referred to as P). For a single mode optical field, the representation of the density matrix is given by
+One of the most well-known representations is the [Glauber-Sudarshan P-representation](https://en.wikipedia.org/wiki/Glauber–Sudarshan_P_representation) (for brevity here called the Glauber-P). For a single mode optical field, the representation of the density matrix is given by
 
 ```math
 \rho = \int d^2\alpha |\alpha\rangle\langle\alpha|P(\alpha,\alpha^*)
 ```
-where the integral is taken over the entire complex plane. The P-representation occurs in a single complex variable phase space, as seen from the expansion over diagonal coherent state projectors.
+where the integral is taken over the entire complex plane. The Glauber-P representation occurs in a single complex variable phase space, as seen from the expansion over diagonal coherent state projectors.
 
 In the P-representation a coherent state may be sampled as a single point on the complex plane
 
@@ -43,7 +45,7 @@ state = Coherent(12.0)
 
 In any other distribution the coherent state is more interesting to sample.
 
-## Positive-P
+## Positive-P representation
 In the Positive-P representation the simples way to sample the state is again as a point on the complex plane
 
 ```julia
@@ -75,7 +77,7 @@ where
 ```math
 Q(\alpha,\alpha^*)\equiv \frac{\langle \alpha|\rho|\alpha\rangle}{\pi}
 ```
-is the [Husimi-Q function](https://en.wikipedia.org/wiki/Husimi_Q_representation), and the remaining complex Gaussian distribution is readily sampled as
+is the [Husimi-Q representation](https://en.wikipedia.org/wiki/Husimi_Q_representation), and the remaining complex Gaussian distribution is readily sampled as
 ```math
 \gamma = \frac{1}{\sqrt{2}}\left(\eta_1+i\eta_2\right).
 ```
@@ -85,5 +87,6 @@ Here ``\eta_j`` are independent normal random variates with zero mean and unit v
 \langle \eta_j \rangle = 0\quad\quad \langle \eta_i\eta_j\rangle =\delta_{ij}.
 ```
 Normally distributed Gaussian variates are sampled using `randn()`.
-
-## Wigner function
+## Husimi-Q representation
+The [Husimi-Q representation](https://en.wikipedia.org/wiki/Husimi_Q_representation)
+## Wigner representation
