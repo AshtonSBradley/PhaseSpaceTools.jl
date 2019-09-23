@@ -57,7 +57,7 @@ However, we emphasize that this is no longer the case in any subsequent dynamica
 
 In this package we primarily focus on single mode problems, taking the general approach of sampling the Husimi-Q funcion, and then exploiting a simple convolutional relationship between the Husimi-Q and a particular choice of positive-P representation.
 
-Once choice of positive-P that can be made for any single mode density matrix is given by
+A particular choice of positive-P that can be made for any single mode density matrix is given by
 ```math
 P(\alpha,\bar\alpha) = \frac{1}{4\pi^2}\langle (\alpha+\bar\alpha^*)/2|\rho|(\alpha+\bar\alpha^*)/2\rangle e^{-|\alpha-\bar\alpha^*|^2/4}
 ```
@@ -89,4 +89,62 @@ Here ``\eta_j`` are independent normal random variates with zero mean and unit v
 Normally distributed Gaussian variates are sampled using `randn()`.
 ## Husimi-Q representation
 The [Husimi-Q representation](https://en.wikipedia.org/wiki/Husimi_Q_representation)
-## Wigner representation
+## Wigner-representation
+
+## Positive Wigner representation
+Just as the phase space of the P-representation can be doubled to give the positive-P, we can also double the phase space of the W-representation, to give a positive-W representation. The relationship between positive-P and positive-W is a convolution
+```math
+W_+(\alpha,\bar\alpha)=\frac{2}{\pi}\int d^2\lambda e^{-2|\lambda|^2}P_+(\alpha+\lambda,\bar\alpha+\lambda^*).
+```
+We can make a change of variables to $\mu, \gamma$, by defining $\lambda = \mu'-(\alpha+\bar\alpha)/2$, and
+```math
+\alpha = \mu + \gamma,\quad\quad \bar\alpha = \mu^* - \gamma^*
+```
+with inverse
+```math
+\mu = \frac{1}{2}\left(\alpha+\bar\alpha^*\right),\quad\quad \gamma = \frac{1}{2}\left(\alpha-\bar\alpha^*\right).
+```
+Using the specific form of $P_+$ in terms of the $Q$ function, we have
+```math
+W_+(\alpha,\bar\alpha)=\frac{2}{\pi}\int d^2\mu' e^{-2|\mu'-(\alpha+\bar\alpha^*)/2|^2}\frac{e^{-|\alpha-\bar\alpha^*|^2/4}}{4\pi^2}Q(\mu',\mu'^*).
+```
+We note that
+```math
+\int d^2\alpha\int d^2\bar\alpha W_+(\alpha,\bar\alpha)=\int d^2\gamma\int d^2\mu W_+(\alpha,\bar\alpha)4
+```
+where the factor 4 is the Jacobian of the transformation. Hence, we define
+```math
+\tilde W_+(\gamma,\mu)\equiv 4W_+(\alpha(\gamma,\mu),\bar\alpha(\gamma,\mu)),
+```
+and we thus have a particular form for the positive-W of any single mode bosonic quantum state
+```math
+\tilde W_+(\gamma,\mu) = \frac{e^{-|\gamma|^2}}{\pi}\frac{2}{\pi^2}\int d^2\mu' e^{-2|\mu'-\mu|^2}Q(\mu',\mu'^*)
+```
+together with the inverse given above
+```math
+W_+(\alpha,\bar\alpha)=\frac{1}{4}\tilde W_+(\gamma(\alpha,\bar\alpha),\mu(\alpha,\bar\alpha))
+```
+### Fock state in positive-W
+Using the Q-representation for the Fock state $\rho = |n\rangle \langle n|$, and polar coordinates $\mu=\rho e^{i\phi}$, $\mu'=r e^{i\theta}$, we can carry out the convolution
+```math
+\frac{2}{\pi^2}\int d^2\mu'e^{-2|\mu'|^2-2|\mu|^2+2(\mu\mu'^*+\mu^*\mu')}\frac{|\mu'|^{2n}e^{-|\mu'|^2}}{n!}
+=
+\frac{2}{\pi^2}\frac{e^{-2|\mu|^2}}{n!}\int_0^\infty dr r^{2n+1}e^{-3r^2}\underbrace{\int_0^{2\pi}d\theta e^{4r\rho\cos{(\theta-\phi)}}}_{2\pi I_0(4r\rho)}.
+```
+Using the relation between Laguerre polynomials and Bessel function
+```math
+\int_0^\infty dr r^{2n+1}e^{-3r^2}I_0(4r\rho)=\frac{1}{2}\frac{n!}{3^{n+1}}L_{-(n+1)}(4\rho^2/3)
+```
+and the identity $L_{-n}(x)=e^xL_{n-1}(-x)$, we arrive at
+```math
+\tilde W_+(\gamma,\mu) = \frac{e^{-|\gamma|^2}}{\pi}\frac{2e^{-2|\mu|^2/3}}{\pi 3^{n+1}}L_n(-4|\mu|^2/3)
+```
+The $\gamma$ distribution is easily sampled. For the distribution of $\mu\in \mathbb{C}$, as it only depends on $|\mu|\in [0,\infty)$, we can sample it via the correctly normalized distribution for $|\mu|=x$
+```math
+P_{|\mu|}(x)=\frac{4 x e^{-2x^2/3}}{3^{n+1}}L_n(-4x^2/3),
+```
+such that $\int_0^\infty \;dx P_{|\mu|}(x)=1$, 
+and then apply a uniformly sampled random phase $\theta \in [0,2\pi)$ to construct samples on the complex plane
+```math
+\mu = x e^{i\theta}.
+```
