@@ -2,9 +2,10 @@
 """
     a = randnc(N...)
 
-Returns an array of dimension `length(N)`, containing samples of complex random variables with mean zero and variance one:
+Return an array of dimension `length(N)`, containing samples of complex random
+variables with mean zero and variance one:
 ```math
-\\langle |a|^2\\rangle = 1; \\quad\\quad\\langle a^2\\rangle = \\langle (a^*) ^2\\rangle = 0,
+⟨|a|^2⟩ = 1; ⟨a^2⟩ = ⟨(a^*) ^2⟩ = 0,
 ```
 Useful for creating a range of noises that show up in phase-space simulations.
 
