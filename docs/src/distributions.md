@@ -1,5 +1,5 @@
 # Distributions
-The phase-space distributions that may be sampled for these states are
+The phase-space distributions that may be sampled for these quantum states are
 
 ## Husimi-Q
 ```@docs
