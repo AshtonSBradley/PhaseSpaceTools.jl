@@ -5,7 +5,9 @@
 [![Build Status](https://travis-ci.com/AshtonSBradley/PhaseSpaceTools.jl.svg?branch=master)](https://travis-ci.com/AshtonSBradley/PhaseSpaceTools.jl)
 [![Build status](https://ci.appveyor.com/api/projects/status/t6i7kdnpffgnq6pg?svg=true)](https://ci.appveyor.com/project/AshtonSBradley/phasespacetools-jl)
 [![Coverage Status](https://coveralls.io/repos/github/AshtonSBradley/PhaseSpaceTools.jl/badge.svg?branch=master)](https://coveralls.io/github/AshtonSBradley/PhaseSpaceTools.jl?branch=master)
-[![codecov](https://codecov.io/gh/AshtonSBradley/PhaseSpaceTools.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/AshtonSBradley/PhaseSpaceTools.jl)
+[![codecov](https://codecov.io/gh/AshtonSBradley/PhaseSpaceTools.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/AshtonSBradley/PhaseSpaceTools.jl) [![DOI](https://zenodo.org/badge/115932136.svg)](https://zenodo.org/badge/latestdoi/115932136)
+
+
 
 Package for sampling some of the quantum initial states commonly encountered in quantum-optical and matter-wave bosonic phase space simulations. Wigner and positive-P distributions are available, being the most useful for dynamical simulations.
 
