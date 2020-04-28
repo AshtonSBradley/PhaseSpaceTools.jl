@@ -56,7 +56,7 @@ s = Coherent(α) # define state |α⟩
 N = 1000 # number of samples
 a,ā = positiveP(s,N)
 ```
-This is a special case where the two phase space variables `a` and `\bar a` are complex conjugate, and non-stochastic in the `+P` representation.
+This is a special case where the two phase space variables `a` and `ā` are complex conjugate, and non-stochastic in the `+P` representation.
 
 ### Fock state
 An approximate Fock state sampler in the Wigner representation:
