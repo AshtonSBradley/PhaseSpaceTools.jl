@@ -51,20 +51,20 @@ help?> positiveP
 ### Coherent state
 A coherent state |α⟩ is sampled as
 ```julia
-α = 1.0+im*2.0 #coherent state amplitude
-state = Coherent(α) # create state |α⟩
-N = 1000 #number of samples
-α,ᾱ = positiveP(state,N)
+α = 1.0+im*2.0 # coherent amplitude
+s = Coherent(α) # define state |α⟩
+N = 1000 # number of samples
+α,ᾱ = positiveP(s,N)
 ```
 This is a special case where the two phase space variables `\alpha` and `\bar\alpha` are complex conjugate, and non-stochastic in the `+P` representation.
 
 ### Fock state
-An approximate fock state sampler in the Wigner representation:
+An approximate Fock state sampler in the Wigner representation:
 ```julia
 n = 100
-state = Fock(n)  
-N = 1000 #number of samples
-a,ā = wigner(state,N)
+s = Fock(n)  
+N = 1000 # number of samples
+a,ā = wigner(s,N)
 ```
 Provides an approximate sampling of `W` that reproduces operator averages for large `n`.
 
