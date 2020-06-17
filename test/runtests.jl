@@ -258,7 +258,7 @@ end
 
 @testset "Thermal P" begin 
 
-    N = 10000
+    N = 10001
     n = 50
     β = 0.
     s = Thermal(β,n)
