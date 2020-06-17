@@ -11,6 +11,8 @@ matrix:
   allow_failures:
     - julia_version: nightly
 
+build: off
+
 branches:
   only:
     - master
