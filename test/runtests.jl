@@ -265,15 +265,15 @@ end
 
     a,ā = glauberP(s,N)
     na = real(mean(a.*ā))
-    @test isapprox(na,n,atol=0.5)
+    @test isapprox(na,n,atol=1.0)
 
     a,ā = wigner(s,N)
     na = real(mean(a.*ā))-0.5
-    @test isapprox(na,n,atol=0.5)
+    @test isapprox(na,n,atol=1.0)
 
     a,ā = husimiQ(s,N)
     na = real(mean(a.*ā))-1.0
-    @test isapprox(na,n,atol=0.5)
+    @test isapprox(na,n,atol=1.0)
 
 end
 
