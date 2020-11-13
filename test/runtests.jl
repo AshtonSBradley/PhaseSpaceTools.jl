@@ -256,6 +256,47 @@ end
 
 end
 
+@testset "Bogoliubov +P" begin 
+
+    # Bogoliubov
+    N = 100000
+    n̄ = 10
+
+    function randuv()
+        u,v = randnc(2)
+        nrm = abs2(u)-abs2(v)
+        if nrm < 0
+            new = [0 1;1 0]*[u; v]
+            u,v = new
+        end
+        u /= sqrt(abs(nrm))
+        v /= sqrt(abs(nrm))
+        return u,v
+    end
+
+    u,v = randuv()
+    abs2(u)-abs2(v) ≈ 1.0
+
+    #thermal state
+    state = Bogoliubov(u,v,n̄)
+    a,ā = positiveP(state,N)
+
+    # particle mode population
+    na = mean(a.*ā) |> real
+    nth = (abs2(u)+abs2(v))*n̄ 
+    @test isapprox(na,nth,rtol=1e-1)
+
+
+    #test vacuum limit
+    state = Bogoliubov(u,v,0)
+    a,ā = positiveP(state,N)
+
+    na = mean(a.*ā) |> real
+    nvac = abs2(v)
+    @test isapprox(na,nvac,atol=0.3)
+
+end
+
 @testset "Thermal P" begin 
 
     N = 10001
