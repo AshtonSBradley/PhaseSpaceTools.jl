@@ -14,16 +14,6 @@ function randuv()
     return u,v
 end
 
-@testset "Noises" begin 
-
-    N = 100_000
-    a = randnc(N)
-    mean(abs2.(a))
-
-    @test isapprox(mean(abs2.(a)),1.0,rtol=5e-2)
-    @test isapprox(abs(mean(a)),0.0,atol=1e-2)
-end
-
 @testset "Arg tests" begin 
 
     # Coherent
@@ -85,6 +75,16 @@ end
     @test typeof(laguerren(.1,1)) == Float64
     @test typeof(plaguerre_asymptotic(.1,1)) == Float64
 
+end
+
+@testset "Noises" begin 
+
+    N = 100_000
+    a = randnc(N)
+    mean(abs2.(a))
+
+    @test isapprox(mean(abs2.(a)),1.0,rtol=5e-2)
+    @test isapprox(abs(mean(a)),0.0,atol=1e-2)
 end
 
 @testset "Coherent W" begin 
