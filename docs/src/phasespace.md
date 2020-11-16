@@ -45,6 +45,23 @@ state = Coherent(12.0)
 
 In any other distribution the coherent state is more interesting to sample.
 
+## Husimi-Q representation
+The [Husimi-Q representation](https://en.wikipedia.org/wiki/Husimi_Q_representation) has the advantage that it always exists as a non-singular distribution, and is always non-negative. It is defined as the diagonal matrix element of the density matrix in the coherent state basis
+
+```math
+Q(\alpha,\alpha^*)=\frac{1}{\pi}\langle \alpha|\rho|\alpha\rangle
+```
+
+Many of its properties are very direct to prove. For example, moments of $Q$ generate anti-normally ordered operator averages:
+```math
+\int d^2\alpha\;(\alpha^*)^p\alpha^qQ(\alpha,\alpha^*)=\langle a^q (a^\dag)^q\rangle
+```
+as may be shown using properties of the trace.
+
+In this code we make frequent use of the $Q$ function to sample other distributions. In particular, we use the fact that $P,W,Q$ generate operator averages that are normally ordered, symmetrically ordered, and anti-normally ordered respectively. This may also be expressed in the form of a convolution relationship between distributions, where $W$ and $Q$ are convolutionally broadened relative to the narrower $P$ distribution.
+
+In the next section we outline the main application of this relationship, which is sampling particular +P distributions for states where a $Q$ function may be easily sampled. 
+
 ## Positive-P representation
 In the Positive-P representation the simples way to sample the state is again as a point on the complex plane
 
@@ -87,9 +104,9 @@ Here ``\eta_j`` are independent normal random variates with zero mean and unit v
 \langle \eta_j \rangle = 0\quad\quad \langle \eta_i\eta_j\rangle =\delta_{ij}.
 ```
 Normally distributed Gaussian variates are sampled using `randn()`.
-## Husimi-Q representation
-The [Husimi-Q representation](https://en.wikipedia.org/wiki/Husimi_Q_representation)
+
 ## Wigner-representation
+The Wigner function generates symmetrically ordered operator averages from its moments. It is often used due to being well suited for identifying semi-classical approximations. Many of the simpler Wigner functions are well known and straightforward to sample. However, when the $W$ function has negative regions, or oscillates rapidly, sampling can be more challenging. In this package we implement previously developed methods for sampling Fock states, and also develop a new method to sample Fock states in the positive Wigner representation, a doubled-phase space representation that allows the distribution to remain positive everywhere. 
 
 ## Positive Wigner representation
 Just as the phase space of the P-representation can be doubled to give the positive-P, we can also double the phase space of the W-representation, to give a positive-W representation. The relationship between positive-P and positive-W is a convolution
