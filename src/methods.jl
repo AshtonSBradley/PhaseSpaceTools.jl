@@ -32,12 +32,14 @@ end
 Generate `N` samples from the positive-P phase-space distribution for `state`.
 
 Moments of the positive-P distribution generate quantum operator averages that are normally ordered.
+
+In general the two random variates α,ᾱ are statistically independent for the +P distribution. 
 """
 function positiveP(state::T,N) where T
     μ,μ̄ = husimiQ(state,N)
     γ = randnc(N)
     α = μ .+ γ
-    ᾱ = conj(μ .- γ)
+    ᾱ = conj.(μ .- γ)
     return α, ᾱ
 end
 
@@ -66,14 +68,14 @@ end
 
 function wigner(state::Thermal,N)
     @unpack β,n̄ = state
-    α = β .+ sqrt(n̄+.5)*randnc(N)
+    α = β .+ sqrt(n̄ + .5)*randnc(N)
     ᾱ = conj(α)
     return α, ᾱ
 end
 
 function husimiQ(state::Thermal,N)
     @unpack β,n̄ = state
-    α = β .+ sqrt(n̄+1.0)*randnc(N)
+    α = β .+ sqrt(n̄ + 1.0)*randnc(N)
     ᾱ = conj(α)
     return α, ᾱ
 end
@@ -187,8 +189,8 @@ end
 
 function husimiQ(state::Bogoliubov,N)
     @unpack u,v,n̄ = state
-    b,b̄ = husimiQ(Thermal(0.0,n̄),N)
-    a = u*b + conj(v)*b̄
+    b,b̄ = wigner(Thermal(0.0,n̄),N)
+    a = u*b .+ conj(v)*b̄ .+ randnc(N)/sqrt(2) 
     ā = conj.(a)
     return a,ā
 end

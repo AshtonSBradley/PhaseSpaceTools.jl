@@ -1,7 +1,30 @@
 #!/usr/bin/env julia
 
 using PhaseSpaceTools, Test
-@testset "Testing methods" begin 
+
+function randuv()
+    u,v = randnc(2)
+    nrm = abs2(u)-abs2(v)
+    if nrm < 0
+        new = [0 1;1 0]*[u; v]
+        u,v = new
+    end
+    u /=sqrt(abs(nrm))
+    v /=sqrt(abs(nrm))
+    return u,v
+end
+
+@testset "Noises" begin 
+
+    N = 100_000
+    a = randnc(N)
+    mean(abs2.(a))
+
+    @test isapprox(mean(abs2.(a)),1.0,rtol=5e-2)
+    @test isapprox(abs(mean(a)),0.0,atol=1e-2)
+end
+
+@testset "Arg tests" begin 
 
     # Coherent
     state = Coherent(10.0)
@@ -64,7 +87,7 @@ using PhaseSpaceTools, Test
 
 end
 
-@testset "Coherent state W" begin 
+@testset "Coherent W" begin 
 
     # Coherent
     N = 100000
@@ -83,7 +106,7 @@ end
 
 end
 
-@testset "Coherent state +P" begin 
+@testset "Coherent +P" begin 
 
     N = 1000
     α = 100*randnc()
@@ -103,7 +126,29 @@ end
 
 end
 
-@testset "Fock state W" begin 
+
+@testset "Thermal P,Q,W" begin 
+
+    N = 100001
+    n = 50
+    β = 0.
+    s = Thermal(β,n)
+
+    a,ā = glauberP(s,N)
+    na = real(mean(a.*ā))
+    @test isapprox(na,n,atol=.9)
+
+    a,ā = wigner(s,N)
+    na = real(mean(a.*ā))-0.5
+    @test isapprox(na,n,atol=.9)
+
+    a,ā = husimiQ(s,N)
+    na = real(mean(a.*ā))-1.0
+    @test isapprox(na,n,atol=.9)
+
+end
+
+@testset "Fock W" begin 
 
     # Fock
     n = 100
@@ -125,7 +170,7 @@ end
 
 end
 
-@testset "Fock state +W" begin 
+@testset "Fock +W" begin 
 
 #test +W
 
@@ -148,7 +193,7 @@ end
 
 end
 
-@testset "Fock state +W for large n " begin 
+@testset "Fock +W (n≫1)" begin 
 
 #test +W for large n
 
@@ -172,7 +217,28 @@ end
 
 end
 
-@testset "Squeezed state +P " begin 
+@testset "Fock +P" begin 
+
+    n = 99
+    N = 100_000
+    state = Fock(n)
+    a,ā = positiveP(state,N)
+
+    meana = mean(a)
+    absa = abs(meana)
+    n̄ = mean(a.*ā) |> real
+    Vn = abs(mean(a.*a.*ā.*ā))-abs(mean(a.*ā)).^2
+    rel_num_var = sqrt(abs(Vn))/abs(n̄);
+
+    #test
+    @test absa < 0.1
+    @test n̄ - n < 1
+    @test Vn < 50
+    @test rel_num_var < 0.15
+
+end
+
+@testset "Squeezed +P " begin 
 
     #Squeezed
     β = 10
@@ -194,7 +260,7 @@ end
 
 end
 
-@testset "Squeezed state W" begin 
+@testset "Squeezed W" begin 
 
     # Squeezed
     β = 10
@@ -221,18 +287,6 @@ end
     N = 100000
     n̄ = 10
 
-    function randuv()
-        u,v = randnc(2)
-        nrm = abs2(u)-abs2(v)
-        if nrm < 0
-            new = [0 1;1 0]*[u; v]
-            u,v = new
-        end
-        u /=sqrt(abs(nrm))
-        v /=sqrt(abs(nrm))
-        return u,v
-    end
-
     u,v = randuv()
     abs2(u)-abs2(v) ≈ 1.0
 
@@ -241,16 +295,43 @@ end
     a,ā = wigner(state,N)
 
     # particle mode population
-    na = real(mean(a.*ā))-0.5
-    nth = (abs2(u)+abs2(v))*(n̄+0.5) - 0.5
+    na = real(mean(a.*ā)) - 0.5
+    nth = (abs2(u) + abs2(v))*(n̄ + 0.5) - 0.5
     @test isapprox(na,nth,rtol=1e-1)
-
 
     #test vacuum limit
     state = Bogoliubov(u,v,0)
     a,ā = wigner(state,N)
 
-    na = real(mean(a.*ā))-0.5
+    na = real(mean(a.*ā)) - 0.5
+    nvac = abs2(v)
+    @test isapprox(na,nvac,atol=0.3)
+
+end
+
+@testset "Bogoliubov Q" begin 
+
+    # Bogoliubov
+    N = 100000
+    n̄ = 10
+
+    u,v = randuv()
+    abs2(u)-abs2(v) ≈ 1.0
+
+    #thermal state
+    state = Bogoliubov(u,v,n̄)
+    a,ā = husimiQ(state,N)
+
+    # particle mode population
+    na = real(mean(a.*ā)) - 1.0
+    nth = (abs2(u) + abs2(v))*(n̄ + 1.0) - 1.0
+    @test isapprox(na,nth,rtol=1e-1)
+
+    #test vacuum limit
+    state = Bogoliubov(u,v,0)
+    a,ā = husimiQ(state,N)
+
+    na = real(mean(a.*ā)) - 1.0
     nvac = abs2(v)
     @test isapprox(na,nvac,atol=0.3)
 
@@ -262,20 +343,8 @@ end
     N = 100000
     n̄ = 10
 
-    function randuv()
-        u,v = randnc(2)
-        nrm = abs2(u)-abs2(v)
-        if nrm < 0
-            new = [0 1;1 0]*[u; v]
-            u,v = new
-        end
-        u /= sqrt(abs(nrm))
-        v /= sqrt(abs(nrm))
-        return u,v
-    end
-
     u,v = randuv()
-    abs2(u)-abs2(v) ≈ 1.0
+    @test abs2(u)-abs2(v) ≈ 1.0
 
     #thermal state
     state = Bogoliubov(u,v,n̄)
@@ -283,9 +352,8 @@ end
 
     # particle mode population
     na = mean(a.*ā) |> real
-    nth = (abs2(u)+abs2(v))*n̄ 
+    nth = (abs2(u) + abs2(v))*n̄ + abs(v)
     @test isapprox(na,nth,rtol=1e-1)
-
 
     #test vacuum limit
     state = Bogoliubov(u,v,0)
@@ -297,33 +365,4 @@ end
 
 end
 
-@testset "Thermal P" begin 
 
-    N = 10001
-    n = 50
-    β = 0.
-    s = Thermal(β,n)
-
-    a,ā = glauberP(s,N)
-    na = real(mean(a.*ā))
-    @test isapprox(na,n,atol=1.0)
-
-    a,ā = wigner(s,N)
-    na = real(mean(a.*ā))-0.5
-    @test isapprox(na,n,atol=1.0)
-
-    a,ā = husimiQ(s,N)
-    na = real(mean(a.*ā))-1.0
-    @test isapprox(na,n,atol=1.0)
-
-end
-
-@testset "Noises" begin 
-
-    N = 100_000
-    a = randnc(N)
-    mean(abs2.(a))
-
-    @test isapprox(mean(abs2.(a)),1.0,rtol=5e-2)
-
-end
