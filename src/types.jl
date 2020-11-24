@@ -3,7 +3,7 @@ abstract type State end
 """
     Coherent(β)
 
-Create a coherent state with complex amplitude `β`.
+Create a coherent state with complex amplitude `β ∈ ℂ`.
 """
 struct Coherent <: State
     β::Complex{Float64}
@@ -12,7 +12,7 @@ end
 """
     Fock(n)
 
-Create a Fock state for particle number `n`.
+Create a Fock state for particle number `n ∈ ℕ₀`.
 """
 struct Fock <: State
     n::Int64

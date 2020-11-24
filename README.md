@@ -19,13 +19,6 @@ Available distributions are `glauberP`, `positiveP` `wigner`, `positiveW`, `husi
 ] add https://github.com/AshtonSBradley/PhaseSpaceTools.jl.git
 ```
 
-To get help type, e.g.
-
-```julia
-julia> methods(positiveP)
-```
-for a list of available methods.
-
 ## Usage
 ```julia
 julia> using PhaseSpaceTools

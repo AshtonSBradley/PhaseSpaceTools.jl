@@ -1,5 +1,5 @@
 """
-    α,ᾱ = wigner(state <: State,N)
+    α,α⁺ = wigner(state <: State,N)
 
 Generate `N` samples from wigner phase-space distribution for `state`.
 
@@ -8,8 +8,8 @@ Moments of the Wigner distribution generate symmetrically ordered quantum operat
 function wigner(state::Coherent,N)
     @unpack β = state
     α = β .+ randnc(N)/sqrt(2)
-    ᾱ = conj(α)
-    return α, ᾱ
+    α⁺ = conj(α)
+    return α, α⁺
 end
 
 """
@@ -22,36 +22,36 @@ Moments of the Husimi-Q distribution generate quantum operator averages that are
 function husimiQ(state::Coherent,N)
     @unpack β = state
     α = β .+ randnc(N)
-    ᾱ = conj(α)
-    return α, ᾱ
+    α⁺ = conj(α)
+    return α, α⁺
 end
 
 """
-    α,ᾱ = positiveP(state <: State,N)
+    α,α⁺ = positiveP(state <: State,N)
 
-Generate `N` samples from the positive-P phase-space distribution for `state`.
+Generate `N` samples from the positive-P (+P) phase-space distribution for `state`.
 
-Moments of the positive-P distribution generate quantum operator averages that are normally ordered.
+Moments of the +P distribution generate quantum operator averages that are normally ordered.
 
-In general the two random variates α,ᾱ are statistically independent for the +P distribution. 
+In general the two random variates α,α⁺ are statistically independent for the +P distribution. 
 """
 function positiveP(state::T,N) where T
-    μ,μ̄ = husimiQ(state,N)
+    μ,μ⁺ = husimiQ(state,N)
     γ = randnc(N)
     α = μ .+ γ
-    ᾱ = conj.(μ .- γ)
-    return α, ᾱ
+    α⁺ = conj.(μ .- γ)
+    return α, α⁺
 end
 
 function positiveP(state::Coherent,N)
     @unpack β = state
     α = β*ones(N)
-    ᾱ = conj(α)
-    return α,ᾱ
+    α⁺ = conj(α)
+    return α,α⁺
 end
 
 """
-    α,ᾱ = glauberP(state <: State,N)
+    α,α⁺ = glauberP(state <: State,N)
 
 Generate `N` samples from the Glauber-Sudarshan-P phase-space distribution for `state`.
 
@@ -62,22 +62,22 @@ glauberP(state::Coherent,N) = positiveP(state,N)
 function glauberP(state::Thermal,N)
     @unpack β,n̄ = state
     α = β .+ sqrt(n̄)*randnc(N)
-    ᾱ = conj(α)
-    return α, ᾱ
+    α⁺ = conj(α)
+    return α, α⁺
 end
 
 function wigner(state::Thermal,N)
     @unpack β,n̄ = state
     α = β .+ sqrt(n̄ + .5)*randnc(N)
-    ᾱ = conj(α)
-    return α, ᾱ
+    α⁺ = conj(α)
+    return α, α⁺
 end
 
 function husimiQ(state::Thermal,N)
     @unpack β,n̄ = state
     α = β .+ sqrt(n̄ + 1.0)*randnc(N)
-    ᾱ = conj(α)
-    return α, ᾱ
+    α⁺ = conj(α)
+    return α, α⁺
 end
 
 function husimiQ(state::Squeezed,N)
@@ -86,8 +86,8 @@ function husimiQ(state::Squeezed,N)
     ϕ = angle(ϵ)/2
     ν = sqrt(exp(-r)*cosh(r)/2)*randn(N) .+ im*sqrt(exp(r)*cosh(r)/2)*randn(N)
     α = β .+ exp(im*ϕ)*ν
-    ᾱ = conj(α)
-    return α, ᾱ
+    α⁺ = conj(α)
+    return α, α⁺
 end
 
 function wigner(state::Squeezed,N)
@@ -95,8 +95,8 @@ function wigner(state::Squeezed,N)
     r = abs(ϵ)
     ϕ = angle(ϵ)/2
     α = β .+ 0.5*(randn(N)*exp(-r) .+ im*randn(N)*exp(r))*exp(-im*ϕ)
-    ᾱ = conj(α)
-    return α, ᾱ
+    α⁺ = conj(α)
+    return α, α⁺
 end
 
 function husimiQ(state::Crescent,N)
@@ -105,8 +105,8 @@ function husimiQ(state::Crescent,N)
     ϕ = angle(ϵ)/2
     α = β .+ (randn(N)*exp(-r) .+ im*randn(N)*exp(r))*exp(-im*ϕ)/sqrt(2)
     α = α.*exp.(im*q*randn(N))
-    ᾱ = conj(α)
-    return α,ᾱ
+    α⁺ = conj(α)
+    return α,α⁺
 end
 
 function wigner(state::Crescent,N)
@@ -115,8 +115,8 @@ function wigner(state::Crescent,N)
     ϕ = angle(ϵ)/2
     α = β .+ 0.5*(randn(N)*exp(-r) .+ im*randn(N)*exp(r))*exp(-im*ϕ)
     α = α.*exp.(im*q*randn(N))
-    ᾱ = conj(α)
-    return α, ᾱ
+    α⁺ = conj(α)
+    return α, α⁺
 end
 
 function husimiQ(state::Fock,N)
@@ -124,8 +124,8 @@ function husimiQ(state::Fock,N)
     d = Gamma(n+1,1)
     z = rand(d,N)
     α = sqrt.(z).*exp.(2π*im*rand(N))
-    ᾱ = conj(α)
-    return α, ᾱ
+    α⁺ = conj(α)
+    return α, α⁺
 end
 
 function wigner(state::Fock,N)
@@ -134,20 +134,20 @@ function wigner(state::Fock,N)
     p = 0.5*sqrt(2*n+1+2*sqrt(n^2+n))
     q = 1/(4*p)
     α = (p .+ q*randn(N)).*exp.(2π*im*rand(N))
-    ᾱ = conj(α)
-    return α, ᾱ
+    α⁺ = conj(α)
+    return α, α⁺
 end
 
 """
-    α,ᾱ = positiveW(state <: State,N)
+    α,α⁺ = positiveW(state <: State,N)
 
-Generate `N` samples from the positive-W phase-space distribution for `state`.
+Generate `N` samples from the positive-W (+W) phase-space distribution for `state`.
 
 Implemented states are
 
 - `Fock(N)`
 
-The moments of the positive-W distribution generate quantum operator averages that are symmmetrically ordered.
+The moments of the +W distribution generate quantum operator averages that are symmmetrically ordered.
 """
 function positiveW(state::Fock,N)
     @unpack n = state
@@ -158,47 +158,47 @@ function positiveW(state::Fock,N)
     μ = z.*exp.(2π*im*rand(N))
     γ = randnc(N)
     α = μ .+ γ
-    ᾱ = conj(μ .- γ)
-    return α, ᾱ
+    α⁺ = conj(μ .- γ)
+    return α, α⁺
     else
     x1 = max(0,sqrt(n)-5); x2 = sqrt(n)+5
     z = reject(x->plaguerre_asymptotic.(x,n),[x1,x2],N,0.6)
     μ = z.*exp.(2π*im*rand(N))
     γ = randnc(N)
     α = μ .+ γ
-    ᾱ = conj(μ .- γ)
-    return α, ᾱ
+    α⁺ = conj(μ .- γ)
+    return α, α⁺
 end
 end
 
 function glauberP(state::Bogoliubov,N)
     @unpack u,v,n̄ = state
-    b,b̄ = glauberP(Thermal(0.0,n̄),N)
-    a = u*b + conj(v)*b̄
-    ā = conj.(a)
-    return a,ā
+    β,β⁺ = glauberP(Thermal(0.0,n̄),N)
+    α = u*β + conj(v)*β⁺
+    α⁺ = conj.(α)
+    return α,α⁺
 end
 
 function wigner(state::Bogoliubov,N)
     @unpack u,v,n̄ = state
-    b,b̄ = wigner(Thermal(0.0,n̄),N)
-    a = u*b + conj(v)*b̄
-    ā = conj.(a)
-    return a,ā
+    β,β⁺ = wigner(Thermal(0.0,n̄),N)
+    α = u*β + conj(v)*β⁺
+    α⁺ = conj.(α)
+    return α,α⁺
 end
 
 function husimiQ(state::Bogoliubov,N)
     @unpack u,v,n̄ = state
-    b,b̄ = wigner(Thermal(0.0,n̄),N)
-    a = u*b .+ conj(v)*b̄ .+ randnc(N)/sqrt(2) 
-    ā = conj.(a)
-    return a,ā
+    β,β⁺ = wigner(Thermal(0.0,n̄),N)
+    α = u*β .+ conj(v)*β⁺ .+ randnc(N)/sqrt(2) 
+    α⁺ = conj.(α)
+    return α,α⁺
 end
 
 # #TODO
 # function positiveW(state::Coherent,N)
 #     @unpack β = state
 #     α = β .+ randnc(N)/sqrt(2)
-#     ᾱ = conj(α)
-#     return α, ᾱ
+#     α⁺ = conj(α)
+#     return α, α⁺
 # end

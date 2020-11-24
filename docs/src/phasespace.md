@@ -66,25 +66,25 @@ In the next section we outline the main application of this relationship, which 
 In the Positive-P representation the simples way to sample the state is again as a point on the complex plane
 
 ```julia
-α,ᾱ = positiveP(state,N)
+α,α⁺ = positiveP(state,N)
 ```
 
-Here ``α,ᾱ`` are once again complex conjugates.
+Here ``α,α⁺`` are once again complex conjugates.
 However, we emphasize that this is no longer the case in any subsequent dynamical evolution of the ensemble of phase space points. Furthermore, unlike the Glauber-P distribution, the positive-P distribution for a particular quantum state is not unique.
 
 In this package we primarily focus on single mode problems, taking the general approach of sampling the Husimi-Q funcion, and then exploiting a simple convolutional relationship between the Husimi-Q and a particular choice of positive-P representation.
 
 A particular choice of positive-P that can be made for any single mode density matrix is given by
 ```math
-P(\alpha,\bar\alpha) = \frac{1}{4\pi^2}\langle (\alpha+\bar\alpha^*)/2|\rho|(\alpha+\bar\alpha^*)/2\rangle e^{-|\alpha-\bar\alpha^*|^2/4}
+P(\alpha,\alpha^+) = \frac{1}{4\pi^2}\langle (\alpha+(\alpha^+)^*)/2|\rho|(\alpha+(\alpha^+)^*)/2\rangle e^{-|\alpha-(\alpha^+)^*|^2/4}
 ```
 We can then use the transformation
 ```math
-\mu = (\alpha+\bar\alpha^*)/2,\quad\quad\gamma = (\alpha-\bar\alpha^*)/2,
+\mu = (\alpha+(\alpha^+)^*)/2,\quad\quad\gamma = (\alpha-(\alpha^+)^*)/2,
 ```
 with inverse
 ```math
-\alpha = \mu + \gamma,\quad\quad \bar\alpha = \mu^* - \gamma^*.
+\alpha = \mu + \gamma,\quad\quad \alpha^+ = \mu^* - \gamma^*.
 ```
 The problem reduces to that of sampling the  distribution
 ```math
@@ -111,27 +111,27 @@ The Wigner function generates symmetrically ordered operator averages from its m
 ## Positive Wigner representation
 Just as the phase space of the P-representation can be doubled to give the positive-P, we can also double the phase space of the W-representation, to give a positive-W representation. The relationship between positive-P and positive-W is a convolution
 ```math
-W_+(\alpha,\bar\alpha)=\frac{2}{\pi}\int d^2\lambda e^{-2|\lambda|^2}P_+(\alpha+\lambda,\bar\alpha+\lambda^*).
+W_+(\alpha,\alpha^+)=\frac{2}{\pi}\int d^2\lambda e^{-2|\lambda|^2}P_+(\alpha+\lambda,\alpha^++\lambda^*).
 ```
-We can make a change of variables to $\mu, \gamma$, by defining $\lambda = \mu'-(\alpha+\bar\alpha)/2$, and
+We can make a change of variables to $\mu, \gamma$, by defining $\lambda = \mu'-(\alpha+\alpha^+)/2$, and
 ```math
-\alpha = \mu + \gamma,\quad\quad \bar\alpha = \mu^* - \gamma^*
+\alpha = \mu + \gamma,\quad\quad \alpha^+ = \mu^* - \gamma^*
 ```
 with inverse
 ```math
-\mu = \frac{1}{2}\left(\alpha+\bar\alpha^*\right),\quad\quad \gamma = \frac{1}{2}\left(\alpha-\bar\alpha^*\right).
+\mu = \frac{1}{2}\left(\alpha+(\alpha^+)^*\right),\quad\quad \gamma = \frac{1}{2}\left(\alpha-(\alpha^+)^*\right).
 ```
 Using the specific form of $P_+$ in terms of the $Q$ function, we have
 ```math
-W_+(\alpha,\bar\alpha)=\frac{2}{\pi}\int d^2\mu' e^{-2|\mu'-(\alpha+\bar\alpha^*)/2|^2}\frac{e^{-|\alpha-\bar\alpha^*|^2/4}}{4\pi^2}Q(\mu',\mu'^*).
+W_+(\alpha,\alpha^+)=\frac{2}{\pi}\int d^2\mu' e^{-2|\mu'-(\alpha+(\alpha^+)^*)/2|^2}\frac{e^{-|\alpha-(\alpha^+)^*|^2/4}}{4\pi^2}Q(\mu',\mu'^*).
 ```
 We note that
 ```math
-\int d^2\alpha\int d^2\bar\alpha W_+(\alpha,\bar\alpha)=\int d^2\gamma\int d^2\mu W_+(\alpha,\bar\alpha)4
+\int d^2\alpha\int d^2\alpha^+ W_+(\alpha,\alpha^+)=\int d^2\gamma\int d^2\mu W_+(\alpha,\alpha^+)4
 ```
 where the factor 4 is the Jacobian of the transformation. Hence, we define
 ```math
-\tilde W_+(\gamma,\mu)\equiv 4W_+(\alpha(\gamma,\mu),\bar\alpha(\gamma,\mu)),
+\tilde W_+(\gamma,\mu)\equiv 4W_+(\alpha(\gamma,\mu),\alpha^+(\gamma,\mu)),
 ```
 and we thus have a particular form for the positive-W of any single mode bosonic quantum state
 ```math
@@ -139,7 +139,7 @@ and we thus have a particular form for the positive-W of any single mode bosonic
 ```
 together with the inverse given above
 ```math
-W_+(\alpha,\bar\alpha)=\frac{1}{4}\tilde W_+(\gamma(\alpha,\bar\alpha),\mu(\alpha,\bar\alpha))
+W_+(\alpha,\alpha^+)=\frac{1}{4}\tilde W_+(\gamma(\alpha,\alpha^+),\mu(\alpha,\alpha^+))
 ```
 ### Fock state in positive-W
 Using the Q-representation for the Fock state $\rho = |n\rangle \langle n|$, and polar coordinates $\mu=\rho e^{i\phi}$, $\mu'=r e^{i\theta}$, we can carry out the convolution
