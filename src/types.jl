@@ -28,16 +28,18 @@ julia> wigner(s,100)
 ┌ Warning: Fock state sampling for W is only valid for n ≫ 1.
 ```
 
-Here a warning is generated since Fock sampling is not well defined for small `n`. A simpler way to sample the vacuum is 
+Here a warning is generated since Fock sampling is not well defined for small `n`. 
+    
+A simpler way to sample the vacuum is 
 
 ```julia-repl 
-julia> s = Coherent(0)
-Coherent(0.0 + 0.0im)
+julia> s = Coherent(0) 
+Coherent(0.0 + 0.0im)  # type conversion to ComplexF64.
 
 julia> wigner(s,100)
-(ComplexF64[0.33820868828162637 + 0.4407579103538181im, 0.057183146091823775 - 0.2772571883006981im, -0.022371637201167707 + 0.17617554936307822im, 0.9300453185233181 - 0.14876109286349226im, ...
+(ComplexF64[0.33820868828162637 + 0.4407579103538181im, 0.057183146091823775 - 0.2772571883006981im, ...
 ```
-generating two vectors of sampled points `α,α⁺` in the complex plane. In this case, `α = conj(α⁺)`.
+generating two vectors of sampled points `α,α⁺` in the complex plane. In this case, `α = conj(α⁺)`, as we are not working with a doubled phase space.
 """    
 abstract type State end
 
