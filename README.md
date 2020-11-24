@@ -20,7 +20,7 @@ Available distributions are `glauberP`, `positiveP` `wigner`, `positiveW`, `husi
 ```
 
 ## Usage
-```julia-repl
+```julia
 julia> using PhaseSpaceTools
 
 help?> positiveP
@@ -36,7 +36,7 @@ search: positiveP positiveW
 ```
 ## Implemented states
 
-```julia-repl
+```julia
 help?> State
 search: State state estimate InvalidStateException AbstractSet AbstractVector AbstractVecOrMat stacktrace StackTraces istaskstarted abstract type AbstractRange AbstractPattern
 
@@ -84,7 +84,7 @@ search: State state estimate InvalidStateException AbstractSet AbstractVector Ab
 
 ### Coherent state
 A coherent state |α⟩ is sampled as
-```julia-repl
+```julia
 α = 1.0+im*2.0 # coherent amplitude
 s = Coherent(α) # define state |α⟩
 N = 1000 # number of samples
@@ -94,7 +94,7 @@ This is a special case where the two phase space variables `a` and `a⁺` are co
 
 ### Fock state
 An approximate Fock state sampler in the Wigner representation:
-```julia-repl
+```julia
 n = 100
 s = Fock(n) # define number state |n⟩
 N = 1000 # number of samples
