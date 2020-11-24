@@ -69,12 +69,11 @@ In the Positive-P representation the simples way to sample the state is again as
 α,α⁺ = positiveP(state,N)
 ```
 
-Here ``α,α⁺`` are once again complex conjugates.
-However, we emphasize that this is no longer the case in any subsequent dynamical evolution of the ensemble of phase space points. Furthermore, unlike the Glauber-P distribution, the positive-P distribution for a particular quantum state is not unique.
+Here ``α,α⁺`` are no longer in general complex conjugates. Even if they are initial conjugates, we emphasize that this is no longer the case in subsequent dynamical evolution of the ensemble of phase space points. Furthermore, unlike the Glauber-P distribution, the +P distribution for a particular quantum state is not unique.
 
-In this package we primarily focus on single mode problems, taking the general approach of sampling the Husimi-Q funcion, and then exploiting a simple convolutional relationship between the Husimi-Q and a particular choice of positive-P representation.
+In this package we primarily focus on single mode problems, taking the general approach of sampling the Husimi-Q funcion, and then exploiting a simple convolutional relationship between the Husimi-Q and a particular choice of +P representation.
 
-A particular choice of positive-P that can be made for any single mode density matrix is given by
+A particular choice of +P that can be made for any single mode density matrix is given by
 ```math
 P(\alpha,\alpha^+) = \frac{1}{4\pi^2}\langle (\alpha+(\alpha^+)^*)/2|\rho|(\alpha+(\alpha^+)^*)/2\rangle e^{-|\alpha-(\alpha^+)^*|^2/4}
 ```
@@ -105,6 +104,7 @@ Here ``\eta_j`` are independent normal random variates with zero mean and unit v
 ```
 Normally distributed Gaussian variates are sampled using `randn()`.
 
+We should emphasize that all states with $Q$ function sampling in this package are also available in the +P representation via this approach. To see details of sampling for a given distribution, see `src/methods.jl`.
 ## Wigner-representation
 The Wigner function generates symmetrically ordered operator averages from its moments. It is often used due to being well suited for identifying semi-classical approximations. Many of the simpler Wigner functions are well known and straightforward to sample. However, when the $W$ function has negative regions, or oscillates rapidly, sampling can be more challenging. In this package we implement previously developed methods for sampling Fock states, and also develop a new method to sample Fock states in the positive Wigner representation, a doubled-phase space representation that allows the distribution to remain positive everywhere. 
 

@@ -190,7 +190,7 @@ end
 function husimiQ(state::Bogoliubov,N)
     @unpack u,v,n̄ = state
     β,β⁺ = wigner(Thermal(0.0,n̄),N)
-    α = u*β .+ conj(v)*β⁺ .+ randnc(N)/sqrt(2) 
+    α = u*β .+ conj(v)*β⁺ .+ randnc(N)/sqrt(2) # convolve with Gaussian 
     α⁺ = conj.(α)
     return α,α⁺
 end
