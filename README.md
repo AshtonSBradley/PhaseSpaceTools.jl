@@ -20,7 +20,7 @@ Available distributions are `glauberP`, `positiveP` `wigner`, `positiveW`, `husi
 ```
 
 ## Usage
-```julia
+```julia-repl
 julia> using PhaseSpaceTools
 
 help?> positiveP
@@ -36,18 +36,55 @@ search: positiveP positiveW
 ```
 ## Implemented states
 
+```julia-repl
 help?> State
+search: State state estimate InvalidStateException AbstractSet AbstractVector AbstractVecOrMat stacktrace StackTraces istaskstarted abstract type AbstractRange AbstractPattern
 
-* Coherent(α)
-* Thermal(α,n̄)
-* Squeezed(α,ϵ)
-* Fock(N)
-* Bogoliubov(u,v,n̄)
-* Crescent(α,ϵ,q)
+  State
+
+  Abstract container type for all sampled states: state <: State.
+
+  Examples
+  ≡≡≡≡≡≡≡≡≡≡
+
+  Find all states that may be sampled
+  =====================================
+
+  julia> subtypes(State)
+  
+  6-element Vector{Any}:
+  Bogoliubov
+  Coherent
+  Crescent
+  Fock
+  Squeezed
+  Thermal
+
+  Create and sample a particular state (vacuum)
+  ===============================================
+
+  julia> s = Fock(0)
+  Fock(0)
+  julia> wigner(s,100)
+  julia> wigner(s,100)
+  ┌ Warning: Fock state sampling for W is only valid for n ≫ 1.
+
+  Here a warning is generated since Fock sampling is not well defined for small n. 
+
+  A simpler way to sample the vacuum is 
+
+  julia> s = Coherent(0) 
+  Coherent(0.0 + 0.0im)  # type conversion to ComplexF64.
+  
+  julia> wigner(s,100)
+  (ComplexF64[0.33820868828162637 + 0.4407579103538181im, 0.057183146091823775 - 0.2772571883006981im, ...
+
+  generating two vectors of sampled points α,α⁺ in the complex plane. In this case, α = conj(α⁺), as we are not working with a doubled phase space.
+```
 
 ### Coherent state
 A coherent state |α⟩ is sampled as
-```julia
+```julia-repl
 α = 1.0+im*2.0 # coherent amplitude
 s = Coherent(α) # define state |α⟩
 N = 1000 # number of samples
@@ -57,7 +94,7 @@ This is a special case where the two phase space variables `a` and `a⁺` are co
 
 ### Fock state
 An approximate Fock state sampler in the Wigner representation:
-```julia
+```julia-repl
 n = 100
 s = Fock(n) # define number state |n⟩
 N = 1000 # number of samples
