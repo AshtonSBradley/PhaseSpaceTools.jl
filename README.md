@@ -22,17 +22,21 @@ Available distributions are `glauberP`, `positiveP` `wigner`, `positiveW`, `husi
 ## Usage
 ```julia
 julia> using PhaseSpaceTools
+
 help?> positiveP
+search: positiveP positiveW
 
-  search: positiveP positiveW
+  α,α⁺ = positiveP(state <: State,N)
 
-    α,ᾱ = positiveP(state <: State,N)
+  Generate N samples from the positive-P (+P) phase-space distribution for state.
 
-    Generate N samples from the positive-P phase-space distribution for state.
+  Moments of the +P distribution generate quantum operator averages that are normally ordered.
 
-    Moments of the positive-P distribution generate quantum operator averages that are normally ordered.
+  In general the two random variates α,α⁺ are statistically independent for the +P distribution. 
 ```
 ## Implemented states
+
+help?> State
 
 * Coherent(α)
 * Thermal(α,n̄)
