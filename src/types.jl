@@ -1,7 +1,7 @@
 """
     State
 
-Abstract container type for all sampled states: `state <: State`.
+Abstract supertype for all sampled states: `state <: State`.
 
 # Examples
 ## Find all states that may be sampled
@@ -23,7 +23,6 @@ Thermal
 ```julia-repl 
 julia> s = Fock(0)
 Fock(0)
-julia> wigner(s,100)
 julia> wigner(s,100)
 ┌ Warning: Fock state sampling for W is only valid for n ≫ 1.
 ```

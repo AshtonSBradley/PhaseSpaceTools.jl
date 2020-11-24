@@ -42,7 +42,7 @@ search: State state estimate InvalidStateException AbstractSet AbstractVector Ab
 
   State
 
-  Abstract container type for all sampled states: state <: State.
+  Abstract supertype for all sampled states: state <: State.
 
   Examples
   ≡≡≡≡≡≡≡≡≡≡
@@ -65,7 +65,6 @@ search: State state estimate InvalidStateException AbstractSet AbstractVector Ab
 
   julia> s = Fock(0)
   Fock(0)
-  julia> wigner(s,100)
   julia> wigner(s,100)
   ┌ Warning: Fock state sampling for W is only valid for n ≫ 1.
 
