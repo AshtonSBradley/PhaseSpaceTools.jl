@@ -9,7 +9,9 @@
 
 
 
-Package for sampling some of the quantum initial states commonly encountered in quantum-optical and matter-wave bosonic phase space simulations. Wigner and positive-P distributions are available, being the most useful for dynamical simulations.
+Sample quantum initial states commonly encountered in quantum phase space simulations of Bose fields, including those encountered in quantum optics and Bose-Einstein condensates. 
+
+Wigner and positive-P distributions are available, being the most useful for dynamical simulations.
 
 Available distributions are `glauberP`, `positiveP` `wigner`, `positiveW`, `husimiQ`.
 
