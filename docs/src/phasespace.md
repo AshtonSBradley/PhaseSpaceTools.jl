@@ -40,7 +40,7 @@ In the P-representation a coherent state may be sampled as a single point on the
 ```julia
 N = 10000
 state = Coherent(12.0)
-α,ᾱ = glauberP(state,N)
+α,α⁺ = glauberP(state,N)
 ```
 
 In any other distribution the coherent state is more interesting to sample.
