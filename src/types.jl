@@ -96,8 +96,8 @@ end
 
 Create a Bogoliubov state with parameters `u`, `v`, `n̄`.
 """
-struct Bogoliubov <: State
-    u::Complex{Float64}
-    v::Complex{Float64}
+struct Bogoliubov{N} <: State
+    u::Array{Complex{Float64},N}
+    v::Array{Complex{Float64},N}
     n̄::Float64
 end
