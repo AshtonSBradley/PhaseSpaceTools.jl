@@ -14,7 +14,8 @@ git:
 ## uncomment the following lines to allow failures on nightly julia
 ## (tests will run but not make your overall status red)
 # matrix: (deprecated in Travis)
-
+#   allow_failures:
+#   - julia: nightly
 
 jobs:
   allow_failures:
