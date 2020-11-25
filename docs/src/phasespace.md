@@ -42,8 +42,10 @@ N = 10000
 state = Coherent(12.0)
 α,α⁺ = glauberP(state,N)
 ```
-
 In any other distribution the coherent state is more interesting to sample.
+
+Note here that $\alpha$ and $\alpha^+$ are simple complex conjugates. In any of the doubled-phase space representations such as the [positive-P representation](@ref), they are independent variables.
+
 
 ## Husimi-Q representation
 The [Husimi-Q representation](https://en.wikipedia.org/wiki/Husimi_Q_representation) has the advantage that it always exists as a non-singular distribution, and is always non-negative. It is defined as the diagonal matrix element of the density matrix in the coherent state basis
