@@ -17,4 +17,4 @@ include("types.jl")
 include("helpers.jl")
 include("methods.jl")
 
-end #end of module
+end  
