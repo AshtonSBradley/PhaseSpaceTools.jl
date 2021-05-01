@@ -55,6 +55,7 @@ jobs:
             Pkg.instantiate()'
       - run: |
           julia --project=docs -e '
+            Pkg.add("Documenter")
             using Documenter: DocMeta, doctest
             using PhaseSpaceTools
             DocMeta.setdocmeta!(PhaseSpaceTools, :DocTestSetup, :(using PhaseSpaceTools); recursive=true)
