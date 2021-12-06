@@ -24,7 +24,7 @@ Available distributions are `glauberP`, `positiveP` `wigner`, `positiveW`, `husi
 ## Install
 
 ```julia
-] add https://github.com/AshtonSBradley/PhaseSpaceTools.jl.git
+] add PhaseSpaceTools
 ```
 
 ## Usage
