@@ -17,14 +17,6 @@
 
 Sample quantum initial states commonly encountered in quantum phase space simulations of Bose fields, including those encountered in quantum optics and Bose-Einstein condensates. 
 
-These quantum phase space methods use coherent states
-
-$$
-|\alpha\rangle=e^{-|\alpha|^2/2}\sum_{n=0}^\infty \frac{\alpha^n}{\sqrt{n!}}|n\rangle
-$$
-
-to represent general quantum states.
-
 Wigner and positive-P distributions are available, being the most useful for dynamical simulations.
 
 Available distributions are `glauberP`, `positiveP` `wigner`, `positiveW`, `husimiQ`.
