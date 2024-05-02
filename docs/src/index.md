@@ -7,9 +7,9 @@ There are also convenience methods for calculating operator averages from phase-
 In the julia REPL
 
 ```
-julia> ]add https://github.com/AshtonSBradley/PhaseSpaceTools.jl
+pkg> add https://github.com/AshtonSBradley/PhaseSpaceTools.jl
 
-Pkg> test PhaseSpaceTools
+pkg> test PhaseSpaceTools
 ```
 # Reference
 If you find this package useful, please cite

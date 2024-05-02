@@ -44,7 +44,7 @@ state = Coherent(12.0)
 ```
 In any other distribution the coherent state is more interesting to sample.
 
-Note here that $\alpha$ and $\alpha^+$ are simple complex conjugates. In any of the doubled-phase space representations such as the [positive-P representation](@ref), they are independent variables.
+Note here that $\alpha$ and $\alpha^+$ are simple complex conjugates. In any of the doubled-phase space representations such as the [Positive-P representation](@ref), they are independent variables.
 
 
 ## Husimi-Q representation

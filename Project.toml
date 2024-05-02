@@ -1,7 +1,7 @@
 name = "PhaseSpaceTools"
 uuid = "0e21426a-da0a-11e8-1f13-43a2532b2fa8"
 authors = ["Ashton Bradley <ashton.bradley@gmail.com>"]
-version = "1.0.3"
+version = "1.0.4"
 
 [deps]
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
@@ -16,7 +16,6 @@ Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 [compat]
 Distributions = "0.25"
 GSL = "1, 1.0"
-Parameters = "0.12"
 Reexport = "1, 1.0, 1.1, 1.2"
 SpecialFunctions = "2"
-julia = "1.6,1.7,1.8,1.9"
+julia = "1"
