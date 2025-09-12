@@ -261,26 +261,35 @@ end
 end
 
 # TODO:
-# @testset "Squeezed2 +P " begin 
+@testset "Squeezed2 +P " begin 
 
-#     #Squeezed
-#     r = 1
-#     ϕ = π/2
-#     state = Squeezed2(r,ϕ)
-#     N = 100000
+## Squeezed
+r = 1
+ϕ = 0
+n̄ = sinh(r)^2
+state = Squeezed2(r,ϕ)
+N = 1000000
 
-#     a,a⁺,b,b⁺ = positiveP(state,N)
+a,a⁺,b,b⁺ = positiveP(state,N)
 
-#     X = (a + b⁺)/2
-#     Y = (im*(a⁺ - b))/2
-#     σX = std(X,corrected=false) |> real 
-#     σY = std(Y,corrected=false) |> real  
+na = mean(a.*a⁺) |> real
+nb = mean(b.*b⁺) |> real
+@test isapprox(na,n̄,atol=1e-2)
+@test isapprox(nb,n̄,atol=1e-2) 
 
-#     #test
-#     @test isapprox(σX,exp(r),rtol=1e-2)
-#     @test isapprox(σY,exp(-r),rtol=1e-2)
+##quadratures
+X = a + b⁺
+X⁺ = a⁺ + b
+Y = im*(a⁺ - b)
+Y⁺ = -im*(a - b⁺)
+σX = mean(X.*X⁺)+1 |> real |> sqrt
+σY = mean(Y.*Y⁺)+1 |> real |> sqrt
 
-# end
+@test isapprox(σX,exp(r),rtol=1e-2)
+@test isapprox(σY,exp(-r),rtol=1e-2)
+
+##TODO ϕ=π/4 test
+end
 
 @testset "Squeezed W" begin 
 

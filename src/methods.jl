@@ -97,12 +97,12 @@ function positiveP(state::Squeezed2,N)
     y = randn(ComplexF64,N)*sqrt(2/(1+λ))
     γa = randn(ComplexF64,N)
     γb = randn(ComplexF64,N)
-    μa = @. (-im*x +conj(y))*exp(im*ϕ)/2
-    μb = @. (y -im*conj(x))*exp(im*ϕ)/2
+    μa = @. (-im*x +conj(y))*im*exp(im*ϕ)/2
+    μb = @. (y -im*conj(x))*im*exp(im*ϕ)/2
     α = μa .+ γa
-    α⁺ = @. conj(μa) - conj(γa)
+    α⁺ = conj.(μa .- γa)
     β = μb .+ γb
-    β⁺ = @. conj(μb) - conj(γb)
+    β⁺ = conj.(μb .- γb)
     return α, α⁺, β, β⁺
 end
 
