@@ -82,6 +82,16 @@ struct Squeezed <: State
 end
 
 """
+    Squeezed2(r,ϕ)
+
+Create a two-mode squeezed state with parameters `r`, `ϕ`.
+"""
+struct Squeezed2 <: State
+    r::Float64
+    ϕ::Float64
+end
+
+"""
     Thermal(β,n̄)
 
 Create a Thermal state with parameters `β`, `n̄`.

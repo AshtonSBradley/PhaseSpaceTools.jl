@@ -260,6 +260,28 @@ end
 
 end
 
+# TODO:
+# @testset "Squeezed2 +P " begin 
+
+#     #Squeezed
+#     r = 1
+#     ϕ = π/2
+#     state = Squeezed2(r,ϕ)
+#     N = 100000
+
+#     a,a⁺,b,b⁺ = positiveP(state,N)
+
+#     X = (a + b⁺)/2
+#     Y = (im*(a⁺ - b))/2
+#     σX = std(X,corrected=false) |> real 
+#     σY = std(Y,corrected=false) |> real  
+
+#     #test
+#     @test isapprox(σX,exp(r),rtol=1e-2)
+#     @test isapprox(σY,exp(-r),rtol=1e-2)
+
+# end
+
 @testset "Squeezed W" begin 
 
     # Squeezed

@@ -8,7 +8,7 @@ using Reexport
 
 import GSL:sf_laguerre_n
 
-export State, Coherent, Squeezed, Fock, Thermal, Crescent, Bogoliubov
+export State, Coherent, Squeezed, Squeezed2, Fock, Thermal, Crescent, Bogoliubov
 export glauberP, husimiQ, wigner, positiveP, positiveW
 export randnc, realnoise, realbridge
 export reject, plaguerre, plaguerre_asymptotic, laguerren
