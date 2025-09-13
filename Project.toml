@@ -1,7 +1,7 @@
 name = "PhaseSpaceTools"
 uuid = "0e21426a-da0a-11e8-1f13-43a2532b2fa8"
 authors = ["Ashton Bradley <ashton.bradley@gmail.com>"]
-version = "1.0.5"
+version = "1.0.6"
 
 [deps]
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
@@ -12,6 +12,13 @@ Reexport = "189a3867-3050-52da-a836-e630ba90ab69"
 SpecialFunctions = "276daf66-3868-5448-9aa4-cd146d93841b"
 Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
+
+[targets]
+test = ["Test", "Statistics"]
 
 [compat]
 Distributions = "0.25"

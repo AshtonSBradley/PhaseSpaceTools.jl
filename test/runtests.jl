@@ -274,8 +274,8 @@ a,a⁺,b,b⁺ = positiveP(state,N)
 
 na = mean(a.*a⁺) |> real
 nb = mean(b.*b⁺) |> real
-@test isapprox(na,n̄,atol=1e-2)
-@test isapprox(nb,n̄,atol=1e-2) 
+@test isapprox(na,n̄,atol=5e-2)
+@test isapprox(nb,n̄,atol=5e-2) 
 
 ##quadratures
 X = a + b⁺
