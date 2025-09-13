@@ -261,13 +261,13 @@ end
 end
 
 # TODO:
-@testset "Squeezed2 +P " begin 
+@testset "SqueezedTwoMode +P " begin 
 
 ## Squeezed
 r = 1
 ϕ = 0
 n̄ = sinh(r)^2
-state = Squeezed2(r,ϕ)
+state = SqueezedTwoMode(r,ϕ)
 N = 1000000
 
 a,a⁺,b,b⁺ = positiveP(state,N)

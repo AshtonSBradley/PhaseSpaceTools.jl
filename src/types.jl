@@ -82,11 +82,11 @@ struct Squeezed <: State
 end
 
 """
-    Squeezed2(r,ϕ)
+    SqueezedTwoMode(r,ϕ)
 
 Create a two-mode squeezed state with parameters `r`, `ϕ`.
 """
-struct Squeezed2 <: State
+struct SqueezedTwoMode <: State
     r::Float64
     ϕ::Float64
 end

@@ -17,6 +17,10 @@ Crescent
 ```@docs
 Squeezed
 ```
+## SqueezedTwoMode
+```@docs
+SqueezedTwoMode
+```
 ## Thermal
 ```@docs
 Thermal

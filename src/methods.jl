@@ -90,7 +90,7 @@ function husimiQ(state::Squeezed,N)
     return α, α⁺
 end
 
-function positiveP(state::Squeezed2,N)
+function positiveP(state::SqueezedTwoMode,N)
     @unpack r,ϕ = state
     λ = tanh(r)
     x = randn(ComplexF64,N)*sqrt(2/(1-λ))
