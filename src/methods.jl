@@ -93,10 +93,10 @@ end
 function positiveP(state::SqueezedTwoMode,N)
     @unpack r,ϕ = state
     λ = tanh(r)
-    x = randn(ComplexF64,N)*sqrt(2/(1-λ))
-    y = randn(ComplexF64,N)*sqrt(2/(1+λ))
-    γa = randn(ComplexF64,N)
-    γb = randn(ComplexF64,N)
+    x = randnc(N)*sqrt(2/(1-λ))
+    y = randnc(N)*sqrt(2/(1+λ))
+    γa = randnc(N)
+    γb = randnc(N)
     μa = @. (-im*x +conj(y))*im*exp(im*ϕ)/2
     μb = @. (y -im*conj(x))*im*exp(im*ϕ)/2
     α = μa .+ γa
