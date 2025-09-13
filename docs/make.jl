@@ -1,4 +1,5 @@
-import Pkg; Pkg.add(["Documenter","PhaseSpaceTools"])
+# import Pkg; 
+# Pkg.add(["Documenter","PhaseSpaceTools#master"])
 
 using Documenter, PhaseSpaceTools
 
