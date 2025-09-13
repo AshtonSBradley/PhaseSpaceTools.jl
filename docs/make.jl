@@ -17,4 +17,7 @@ format = Documenter.HTML(
 
 deploydocs(
     repo = "github.com/AshtonSBradley/PhaseSpaceTools.jl.git",
+    devbranch = "master"                  # match your default branch
 )
+
+
