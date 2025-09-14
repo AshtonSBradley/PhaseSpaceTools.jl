@@ -90,19 +90,26 @@ function husimiQ(state::Squeezed,N)
     return α, α⁺
 end
 
-function positiveP(state::SqueezedTwoMode,N)
+function husimiQ(state::SqueezedTwoMode,N)
     @unpack r,ϕ = state
     λ = tanh(r)
     x = randnc(N)*sqrt(2/(1-λ))
     y = randnc(N)*sqrt(2/(1+λ))
+    α = @. (-im*x +conj(y))*im*exp(im*ϕ)/2
+    α⁺= conj.(α)
+    β = @. (y -im*conj(x))*im*exp(im*ϕ)/2
+    β⁺= conj.(β)
+    return α, α⁺, β, β⁺
+end
+
+function positiveP(state::SqueezedTwoMode,N)
+    μa,μa⁺,μb,μb⁺ = husimiQ(state,N)
     γa = randnc(N)
     γb = randnc(N)
-    μa = @. (-im*x +conj(y))*im*exp(im*ϕ)/2
-    μb = @. (y -im*conj(x))*im*exp(im*ϕ)/2
     α = μa .+ γa
-    α⁺ = conj.(μa .- γa)
+    α⁺ = μa⁺ .- conj.(γa)
     β = μb .+ γb
-    β⁺ = conj.(μb .- γb)
+    β⁺ = μb⁺ .- conj.(γb)
     return α, α⁺, β, β⁺
 end
 

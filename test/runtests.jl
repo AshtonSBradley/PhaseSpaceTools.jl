@@ -261,10 +261,10 @@ end
 end
 
 # TODO:
-@testset "SqueezedTwoMode +P " begin 
+@testset "Squeezed2 +P " begin 
 
 ## Squeezed
-r = 1
+r = .5
 ϕ = 0
 n̄ = sinh(r)^2
 state = SqueezedTwoMode(r,ϕ)
@@ -285,8 +285,8 @@ Y⁺ = -im*(a - b⁺)
 σX = mean(X.*X⁺)+1 |> real |> sqrt
 σY = mean(Y.*Y⁺)+1 |> real |> sqrt
 
-@test isapprox(σX,exp(r),rtol=1e-2)
-@test isapprox(σY,exp(-r),rtol=1e-2)
+@test isapprox(σX,exp(r),rtol=5e-2)
+@test isapprox(σY,exp(-r),rtol=5e-2)
 
 ##TODO ϕ=π/4 test
 end

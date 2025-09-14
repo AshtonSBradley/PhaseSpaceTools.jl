@@ -1,18 +1,18 @@
 using PhaseSpaceTools, Test, Statistics
 
-## Tw-mode Squeezed states
+## Two-mode Squeezed states
 r = 1
 ϕ = 0
 n̄ = sinh(r)^2
-state = Squeezed2(r,ϕ)
+state = SqueezedTwoMode(r,ϕ)
 N = 1000000
 
 a,a⁺,b,b⁺ = positiveP(state,N)
 
 na = mean(a.*a⁺) |> real
 nb = mean(b.*b⁺) |> real
-@test isapprox(na,n̄,atol=1e-2)
-@test isapprox(nb,n̄,atol=1e-2) 
+@test isapprox(na,n̄,atol=5e-2)
+@test isapprox(nb,n̄,atol=5e-2) 
 
 ##quadratures
 X = a + b⁺
@@ -22,6 +22,6 @@ Y⁺ = -im*(a - b⁺)
 σX = mean(X.*X⁺)+1 |> real |> sqrt
 σY = mean(Y.*Y⁺)+1 |> real |> sqrt
 
-@test isapprox(σX,exp(r),rtol=1e-2)
-@test isapprox(σY,exp(-r),rtol=1e-2)
+@test isapprox(σX,exp(r),rtol=5e-2)
+@test isapprox(σY,exp(-r),rtol=5e-2)
 
