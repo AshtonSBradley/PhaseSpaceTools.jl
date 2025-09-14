@@ -51,13 +51,14 @@ search: State state estimate InvalidStateException AbstractSet AbstractVector Ab
   =====================================
 
   julia> subtypes(State)
-  
-  6-element Vector{Any}:
+
+  7-element Vector{Any}:
   Bogoliubov
   Coherent
   Crescent
   Fock
   Squeezed
+  SqueezedTwoMode
   Thermal
 
   Create and sample a particular state (vacuum)
@@ -103,7 +104,7 @@ Provides an approximate sampling of `W` that reproduces operator averages for la
 
 ## Examples
 
-See  `/examples/PhaseSpaceTools.ipynb` for more usage.
+See  `/examples/sampling.ipynb` for more usage.
 
 # External links
 ___Numerical representation of quantum states in the positive-P and Wigner representations,___ \
