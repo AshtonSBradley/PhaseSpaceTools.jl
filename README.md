@@ -24,20 +24,19 @@ julia> ]add PhaseSpaceTools
 
 ```julia
 julia> using PhaseSpaceTools
-julia> using Statistics
 
 julia> α = 1.0 + 2.0im
 julia> state = Coherent(α)
-julia> samples, samples_conj = wigner(state, 100_000)
+julia> samples, samples_conj = positiveP(state, 4)
 
 julia> mean(samples)
 1.0 + 2.0im
 
-julia> real(mean(samples_conj .* samples) - 0.5)
+julia> real(mean(samples_conj .* samples))
 5.0
 ```
 
-The returned sample moments reproduce symmetrically ordered observables in the Wigner representation.
+For coherent states, the `+P` representation is deterministic: `samples` and `samples_conj` are fixed at `α` and `conj(α)`.
 
 ## Implemented states
 
