@@ -28,6 +28,10 @@ end
     @test typeof(glauberP(state,1)[1][1]) == Complex{Float64}
     @test typeof(husimiQ(state,1)[1][1]) == Complex{Float64}
     @test typeof(positiveP(state,1)[1][1]) == Complex{Float64}
+    gp_a, gp_adag = glauberP(state, 10)
+    pp_a, pp_adag = positiveP(state, 10)
+    @test gp_a == pp_a
+    @test gp_adag == pp_adag
 
     # Fock
     n = 100
@@ -60,6 +64,8 @@ end
     state = Squeezed(randnc(),randnc())
     @test typeof(state) <: State
     @test typeof(state) == typeof(Squeezed(randnc(),randnc()))
+    @test Squeezed(1,2im).β === ComplexF64(1)
+    @test Squeezed(1,2im).ϵ === ComplexF64(2im)
     @test typeof(wigner(state,1)[1][1]) == Complex{Float64}
     @test typeof(husimiQ(state,1)[1][1]) == Complex{Float64}
     @test typeof(positiveP(state,1)[1][1]) == Complex{Float64}
@@ -70,6 +76,7 @@ end
     @test typeof(state) == typeof(Thermal(.1,1))
     @test state.β === ComplexF64(0.1)
     @test state.n̄ === 1.0
+    @test Thermal(1 + 2im, 3).β === ComplexF64(1 + 2im)
     @test typeof(wigner(state,1)[1][1]) == Complex{Float64}
     @test typeof(glauberP(state,1)[1][1]) == Complex{Float64}
     @test typeof(husimiQ(state,1)[1][1]) == Complex{Float64}
@@ -83,6 +90,7 @@ end
     @test state.β === ComplexF64(1.0)
     @test state.ϵ === ComplexF64(0.1)
     @test state.q === 0.1
+    @test Crescent(1,2im,0.3).ϵ === ComplexF64(2im)
     @test typeof(wigner(state,1)[1][1]) == Complex{Float64}
     @test typeof(husimiQ(state,1)[1][1]) == Complex{Float64}
     @test typeof(positiveP(state,1)[1][1]) == Complex{Float64}
@@ -104,6 +112,10 @@ end
 
 end
 
+@testset "Fock W warning" begin
+    @test_logs (:warn, r"Fock state sampling for W is only valid for n") wigner(Fock(0), 10)
+end
+
 @testset "Noises" begin 
 
     N = 100_000
@@ -111,6 +123,38 @@ end
 
     @test isapprox(mean(abs2.(a)),1.0,rtol=5e-2)
     @test isapprox(abs(mean(a)),0.0,atol=1e-2)
+end
+
+@testset "Squeezed Q" begin
+
+    β = 3 + 1im
+    ϕ = π/10
+    r = 0.7
+    ϵ = r * exp(2im * ϕ)
+    state = Squeezed(β, ϵ)
+    N = 20_000
+
+    a, ā = husimiQ(state, N)
+
+    @test length(a) == N
+    @test all(ā .== conj.(a))
+    @test norm(mean(a) - β) / abs(β) < 0.03
+
+end
+
+@testset "Crescent Q" begin
+
+    β = 2 + 0.5im
+    ϵ = 0.4exp(im * π / 6)
+    state = Crescent(β, ϵ, 0.0)
+    N = 20_000
+
+    a, ā = husimiQ(state, N)
+
+    @test length(a) == N
+    @test all(ā .== conj.(a))
+    @test norm(mean(a) - β) / abs(β) < 0.05
+
 end
 
 @testset "Coherent W" begin 
@@ -132,6 +176,19 @@ end
 
 end
 
+@testset "Squeezed2 Q" begin
+
+    state = SqueezedTwoMode(0.3, π/7)
+    N = 5_000
+    a, a⁺, b, b⁺ = husimiQ(state, N)
+
+    @test length(a) == N
+    @test length(b) == N
+    @test all(a⁺ .== conj.(a))
+    @test all(b⁺ .== conj.(b))
+
+end
+
 @testset "Coherent +P" begin 
 
     N = 1000
@@ -149,6 +206,32 @@ end
     @test norm(meana - α)/abs(α) < 0.01
     @test abs(n̄ - abs(α).^2)/abs(α)^2 < 0.01
     @test abs(Vn - abs(α)^2)/abs(α)^2 < 0.05
+
+end
+
+@testset "Fock +W small n" begin
+
+    state = Fock(0)
+    N = 10_000
+    a, ā = positiveW(state, N)
+
+    @test length(a) == N
+    @test length(ā) == N
+    @test real(mean(a .* ā) - 0.5) < 0.2
+
+end
+
+@testset "Fock +W asymptotic" begin
+
+    n = 500
+    N = 20_000
+    state = Fock(n)
+    a, ā = positiveW(state, N)
+
+    n̄ = real(mean(a .* ā) - 0.5)
+    @test length(a) == N
+    @test length(ā) == N
+    @test abs(n̄ - n) / n < 0.05
 
 end
 
