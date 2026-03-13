@@ -114,7 +114,7 @@ end
 end
 
 @testset "Fock W warning" begin
-    @test_logs (:warn, r"Fock state sampling for W is only valid for n") wigner(Fock(0), 1_000)
+    @test_logs (:warn, r"Fock state sampling for W is only valid for n") wigner(Fock(0), 10)
 end
 
 @testset "Noises" begin 
