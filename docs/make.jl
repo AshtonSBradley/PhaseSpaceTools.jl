@@ -1,6 +1,3 @@
-# import Pkg; 
-# Pkg.add(["Documenter","PhaseSpaceTools#master"])
-
 using Documenter, PhaseSpaceTools
 
 makedocs(sitename="PhaseSpaceTools.jl",
@@ -19,5 +16,4 @@ deploydocs(
     repo = "github.com/AshtonSBradley/PhaseSpaceTools.jl.git",
     devbranch = "master"                  # match your default branch
 )
-
 
