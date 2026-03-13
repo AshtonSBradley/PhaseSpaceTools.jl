@@ -1,6 +1,6 @@
 #!/usr/bin/env julia
 
-using PhaseSpaceTools, Test
+using PhaseSpaceTools, Test, Statistics, Aqua
 
 function randuv()
     u,v = randnc(2)
@@ -14,11 +14,16 @@ function randuv()
     return u,v
 end
 
+@testset "Aqua" begin
+    Aqua.test_all(PhaseSpaceTools; undefined_exports=false, deps_compat=false)
+end
+
 @testset "Arg tests" begin 
 
     # Coherent
     state = Coherent(10.0)
     @test typeof(state) <: State
+    @test state.β === ComplexF64(10.0)
     @test typeof(wigner(state,1)[1][1]) == Complex{Float64}
     @test typeof(glauberP(state,1)[1][1]) == Complex{Float64}
     @test typeof(husimiQ(state,1)[1][1]) == Complex{Float64}
@@ -29,18 +34,27 @@ end
     state = Fock(n)
     @test typeof(state) == typeof(Fock(n))
     @test typeof(state) <: State
+    @test state.n === 100
     @test typeof(wigner(state,1)[1][1]) == Complex{Float64}
     @test typeof(husimiQ(state,1)[1][1]) == Complex{Float64}
     @test typeof(positiveP(state,1)[1][1]) == Complex{Float64}
+    @test_throws ArgumentError Fock(-1)
 
     # Bogoliubov
-    state = Bogoliubov(.1,.1,1)
+    u = sqrt(2)
+    v = 1.0
+    state = Bogoliubov(u,v,1)
     @test typeof(state) <: State
-    @test typeof(state) == typeof(Bogoliubov(.1,.1,1))
+    @test typeof(state) == typeof(Bogoliubov(u,v,1))
+    @test state.u === ComplexF64(u)
+    @test state.v === ComplexF64(v)
+    @test state.n̄ === 1.0
     @test typeof(wigner(state,1)[1][1]) == Complex{Float64}
     @test typeof(glauberP(state,1)[1][1]) == Complex{Float64}
     @test typeof(husimiQ(state,1)[1][1]) == Complex{Float64}
     @test typeof(positiveP(state,1)[1][1]) == Complex{Float64}
+    @test_throws ArgumentError Bogoliubov(0.1,0.1,1)
+    @test_throws ArgumentError Bogoliubov(u,v,-1)
 
     # Squeezed
     state = Squeezed(randnc(),randnc())
@@ -54,18 +68,31 @@ end
     state = Thermal(.1,1)
     @test typeof(state) <: State
     @test typeof(state) == typeof(Thermal(.1,1))
+    @test state.β === ComplexF64(0.1)
+    @test state.n̄ === 1.0
     @test typeof(wigner(state,1)[1][1]) == Complex{Float64}
     @test typeof(glauberP(state,1)[1][1]) == Complex{Float64}
     @test typeof(husimiQ(state,1)[1][1]) == Complex{Float64}
     @test typeof(positiveP(state,1)[1][1]) == Complex{Float64}
+    @test_throws ArgumentError Thermal(0.1,-1)
 
     # Crescent
     state = Crescent(1.0,0.1,0.1)
     @test typeof(state) <: State
     @test typeof(state) == typeof(Crescent(1.0,0.1,0.1))
+    @test state.β === ComplexF64(1.0)
+    @test state.ϵ === ComplexF64(0.1)
+    @test state.q === 0.1
     @test typeof(wigner(state,1)[1][1]) == Complex{Float64}
     @test typeof(husimiQ(state,1)[1][1]) == Complex{Float64}
     @test typeof(positiveP(state,1)[1][1]) == Complex{Float64}
+
+    # SqueezedTwoMode
+    state = SqueezedTwoMode(0.5,0)
+    @test typeof(state) <: State
+    @test state.r === 0.5
+    @test state.ϕ === 0.0
+    @test_throws ArgumentError SqueezedTwoMode(-0.1,0)
 
     # Helpers
     f(x) = exp(-x^2)
@@ -81,7 +108,6 @@ end
 
     N = 100_000
     a = randnc(N)
-    mean(abs2.(a))
 
     @test isapprox(mean(abs2.(a)),1.0,rtol=5e-2)
     @test isapprox(abs(mean(a)),0.0,atol=1e-2)
@@ -164,7 +190,7 @@ end
 
     #test
     @test absa < 0.1
-    @test n̄ - n < 0.01
+    @test abs(n̄ - n) < 0.01
     @test Vn < 0.01
     @test rel_num_var < 0.001
 
@@ -187,7 +213,7 @@ end
 
     #test
     @test absa < 0.1
-    @test n̄ - n < 1
+    @test abs(n̄ - n) < 1
     @test Vn < 50
     @test rel_num_var < 0.1
 
@@ -211,7 +237,7 @@ end
 
     #test
     @test absa < 0.1
-    @test (n̄ - n)/n < 0.01
+    @test abs(n̄ - n)/n < 0.01
     @test Vn < 30
     @test rel_num_var < 0.1
 
@@ -232,7 +258,7 @@ end
 
     #test
     @test absa < 0.1
-    @test n̄ - n < 1
+    @test abs(n̄ - n) < 1
     @test Vn < 50
     @test rel_num_var < 0.15
 
@@ -319,7 +345,7 @@ end
     n̄ = 10
 
     u,v = randuv()
-    abs2(u)-abs2(v) ≈ 1.0
+    @test abs2(u)-abs2(v) ≈ 1.0
 
     #thermal state
     state = Bogoliubov(u,v,n̄)
@@ -347,7 +373,7 @@ end
     n̄ = 10
 
     u,v = randuv()
-    abs2(u)-abs2(v) ≈ 1.0
+    @test abs2(u)-abs2(v) ≈ 1.0
 
     #thermal state
     state = Bogoliubov(u,v,n̄)
@@ -383,7 +409,7 @@ end
 
     # particle mode population
     na = mean(a.*ā) |> real
-    nth = (abs2(u) + abs2(v))*n̄ + abs(v)
+    nth = (abs2(u) + abs2(v))*n̄ + abs2(v)
     @test isapprox(na,nth,rtol=1e-1)
 
     #test vacuum limit
@@ -395,5 +421,3 @@ end
     @test isapprox(na,nvac,atol=0.3)
 
 end
-
-

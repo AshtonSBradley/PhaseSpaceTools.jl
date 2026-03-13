@@ -2,6 +2,7 @@
 
 [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://AshtonSBradley.github.io/PhaseSpaceTools.jl/dev)
 [![Build Status](https://github.com/AshtonSBradley/PhaseSpaceTools.jl/workflows/CI/badge.svg)](https://github.com/AshtonSBradley/PhaseSpaceTools.jl/actions)
+[![Aqua](https://github.com/AshtonSBradley/PhaseSpaceTools.jl/actions/workflows/Aqua.yml/badge.svg)](https://github.com/AshtonSBradley/PhaseSpaceTools.jl/actions/workflows/Aqua.yml)
 [![Coverage](https://codecov.io/gh/AshtonSBradley/PhaseSpaceTools.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/AshtonSBradley/PhaseSpaceTools.jl)
 [![DOI](https://zenodo.org/badge/115932136.svg)](https://zenodo.org/badge/latestdoi/115932136)
 
@@ -9,7 +10,7 @@ Sample quantum initial states commonly encountered in quantum phase space simula
 
 Wigner and positive-P distributions are available, being the most useful for dynamical simulations.
 
-Available distributions are `glauberP`, `positiveP` `wigner`, `positiveW`, `husimiQ`.
+Available distributions are `glauberP`, `positiveP`, `wigner`, `positiveW`, and `husimiQ`.
 
 <img src="examples/fock.png" alt="Fock state Wigner function" width="300"/>
 
@@ -19,68 +20,34 @@ Available distributions are `glauberP`, `positiveP` `wigner`, `positiveW`, `husi
 julia> ]add PhaseSpaceTools
 ```
 
-## Usage
+## Quick Start
+
 ```julia
 julia> using PhaseSpaceTools
+julia> using Statistics
 
-help?> positiveP
-search: positiveP positiveW
+julia> α = 1.0 + 2.0im
+julia> state = Coherent(α)
+julia> samples, samples_conj = wigner(state, 100_000)
 
-  α,α⁺ = positiveP(state <: State,N)
+julia> mean(samples)
+1.0 + 2.0im
 
-  Generate N samples from the positive-P (+P) phase-space distribution for state.
-
-  Moments of the +P distribution generate quantum operator averages that are normally ordered.
-
-  In general the two random variates α,α⁺ are statistically independent for the +P distribution. 
+julia> real(mean(samples_conj .* samples) - 0.5)
+5.0
 ```
+
+The returned sample moments reproduce symmetrically ordered observables in the Wigner representation.
+
 ## Implemented states
 
-```julia
-help?> State
-search: State state estimate InvalidStateException AbstractSet AbstractVector AbstractVecOrMat stacktrace StackTraces istaskstarted abstract type AbstractRange AbstractPattern
-
-  State
-
-  Abstract supertype for all sampled states: state <: State.
-
-  Examples
-  ≡≡≡≡≡≡≡≡≡≡
-
-  Find all states that may be sampled
-  =====================================
-
-  julia> subtypes(State)
-
-  7-element Vector{Any}:
-  Bogoliubov
-  Coherent
-  Crescent
-  Fock
-  Squeezed
-  SqueezedTwoMode
-  Thermal
-
-  Create and sample a particular state (vacuum)
-  ===============================================
-
-  julia> s = Fock(0)
-  Fock(0)
-  julia> wigner(s,100)
-  ┌ Warning: Fock state sampling for W is only valid for n ≫ 1.
-
-  Here a warning is generated since Fock sampling is not well defined for small n. 
-
-  A simpler way to sample the vacuum is 
-
-  julia> s = Coherent(0) 
-  Coherent(0.0 + 0.0im)  # type conversion to ComplexF64.
-  
-  julia> wigner(s,100)
-  (ComplexF64[0.33820868828162637 + 0.4407579103538181im, 0.057183146091823775 - 0.2772571883006981im, ...
-
-  generating two vectors of sampled points α,α⁺ in the complex plane. In this case, α = conj(α⁺), as we are not working with a doubled phase space.
-```
+- `Bogoliubov`
+- `Coherent`
+- `Crescent`
+- `Fock`
+- `Squeezed`
+- `SqueezedTwoMode`
+- `Thermal`
 
 ### Coherent state
 A coherent state |α⟩ is sampled as
@@ -100,7 +67,7 @@ s = Fock(n) # define number state |n⟩
 N = 1000 # number of samples
 a,a⁺ = wigner(s,N)
 ```
-Provides an approximate sampling of `W` that reproduces operator averages for large `n`.
+Provides an approximate sampling of `W` that reproduces operator averages for large `n`. For small `n`, use with care: the implementation warns that the approximation is only valid when `n ≫ 1`.
 
 ## Examples
 

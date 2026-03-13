@@ -2,7 +2,6 @@ module PhaseSpaceTools
 
 using Reexport
 @reexport using Distributions
-@reexport using Statistics
 @reexport using LinearAlgebra
 @reexport using Parameters
 

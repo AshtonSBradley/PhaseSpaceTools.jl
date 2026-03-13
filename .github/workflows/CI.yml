@@ -11,17 +11,18 @@ jobs:
       matrix:
         version:
           - '1.10'
+          - '1.11'
         os:
           - ubuntu-latest
         arch:
           - x64
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: julia-actions/setup-julia@v1
         with:
           version: ${{ matrix.version }}
           arch: ${{ matrix.arch }}
-      - uses: actions/cache@v3 
+      - uses: actions/cache@v4
         env:
           cache-name: cache-artifacts
         with:
@@ -34,7 +35,7 @@ jobs:
       - uses: julia-actions/julia-buildpkg@v1
       - uses: julia-actions/julia-runtest@v1
       - uses: julia-actions/julia-processcoverage@v1
-      - uses: codecov/codecov-action@v1
+      - uses: codecov/codecov-action@v4
         with: 
           token: ${{ secrets.CODECOV_TOKEN }}
           file: lcov.info
@@ -42,7 +43,7 @@ jobs:
     name: Documentation
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: julia-actions/setup-julia@v1
         with:
           version: '1'
@@ -54,7 +55,6 @@ jobs:
       - run: |
           julia --project=docs -e '
             using Pkg
-            Pkg.add("Documenter")
             using Documenter: DocMeta, doctest
             using PhaseSpaceTools
             DocMeta.setdocmeta!(PhaseSpaceTools, :DocTestSetup, :(using PhaseSpaceTools); recursive=true)
