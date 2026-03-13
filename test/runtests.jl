@@ -19,17 +19,18 @@ end
 end
 
 @testset "Arg tests" begin 
+    Nsmoke = 1_000
 
     # Coherent
     state = Coherent(10.0)
     @test typeof(state) <: State
     @test state.β === ComplexF64(10.0)
-    @test typeof(wigner(state,1)[1][1]) == Complex{Float64}
-    @test typeof(glauberP(state,1)[1][1]) == Complex{Float64}
-    @test typeof(husimiQ(state,1)[1][1]) == Complex{Float64}
-    @test typeof(positiveP(state,1)[1][1]) == Complex{Float64}
-    gp_a, gp_adag = glauberP(state, 10)
-    pp_a, pp_adag = positiveP(state, 10)
+    @test typeof(wigner(state,Nsmoke)[1][1]) == Complex{Float64}
+    @test typeof(glauberP(state,Nsmoke)[1][1]) == Complex{Float64}
+    @test typeof(husimiQ(state,Nsmoke)[1][1]) == Complex{Float64}
+    @test typeof(positiveP(state,Nsmoke)[1][1]) == Complex{Float64}
+    gp_a, gp_adag = glauberP(state, Nsmoke)
+    pp_a, pp_adag = positiveP(state, Nsmoke)
     @test gp_a == pp_a
     @test gp_adag == pp_adag
 
@@ -39,9 +40,9 @@ end
     @test typeof(state) == typeof(Fock(n))
     @test typeof(state) <: State
     @test state.n === 100
-    @test typeof(wigner(state,1)[1][1]) == Complex{Float64}
-    @test typeof(husimiQ(state,1)[1][1]) == Complex{Float64}
-    @test typeof(positiveP(state,1)[1][1]) == Complex{Float64}
+    @test typeof(wigner(state,Nsmoke)[1][1]) == Complex{Float64}
+    @test typeof(husimiQ(state,Nsmoke)[1][1]) == Complex{Float64}
+    @test typeof(positiveP(state,Nsmoke)[1][1]) == Complex{Float64}
     @test_throws ArgumentError Fock(-1)
 
     # Bogoliubov
@@ -53,10 +54,10 @@ end
     @test state.u === ComplexF64(u)
     @test state.v === ComplexF64(v)
     @test state.n̄ === 1.0
-    @test typeof(wigner(state,1)[1][1]) == Complex{Float64}
-    @test typeof(glauberP(state,1)[1][1]) == Complex{Float64}
-    @test typeof(husimiQ(state,1)[1][1]) == Complex{Float64}
-    @test typeof(positiveP(state,1)[1][1]) == Complex{Float64}
+    @test typeof(wigner(state,Nsmoke)[1][1]) == Complex{Float64}
+    @test typeof(glauberP(state,Nsmoke)[1][1]) == Complex{Float64}
+    @test typeof(husimiQ(state,Nsmoke)[1][1]) == Complex{Float64}
+    @test typeof(positiveP(state,Nsmoke)[1][1]) == Complex{Float64}
     @test_throws ArgumentError Bogoliubov(0.1,0.1,1)
     @test_throws ArgumentError Bogoliubov(u,v,-1)
 
@@ -66,9 +67,9 @@ end
     @test typeof(state) == typeof(Squeezed(randnc(),randnc()))
     @test Squeezed(1,2im).β === ComplexF64(1)
     @test Squeezed(1,2im).ϵ === ComplexF64(2im)
-    @test typeof(wigner(state,1)[1][1]) == Complex{Float64}
-    @test typeof(husimiQ(state,1)[1][1]) == Complex{Float64}
-    @test typeof(positiveP(state,1)[1][1]) == Complex{Float64}
+    @test typeof(wigner(state,Nsmoke)[1][1]) == Complex{Float64}
+    @test typeof(husimiQ(state,Nsmoke)[1][1]) == Complex{Float64}
+    @test typeof(positiveP(state,Nsmoke)[1][1]) == Complex{Float64}
 
     # Thermal
     state = Thermal(.1,1)
@@ -77,10 +78,10 @@ end
     @test state.β === ComplexF64(0.1)
     @test state.n̄ === 1.0
     @test Thermal(1 + 2im, 3).β === ComplexF64(1 + 2im)
-    @test typeof(wigner(state,1)[1][1]) == Complex{Float64}
-    @test typeof(glauberP(state,1)[1][1]) == Complex{Float64}
-    @test typeof(husimiQ(state,1)[1][1]) == Complex{Float64}
-    @test typeof(positiveP(state,1)[1][1]) == Complex{Float64}
+    @test typeof(wigner(state,Nsmoke)[1][1]) == Complex{Float64}
+    @test typeof(glauberP(state,Nsmoke)[1][1]) == Complex{Float64}
+    @test typeof(husimiQ(state,Nsmoke)[1][1]) == Complex{Float64}
+    @test typeof(positiveP(state,Nsmoke)[1][1]) == Complex{Float64}
     @test_throws ArgumentError Thermal(0.1,-1)
 
     # Crescent
@@ -91,9 +92,9 @@ end
     @test state.ϵ === ComplexF64(0.1)
     @test state.q === 0.1
     @test Crescent(1,2im,0.3).ϵ === ComplexF64(2im)
-    @test typeof(wigner(state,1)[1][1]) == Complex{Float64}
-    @test typeof(husimiQ(state,1)[1][1]) == Complex{Float64}
-    @test typeof(positiveP(state,1)[1][1]) == Complex{Float64}
+    @test typeof(wigner(state,Nsmoke)[1][1]) == Complex{Float64}
+    @test typeof(husimiQ(state,Nsmoke)[1][1]) == Complex{Float64}
+    @test typeof(positiveP(state,Nsmoke)[1][1]) == Complex{Float64}
 
     # SqueezedTwoMode
     state = SqueezedTwoMode(0.5,0)
@@ -104,7 +105,7 @@ end
 
     # Helpers
     f(x) = exp(-x^2)
-    @test typeof(reject(f,[-1,1],1,1.1)[1]) == Float64
+    @test typeof(reject(f,[-1,1],Nsmoke,1.1)[1]) == Float64
     @test typeof(plaguerre(.1,1)) == Float64
     @test typeof(plaguerre_asymptotic(.1,1)) == Float64
     @test typeof(laguerren(.1,1)) == Float64
@@ -113,7 +114,7 @@ end
 end
 
 @testset "Fock W warning" begin
-    @test_logs (:warn, r"Fock state sampling for W is only valid for n") wigner(Fock(0), 10)
+    @test_logs (:warn, r"Fock state sampling for W is only valid for n") wigner(Fock(0), 1_000)
 end
 
 @testset "Noises" begin 
