@@ -1,7 +1,7 @@
 name = "PhaseSpaceTools"
 uuid = "0e21426a-da0a-11e8-1f13-43a2532b2fa8"
 authors = ["Ashton Bradley <ashton.bradley@gmail.com>"]
-version = "1.0.6"
+version = "1.0.7"
 
 [deps]
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"

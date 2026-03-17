@@ -14,6 +14,12 @@ function randuv()
     return u,v
 end
 
+particle_occupation(u, v, n̄) = (abs2(u) + abs2(v)) * n̄ + abs2(v)
+
+occ_from_wigner(a, ā) = real(mean(a .* ā)) - 0.5
+occ_from_q(a, ā)      = real(mean(a .* ā)) - 1.0
+occ_from_p(a, ā)      = real(mean(a .* ā))
+
 @testset "Aqua" begin
     Aqua.test_all(PhaseSpaceTools; undefined_exports=false, deps_compat=false)
 end
@@ -421,86 +427,74 @@ end
 
 end
 
-@testset "Bogoliubov W" begin 
-
-    # Bogoliubov
-    N = 100000
+@testset "Bogoliubov W" begin
+    N = 100_000
     n̄ = 10
+    u, v = randuv()
 
-    u,v = randuv()
-    @test abs2(u)-abs2(v) ≈ 1.0
+    @test abs2(u) - abs2(v) ≈ 1.0
 
-    #thermal state
-    state = Bogoliubov(u,v,n̄)
-    a,ā = wigner(state,N)
+    state = Bogoliubov(u, v, n̄)
+    a, ā = wigner(state, N)
 
-    # particle mode population
-    na = real(mean(a.*ā)) - 0.5
-    nth = (abs2(u) + abs2(v))*(n̄ + 0.5) - 0.5
-    @test isapprox(na,nth,rtol=1e-1)
+    na  = occ_from_wigner(a, ā)
+    nth = particle_occupation(u, v, n̄)
 
-    #test vacuum limit
-    state = Bogoliubov(u,v,0)
-    a,ā = wigner(state,N)
+    @test isapprox(na, nth, rtol = 1e-1)
 
-    na = real(mean(a.*ā)) - 0.5
-    nvac = abs2(v)
-    @test isapprox(na,nvac,atol=0.3)
+    state = Bogoliubov(u, v, 0)
+    a, ā = wigner(state, N)
 
+    na   = occ_from_wigner(a, ā)
+    nvac = particle_occupation(u, v, 0)
+
+    @test isapprox(na, nvac, atol = 0.05)
 end
 
-@testset "Bogoliubov Q" begin 
-
-    # Bogoliubov
-    N = 100000
+@testset "Bogoliubov Q" begin
+    N = 100_000
     n̄ = 10
+    u, v = randuv()
 
-    u,v = randuv()
-    @test abs2(u)-abs2(v) ≈ 1.0
+    @test abs2(u) - abs2(v) ≈ 1.0
 
-    #thermal state
-    state = Bogoliubov(u,v,n̄)
-    a,ā = husimiQ(state,N)
+    state = Bogoliubov(u, v, n̄)
+    a, ā = husimiQ(state, N)
 
-    # particle mode population
-    na = real(mean(a.*ā)) - 1.0
-    nth = (abs2(u) + abs2(v))*(n̄ + 1.0) - 1.0
-    @test isapprox(na,nth,rtol=1e-1)
+    na  = occ_from_q(a, ā)
+    nth = particle_occupation(u, v, n̄)
 
-    #test vacuum limit
-    state = Bogoliubov(u,v,0)
-    a,ā = husimiQ(state,N)
+    @test isapprox(na, nth, rtol = 1e-1)
 
-    na = real(mean(a.*ā)) - 1.0
-    nvac = abs2(v)
-    @test isapprox(na,nvac,atol=0.3)
+    state = Bogoliubov(u, v, 0)
+    a, ā = husimiQ(state, N)
 
+    na   = occ_from_q(a, ā)
+    nvac = particle_occupation(u, v, 0)
+
+    @test isapprox(na, nvac, atol = 0.05)
 end
 
-@testset "Bogoliubov +P" begin 
-
-    # Bogoliubov
-    N = 100000
+@testset "Bogoliubov +P" begin
+    N = 100_000
     n̄ = 10
+    u, v = randuv()
 
-    u,v = randuv()
-    @test abs2(u)-abs2(v) ≈ 1.0
+    @test abs2(u) - abs2(v) ≈ 1.0
 
-    #thermal state
-    state = Bogoliubov(u,v,n̄)
-    a,ā = positiveP(state,N)
+    state = Bogoliubov(u, v, n̄)
+    a, ā = positiveP(state, N)
 
-    # particle mode population
-    na = mean(a.*ā) |> real
-    nth = (abs2(u) + abs2(v))*n̄ + abs2(v)
-    @test isapprox(na,nth,rtol=1e-1)
+    na  = occ_from_p(a, ā)
+    nth = particle_occupation(u, v, n̄)
 
-    #test vacuum limit
-    state = Bogoliubov(u,v,0)
-    a,ā = positiveP(state,N)
+    @test isapprox(na, nth, rtol = 1e-1)
 
-    na = mean(a.*ā) |> real
-    nvac = abs2(v)
-    @test isapprox(na,nvac,atol=0.3)
+    state = Bogoliubov(u, v, 0)
+    a, ā = positiveP(state, N)
 
+    na   = occ_from_p(a, ā)
+    nvac = particle_occupation(u, v, 0)
+
+    @test isapprox(na, nvac, atol = 0.05)
 end
