@@ -70,7 +70,7 @@ Provides an approximate sampling of `W` that reproduces operator averages for la
 
 ## Examples
 
-See  `/examples/sampling.ipynb` for more usage.
+See `/examples/sampling.ipynb` for more usage.
 
 # External links
 ___Numerical representation of quantum states in the positive-P and Wigner representations,___ \

@@ -34,12 +34,23 @@ Generate `x` distributed according to a probability distribution by rejection sa
 """
 function reject(P,w,N,Pmax)
     a,b = w
+    N >= 0 || throw(ArgumentError("reject requires N >= 0."))
+    a < b || throw(ArgumentError("reject requires a finite window with w[1] < w[2]."))
+    isfinite(Pmax) && Pmax > 0 || throw(ArgumentError("reject requires finite Pmax > 0."))
     samples = Array{Float64}(undef,0)
     sizehint!(samples,N)
+    attempts = 0
+    max_attempts = max(1_000, 1_000 * max(N, 1))
     while length(samples) < N
         y = a + rand()*(b - a)
         z = rand()*Pmax
-        z < P(y) && push!(samples,y)
+        py = P(y)
+        isfinite(py) || throw(ArgumentError("reject requires P(y) to be finite over the sampling window."))
+        py >= 0 || throw(ArgumentError("reject requires P(y) >= 0 over the sampling window."))
+        py <= Pmax || throw(ArgumentError("reject requires Pmax >= P(y) over the sampling window."))
+        z < py && push!(samples,y)
+        attempts += 1
+        attempts <= max_attempts || throw(ArgumentError("reject exceeded $max_attempts attempts without collecting $N samples; check the sampling window and Pmax."))
     end
     return samples
 end

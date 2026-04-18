@@ -1,15 +1,15 @@
 # Overview
 This package provides sampling methods for commonly used quantum states in various quantum phase-space representations. These include Glauber-Sudarshan-P, Positive-P, Husimi-Q, and Wigner representations.
 
-There are also convenience methods for calculating operator averages from phase-space averages, and for sampling noises for solving SDEs using [DifferentialEquations.jl](https://github.com/JuliaDiffEq/DifferentialEquations.jl).
+It also provides helpers for sampling complex and real noises used in phase-space simulations, including SDE workflows with [DifferentialEquations.jl](https://github.com/JuliaDiffEq/DifferentialEquations.jl).
 
 # Installation
 In the julia REPL
 
-```
-pkg> add https://github.com/AshtonSBradley/PhaseSpaceTools.jl
+```julia-repl
+julia> ]add PhaseSpaceTools
 
-pkg> test PhaseSpaceTools
+julia> ]test PhaseSpaceTools
 ```
 # Reference
 If you find this package useful, please cite

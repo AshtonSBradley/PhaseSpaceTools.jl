@@ -35,7 +35,7 @@ Moments of the +P distribution generate quantum operator averages that are norma
 
 In general the two random variates α,α⁺ are statistically independent for the +P distribution. 
 """
-function positiveP(state::T,N) where T
+function positiveP(state::State,N)
     μ,μ⁺ = husimiQ(state,N)
     γ = randnc(N)
     α = μ .+ γ

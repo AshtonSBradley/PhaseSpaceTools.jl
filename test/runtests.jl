@@ -1,6 +1,6 @@
 #!/usr/bin/env julia
 
-using PhaseSpaceTools, Test, Statistics, Aqua
+using PhaseSpaceTools, Test, Statistics, Aqua, Random
 
 function randuv()
     u,v = randnc(2)
@@ -111,10 +111,18 @@ end
     # Helpers
     f(x) = exp(-x^2)
     @test typeof(reject(f,[-1,1],1,1.1)[1]) == Float64
+    @test isempty(reject(f,[-1,1],0,1.1))
     @test typeof(plaguerre(.1,1)) == Float64
     @test typeof(plaguerre_asymptotic(.1,1)) == Float64
     @test typeof(laguerren(.1,1)) == Float64
     @test typeof(plaguerre_asymptotic(.1,1)) == Float64
+    @test_throws ArgumentError reject(f, [1,-1], 1, 1.1)
+    @test_throws ArgumentError reject(f, [-1,1], -1, 1.1)
+    @test_throws ArgumentError reject(f, [-1,1], 1, 0.0)
+    @test_throws ArgumentError reject(x -> NaN, [-1,1], 1, 1.1)
+    @test_throws ArgumentError reject(x -> -1.0, [-1,1], 1, 1.1)
+    @test_throws ArgumentError reject(x -> 2.0, [-1,1], 1, 1.1)
+    @test_throws MethodError positiveP("not a state", 1)
 
 end
 
@@ -129,6 +137,19 @@ end
 
     @test isapprox(mean(abs2.(a)),1.0,rtol=5e-2)
     @test isapprox(abs(mean(a)),0.0,atol=1e-2)
+
+    x = zeros(10_000)
+    realnoise(x, nothing, 0.25, Random.default_rng())
+    @test isapprox(mean(x), 0.0, atol=2e-2)
+    @test isapprox(mean(abs2, x), 0.25, rtol=8e-2)
+
+    bridge = zeros(10_000)
+    q = 0.3
+    h = 0.5
+    Wh = fill(1.5, 10_000)
+    realbridge(bridge, nothing, nothing, Wh, q, h, Random.default_rng())
+    @test isapprox(mean(bridge), q * 1.5, atol=2e-2)
+    @test isapprox(var(bridge), (1 - q) * q * h, rtol=1e-1)
 end
 
 @testset "Squeezed Q" begin
